@@ -35,6 +35,8 @@ class ArrivalEvent extends Event {
           new DepartureEvent(this.customer, this.getTime())
       };
     } else {
+      System.out.println(this.customer);
+      System.out.println(counter);
       return new Event[] {
           new ServiceBeginEvent(this.customer, counter)
       };
