@@ -33,7 +33,7 @@ class ArrivalEvent extends Event {
     // Pass entire counter array to encapsulate what is done to the counter
     Counter counter = Counter.getAvailableCounter(this.counters);
     if (counter == null) {
-      if (this.customerQueue.enq(this.customer)) {
+      if (!this.customerQueue.isFull()) {
         return new Event[] {
             new QueueEvent(this.customer, this.customerQueue, this.getTime())
         };

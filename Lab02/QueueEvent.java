@@ -25,6 +25,7 @@ class QueueEvent extends Event {
 
     @Override
     public Event[] simulate() {
+        this.customerQueue.enq(this.customer);
         return new Event[] {};
     }
 
