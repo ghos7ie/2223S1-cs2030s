@@ -7,12 +7,18 @@
  */
 
 class DepartureEvent extends Event {
+
+  /**
+   * Customer that is departing.
+   */
   private Customer customer;
 
   /**
-   * DepartureEvent Constructor
-   *
-   * @param customerId Customer Id
+   * 
+   * @param customer
+   *          Customer that is departing.
+   * @param departTime
+   *          Time that customer is leaving.
    */
   public DepartureEvent(Customer customer, double departTime) {
     super(departTime);
@@ -22,8 +28,8 @@ class DepartureEvent extends Event {
   /**
    * Simulate Departure event.
    *
-   * @param customerId
    * @return An array of new events to be scheduled by the simulator.
+   *         Returns empty Event[] as nothing happens after departure of customer.
    */
   @Override
   public Event[] simulate() {
@@ -31,7 +37,9 @@ class DepartureEvent extends Event {
   }
 
   /**
-   * Prints status of Event
+   * Returns the string representation of this event.
+   * 
+   * @return String representation of an departure event.
    */
   @Override
   public String toString() {

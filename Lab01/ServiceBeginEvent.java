@@ -13,9 +13,12 @@ class ServiceBeginEvent extends Event {
   /**
    * ServiceBeginEvent Constructor
    * 
-   * @param arrivalTime Time that customer arrives
-   * @param serviceTime Time that customer is served
-   * @param customerId  Customer Id
+   * @param arrivalTime
+   *          Time that customer arrives
+   * @param serviceTime
+   *          Time that customer is served
+   * @param customerId
+   *          Customer Id
    * @param counter
    */
   public ServiceBeginEvent(Customer customer, Counter counter) {

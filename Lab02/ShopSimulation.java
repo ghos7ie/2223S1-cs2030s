@@ -8,29 +8,31 @@ import java.util.Scanner;
  */
 class ShopSimulation extends Simulation {
   /**
-   * The availability of counters in the shop.
+   * The number of counters in the shop.
    */
   private Counter[] counters;
 
-  /**
-   * Coutner (available:boolean)
-   */
   /**
    * The list of customer arrival events to populate
    * the simulation with.
    */
   private Event[] initEvents;
 
+  /**
+   * The list of customer arrival events to populate
+   * the simulation with.
+   */
+  private Queue customerQueue;
 
-  private static Queue customerQueue;
   /**
    * Constructor for a shop simulation.
    *
-   * @param sc A scanner to read the parameters from. The first
-   *           integer scanned is the number of customers; followed
-   *           by the number of service counters. Next is a
-   *           sequence of (arrival time, service time) pair, each
-   *           pair represents a customer.
+   * @param sc
+   *          A scanner to read the parameters from. The first
+   *          integer scanned is the number of customers; followed
+   *          by the number of service counters. Next is a
+   *          sequence of (arrival time, service time) pair, each
+   *          pair represents a customer.
    */
   public ShopSimulation(Scanner sc) {
     initEvents = new Event[sc.nextInt()];

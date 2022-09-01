@@ -8,18 +8,30 @@
 
 class ServiceEndEvent extends Event {
 
+  /**
+   * Customer that arrived.
+   */
   private Customer customer;
+  /**
+   * Counter that is serving the customer.
+   */
   private Counter counter;
+  /**
+   * Queue obj that contains number of customers currently in queue.
+   */
   private Queue customerQueue;
 
   /**
-   * ServiceEndEvent Constructor
+   * Creates ServiceEndEvent
    * 
-   * @param endTime
-   *          Time that service ends
-   * @param customerId
-   *          Customer Id
+   * @param customer
+   *          Customer that has been served.
    * @param counter
+   *          Counter that is serving the customer.
+   * @param customerQueue
+   *          Queue obj that contains number of customers currently in queue.
+   * @param endTime
+   *          Time that the service ended.
    */
   public ServiceEndEvent(Customer customer, Counter counter, Queue customerQueue, double endTime) {
     super(endTime);
@@ -28,6 +40,14 @@ class ServiceEndEvent extends Event {
     this.customerQueue = customerQueue;
   }
 
+  /**
+   * Simulate Service Begin event.
+   * 
+   * @return An array of new events to be scheduled by the simulator.
+   *         Returns Event[] containing DepartureEvent if Queue is empty.
+   *         Returns Event[] containing DepartureEvent and ServiceBeginEvent if
+   *         Queue is not empty.
+   */
   @Override
   public Event[] simulate() {
     // Pass entire counter object to encapsulate what is done to the counter

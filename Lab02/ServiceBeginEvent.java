@@ -8,17 +8,30 @@
 
 class ServiceBeginEvent extends Event {
 
+  /**
+   * Customer that arrived.
+   */
   private Customer customer;
+  /**
+   * Counter that is serving the customer.
+   */
   private Counter counter;
+  /**
+   * Queue obj that contains number of customers currently in queue.
+   */
   private Queue customerQueue;
 
   /**
-   * ServiceBeginEvent Constructor
+   * ServiceBeginEvent Constructor.
    * 
-   * @param customer  Customer obj
-   * @param counter Counter obj
-   * @param customerQueue Queue obj
-   * @param startTime starting time of service (needed since there is a queue now)
+   * @param customer
+   *          Customer that is being served.
+   * @param counter
+   *          Counter that is serving the customer.
+   * @param customerQueue
+   *          Queue obj that contains number of customers currently in queue.
+   * @param startTime
+   *          starting time of service (needed since there is a queue now).
    */
   public ServiceBeginEvent(Customer customer, Counter counter, Queue customerQueue, double startTime) {
     super(startTime);
@@ -31,6 +44,7 @@ class ServiceBeginEvent extends Event {
    * Simulate Service Begin event.
    * 
    * @return An array of new events to be scheduled by the simulator.
+   *         Returns Event[] containing ServiceEndEvent.
    */
   @Override
   public Event[] simulate() {
@@ -41,7 +55,9 @@ class ServiceBeginEvent extends Event {
   }
 
   /**
-   * Prints status of Event
+   * Returns the string representation of this event.
+   * 
+   * @return String representation of a service begin event.
    */
   @Override
   public String toString() {

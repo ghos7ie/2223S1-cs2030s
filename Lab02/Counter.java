@@ -1,5 +1,6 @@
 /**
- * This class
+ * This is the Counter class. This class is responsible for tracking
+ * the availability of the counters.
  * 
  * @author Lewis Lye [14A]
  * @version CS2030S AY21/22 Semester 2
@@ -23,9 +24,6 @@ class Counter {
 
     /**
      * Constructor for a counter
-     *
-     * @param available Dictates the availability of the counter.
-     *                  True (available) or False (not available)
      */
     public Counter() {
         this.id = count++;
@@ -59,7 +57,7 @@ class Counter {
      * 
      */
     @Override
-    public String toString(){
+    public String toString() {
         return "S" + this.id;
     }
 }

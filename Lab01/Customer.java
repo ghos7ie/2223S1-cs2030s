@@ -1,5 +1,5 @@
 /**
- * This class
+ * This is the Customer class.
  * 
  * @author Lewis Lye [14A]
  * @version CS2030S AY21/22 Semester 2
