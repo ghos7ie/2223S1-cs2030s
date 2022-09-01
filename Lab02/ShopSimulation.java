@@ -42,7 +42,6 @@ class ShopSimulation extends Simulation {
     // Customer Id -- should move to Customer object next time
     int id = 0;
     while (sc.hasNextDouble()) {
-
       Customer customer = new Customer(sc.nextDouble(), sc.nextDouble());
       // check for available
       initEvents[id] = new ArrivalEvent(customer, counters);

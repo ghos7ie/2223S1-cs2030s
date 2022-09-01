@@ -43,7 +43,7 @@ class ArrivalEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": Customer %s arrives", this.customer);
+    String str = String.format(": Customer %d arrives", this.customer);
     return super.toString() + str;
   }
 }
