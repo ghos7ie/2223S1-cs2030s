@@ -8,10 +8,13 @@ import java.util.Scanner;
  */
 class ShopSimulation extends Simulation {
   /**
-   * The array of counters in Shop
+   * The availability of counters in the shop.
    */
   private Counter[] counters;
 
+  /**
+   * Coutner (available:boolean)
+   */
   /**
    * The list of customer arrival events to populate
    * the simulation with.
@@ -28,12 +31,10 @@ class ShopSimulation extends Simulation {
    *           pair represents a customer.
    */
   public ShopSimulation(Scanner sc) {
-
-    // num of customers/num of events to create
     initEvents = new Event[sc.nextInt()];
     int numOfCounters = sc.nextInt();
-    int queueLimit = sc.nextInt();
-
+    Queue customerQueue = new Queue(sc.nextInt());
+    
     counters = new Counter[numOfCounters];
     for (int i = 0; i < numOfCounters; i++) {
       counters[i] = new Counter();
@@ -42,7 +43,9 @@ class ShopSimulation extends Simulation {
     // Customer Id -- should move to Customer object next time
     int id = 0;
     while (sc.hasNextDouble()) {
-      Customer customer = new Customer(sc.nextDouble(), sc.nextDouble());
+      double arrivalTime = sc.nextDouble();
+      double serviceTime = sc.nextDouble();
+      Customer customer = new Customer(arrivalTime, serviceTime);
       // check for available
       initEvents[id] = new ArrivalEvent(customer, counters);
       id += 1;

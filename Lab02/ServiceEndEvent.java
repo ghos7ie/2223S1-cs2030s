@@ -1,5 +1,6 @@
 /**
- * This class implements Event
+ * This class implements Event.
+ * This class represents the end of service for a customer.
  *
  * @author Lewis Lye [14A]
  * @version CS2030S AY21/22 Semester 2
@@ -37,7 +38,7 @@ class ServiceEndEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": Customer %d service done (by Counter %d)", this.customer, this.counter);
+    String str = String.format(": %s service done (by %s)", this.customer, this.counter);
     return super.toString() + str;
   }
 }

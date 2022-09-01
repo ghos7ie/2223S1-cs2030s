@@ -42,6 +42,6 @@ class Customer {
 
     @Override
     public String toString(){
-        return String.valueOf(this.id);
+        return "C" + this.id;
     }
 }

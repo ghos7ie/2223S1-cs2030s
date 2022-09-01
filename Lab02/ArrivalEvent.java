@@ -1,5 +1,6 @@
 /**
- * This class implements Event
+ * This class implements Event. 
+ * This class represents the arrival of a customer.
  *
  * @author Lewis Lye [14A]
  * @version CS2030S AY21/22 Semester 2
@@ -14,10 +15,12 @@ class ArrivalEvent extends Event {
    * ArrivalEvent Constructor
    * 
    * @param customer Customer obj
-   * @param counters 
+   * @param counters
    */
   public ArrivalEvent(Customer customer, Counter[] counters) {
     super(customer.getArrivalTime());
+    this.customer = customer;
+    this.counters = counters;
   }
 
   /**
@@ -34,7 +37,8 @@ class ArrivalEvent extends Event {
       };
     } else {
       return new Event[] {
-          new ServiceBeginEvent(customer, counter) };
+          new ServiceBeginEvent(this.customer, counter)
+      };
     }
   }
 
@@ -43,7 +47,7 @@ class ArrivalEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": Customer %d arrives", this.customer);
+    String str = String.format(": %s arrives", this.customer);
     return super.toString() + str;
   }
 }

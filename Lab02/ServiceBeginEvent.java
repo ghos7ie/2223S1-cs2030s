@@ -1,5 +1,6 @@
 /**
- * This class implements Event
+ * This class implements Event.
+ * This class represents the start of service for a customer.
  *
  * @author Lewis Lye [14A]
  * @version CS2030S AY21/22 Semester 2
@@ -42,7 +43,7 @@ class ServiceBeginEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": Customer %s service begin (by Counter %s)",
+    String str = String.format(": %s service begin (by Counter %s)",
         this.customer, this.counter);
     return super.toString() + str;
   }

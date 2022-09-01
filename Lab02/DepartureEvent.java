@@ -1,5 +1,6 @@
 /**
- * This class implements Event
+ * This class implements Event.
+ * This class represents the departure of a customer.
  *
  * @author Lewis Lye [14A]
  * @version CS2030S AY21/22 Semester 2
@@ -34,7 +35,7 @@ class DepartureEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": Customer %d departed", this.customer);
+    String str = String.format(": %s departed", this.customer);
     return super.toString() + str;
   }
 }
