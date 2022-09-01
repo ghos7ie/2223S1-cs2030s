@@ -14,10 +14,11 @@ class ArrivalEvent extends Event {
    * ArrivalEvent Constructor
    * 
    * @param customer Customer obj
-   * @param counters 
+   * @param counters
    */
   public ArrivalEvent(Customer customer, Counter[] counters) {
     super(customer.getArrivalTime());
+    this.customer = customer;
     this.counters = counters;
   }
 
@@ -35,7 +36,8 @@ class ArrivalEvent extends Event {
       };
     } else {
       return new Event[] {
-          new ServiceBeginEvent(customer, counter) };
+          new ServiceBeginEvent(customer, counter)
+      };
     }
   }
 
