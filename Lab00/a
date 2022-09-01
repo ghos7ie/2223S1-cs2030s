@@ -1,0 +1,41 @@
+/**
+ * CS2030S Lab 0: Point.java
+ * Semester 1, 2022/23
+ *
+ * <p>The Point class encapsulates a point on a 2D plane.
+ *
+ * @author Lewis [Group 14A]
+ */
+class Point {
+  // TODO
+  private double x;
+  private double y;
+
+  public Point (double x, double y){
+    this.x = x;
+    this.y = y;
+  }
+ 
+  public double getX(){
+    return this.x;
+  }
+
+  public double getY(){
+    return this.y;
+  }
+  
+  public double distanceTo (Point p){
+
+  }
+  
+  public boolean contains(Point c, double r){
+    boolean isInCircle = (((this.x - c.getX()) * (this.x - c.getX()) + 
+        (this.y - c.getY()) * (this.y -c.getY())) <= r * r);
+    return isInCircle;
+  }
+
+  @Override
+  public String toString(){
+    return "(" + this.x + ", " + this.y + ")";
+  }
+}
