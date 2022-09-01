@@ -36,7 +36,7 @@ class ArrivalEvent extends Event {
       };
     } else {
       return new Event[] {
-          new ServiceBeginEvent(customer, counter)
+          new ServiceBeginEvent(this.customer, counter)
       };
     }
   }
