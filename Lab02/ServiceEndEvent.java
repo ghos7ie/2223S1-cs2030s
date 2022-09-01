@@ -9,7 +9,6 @@ class ServiceEndEvent extends Event {
 
   private Customer customer;
   private Counter counter;
-  private int counterId;
 
   /**
    * ServiceEndEvent Constructor

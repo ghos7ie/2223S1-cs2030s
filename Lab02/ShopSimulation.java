@@ -32,7 +32,7 @@ class ShopSimulation extends Simulation {
     // num of customers/num of events to create
     initEvents = new Event[sc.nextInt()];
     int numOfCounters = sc.nextInt();
-    // int queueLimit = sc.nextInt();
+    int queueLimit = sc.nextInt();
 
     counters = new Counter[numOfCounters];
     for (int i = 0; i < numOfCounters; i++) {
