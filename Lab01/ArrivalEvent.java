@@ -18,6 +18,7 @@ class ArrivalEvent extends Event {
    */
   public ArrivalEvent(Customer customer, Counter[] counters) {
     super(customer.getArrivalTime());
+    this.counters = counters;
   }
 
   /**
