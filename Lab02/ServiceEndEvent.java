@@ -10,6 +10,7 @@ class ServiceEndEvent extends Event {
 
   private Customer customer;
   private Counter counter;
+  private Queue customerQueue;
 
   /**
    * ServiceEndEvent Constructor
@@ -18,19 +19,29 @@ class ServiceEndEvent extends Event {
    * @param customerId Customer Id
    * @param counter
    */
-  public ServiceEndEvent(Customer customer, Counter counter, double endTime) {
+  public ServiceEndEvent(Customer customer, Counter counter, Queue customerQueue, double endTime) {
     super(endTime);
     this.customer = customer;
     this.counter = counter;
+    this.customerQueue = customerQueue;
   }
 
   @Override
   public Event[] simulate() {
     // Pass entire counter object to encapsulate what is done to the counter
     this.counter.setAvailable(true);
-    return new Event[] {
-        new DepartureEvent(customer, this.getTime())
-    };
+    Customer customer = (Customer) this.customerQueue.deq();
+    if (customer == null) {
+      return new Event[] {
+          new DepartureEvent(this.customer, this.getTime())
+      };
+    } else {
+      return new Event[] {
+          new DepartureEvent(this.customer, this.getTime()),
+          new ServiceBeginEvent(customer, this.counter, this.customerQueue, this.getTime())
+      };
+    }
+
   }
 
   /**

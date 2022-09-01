@@ -1,5 +1,5 @@
 /**
- * This class implements Event. 
+ * This class implements Event.
  * This class represents the arrival of a customer.
  *
  * @author Lewis Lye [14A]
@@ -10,6 +10,7 @@ class ArrivalEvent extends Event {
 
   private Customer customer;
   private Counter[] counters;
+  private Queue customerQueue;
 
   /**
    * ArrivalEvent Constructor
@@ -17,10 +18,11 @@ class ArrivalEvent extends Event {
    * @param customer Customer obj
    * @param counters
    */
-  public ArrivalEvent(Customer customer, Counter[] counters) {
+  public ArrivalEvent(Customer customer, Counter[] counters, Queue customerQueue) {
     super(customer.getArrivalTime());
     this.customer = customer;
     this.counters = counters;
+    this.customerQueue = customerQueue;
   }
 
   /**
@@ -31,13 +33,19 @@ class ArrivalEvent extends Event {
     // Pass entire counter array to encapsulate what is done to the counter
     Counter counter = Counter.getAvailableCounter(this.counters);
     if (counter == null) {
-      // return DepatureEvent if no counters are available
-      return new Event[] {
-          new DepartureEvent(this.customer, this.getTime())
-      };
+      if (this.customerQueue.enq(this.customer)) {
+        return new Event[] {
+            new QueueEvent(this.customer, this.customerQueue, this.getTime())
+        };
+      } else {
+        // return DepatureEvent if no queue is full
+        return new Event[] {
+            new DepartureEvent(this.customer, this.getTime())
+        };
+      }
     } else {
       return new Event[] {
-          new ServiceBeginEvent(this.customer, counter)
+          new ServiceBeginEvent(this.customer, counter, this.customerQueue, this.getTime())
       };
     }
   }
@@ -47,7 +55,7 @@ class ArrivalEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": %s arrives", this.customer);
+    String str = String.format(": %s arrived %s", this.customer, this.customerQueue);
     return super.toString() + str;
   }
 }

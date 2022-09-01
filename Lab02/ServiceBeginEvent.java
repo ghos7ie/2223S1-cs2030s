@@ -10,19 +10,21 @@ class ServiceBeginEvent extends Event {
 
   private Customer customer;
   private Counter counter;
+  private Queue customerQueue;
 
   /**
    * ServiceBeginEvent Constructor
    * 
-   * @param arrivalTime Time that customer arrives
-   * @param serviceTime Time that customer is served
-   * @param customerId  Customer Id
-   * @param counter
+   * @param customer  Customer obj
+   * @param counter Counter obj
+   * @param customerQueue Queue obj
+   * @param startTime starting time of service (needed since there is a queue now)
    */
-  public ServiceBeginEvent(Customer customer, Counter counter) {
-    super(customer.getArrivalTime());
+  public ServiceBeginEvent(Customer customer, Counter counter, Queue customerQueue, double startTime) {
+    super(startTime);
     this.customer = customer;
     this.counter = counter;
+    this.customerQueue = customerQueue;
   }
 
   /**
@@ -34,7 +36,7 @@ class ServiceBeginEvent extends Event {
   public Event[] simulate() {
     double endTime = this.getTime() + this.customer.getServiceTime();
     return new Event[] {
-        new ServiceEndEvent(this.customer, this.counter, endTime)
+        new ServiceEndEvent(this.customer, this.counter, this.customerQueue, endTime)
     };
   }
 

@@ -21,6 +21,8 @@ class ShopSimulation extends Simulation {
    */
   private Event[] initEvents;
 
+
+  private static Queue customerQueue;
   /**
    * Constructor for a shop simulation.
    *
@@ -33,8 +35,8 @@ class ShopSimulation extends Simulation {
   public ShopSimulation(Scanner sc) {
     initEvents = new Event[sc.nextInt()];
     int numOfCounters = sc.nextInt();
-    Queue customerQueue = new Queue(sc.nextInt());
-    
+    customerQueue = new Queue(sc.nextInt());
+
     counters = new Counter[numOfCounters];
     for (int i = 0; i < numOfCounters; i++) {
       counters[i] = new Counter();
@@ -47,7 +49,7 @@ class ShopSimulation extends Simulation {
       double serviceTime = sc.nextDouble();
       Customer customer = new Customer(arrivalTime, serviceTime);
       // check for available
-      initEvents[id] = new ArrivalEvent(customer, counters);
+      initEvents[id] = new ArrivalEvent(customer, counters, customerQueue);
       id += 1;
     }
   }
