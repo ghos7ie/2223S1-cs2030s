@@ -6,37 +6,34 @@
  */
 
 class ServiceBeginEvent extends Event {
-  
-  private double serviceTime;
-  private int customerId;
+
+  private Customer customer;
   private Counter counter;
-  private int counterId;
 
-   /**
-     * ServiceBeginEvent Constructor
-     * @param arrivalTime Time that customer arrives
-     * @param serviceTime Time that customer is served
-     * @param customerId Customer Id
-     * @param counter
-     */
-    public ServiceBeginEvent(double arrivalTime, double serviceTime, int customerId, Counter counter){
-      super(arrivalTime);
-      this.serviceTime = serviceTime;
-      this.customerId = customerId;
-      this.counter = counter;
-      this.counterId = counter.getId();
-    }
-
+  /**
+   * ServiceBeginEvent Constructor
+   * 
+   * @param arrivalTime Time that customer arrives
+   * @param serviceTime Time that customer is served
+   * @param customerId  Customer Id
+   * @param counter
+   */
+  public ServiceBeginEvent(Customer customer, Counter counter) {
+    super(customer.getArrivalTime());
+    this.customer = customer;
+    this.counter = counter;
+  }
 
   /**
    * Simulate Service Begin event.
+   * 
    * @return An array of new events to be scheduled by the simulator.
    */
   @Override
   public Event[] simulate() {
-    double endTime = this.getTime() + this.serviceTime;
+    double endTime = this.getTime() + this.customer.getServiceTime();
     return new Event[] {
-      new ServiceEndEvent(endTime, this.customerId, this.counter)
+        new ServiceEndEvent(this.customer, this.counter, endTime)
     };
   }
 
@@ -45,8 +42,8 @@ class ServiceBeginEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": Customer %d service begin (by Counter %d)",
-        this.customerId, this.counterId);
+    String str = String.format(": Customer %s service begin (by Counter %s)",
+        this.customer, this.counter);
     return super.toString() + str;
   }
 }

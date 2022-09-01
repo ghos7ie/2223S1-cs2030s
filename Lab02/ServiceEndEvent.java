@@ -7,30 +7,29 @@
 
 class ServiceEndEvent extends Event {
 
-  private double endTime;
-  private int customerId;
+  private Customer customer;
   private Counter counter;
   private int counterId;
 
-   /**
-     * ServiceEndEvent Constructor
-     * @param endTime Time that service ends
-     * @param customerId Customer Id
-     * @param counter
-     */
-    public ServiceEndEvent(double endTime, int customerId, Counter counter){
-      super(endTime);
-      this.customerId = customerId;
-      this.counter = counter;
-      this.counterId = counter.getId();
-    }
+  /**
+   * ServiceEndEvent Constructor
+   * 
+   * @param endTime    Time that service ends
+   * @param customerId Customer Id
+   * @param counter
+   */
+  public ServiceEndEvent(Customer customer, Counter counter, double endTime) {
+    super(endTime);
+    this.customer = customer;
+    this.counter = counter;
+  }
 
   @Override
   public Event[] simulate() {
     // Pass entire counter object to encapsulate what is done to the counter
     this.counter.setAvailable(true);
     return new Event[] {
-      new DepartureEvent(this.getTime(), this.customerId)
+        new DepartureEvent(customer, this.getTime())
     };
   }
 
@@ -39,7 +38,7 @@ class ServiceEndEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": Customer %d service done (by Counter %d)", this.customerId, this.counterId);
+    String str = String.format(": Customer %d service done (by Counter %d)", this.customer, this.counter);
     return super.toString() + str;
   }
 }

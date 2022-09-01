@@ -6,18 +6,21 @@
  */
 
 class DepartureEvent extends Event {
-  private int customerId;
+  private Customer customer;
 
   /**
    * DepartureEvent Constructor
+   *
    * @param customerId Customer Id
    */
-  public DepartureEvent(double departTime , int customerId) {
+  public DepartureEvent(Customer customer, double departTime) {
     super(departTime);
-    this.customerId = customerId;
+    this.customer = customer;
   }
+
   /**
    * Simulate Departure event.
+   *
    * @param customerId
    * @return An array of new events to be scheduled by the simulator.
    */
@@ -31,7 +34,7 @@ class DepartureEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": Customer %d departed", this.customerId);
+    String str = String.format(": Customer %d departed", this.customer);
     return super.toString() + str;
   }
 }
