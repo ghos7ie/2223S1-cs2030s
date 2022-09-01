@@ -61,4 +61,9 @@ class Counter {
       }
       return null;
   }
+
+  @Override
+  public String toString(){
+    return String.valueOf(this.id);
+  }
 }

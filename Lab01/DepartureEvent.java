@@ -34,7 +34,7 @@ class DepartureEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": Customer %d departed", this.customer);
+    String str = String.format(": Customer %s departed", this.customer);
     return super.toString() + str;
   }
 }

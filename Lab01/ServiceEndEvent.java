@@ -37,7 +37,7 @@ class ServiceEndEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": Customer %d service done (by Counter %d)", this.customer, this.counter);
+    String str = String.format(": Customer %s service done (by Counter %s)", this.customer, this.counter);
     return super.toString() + str;
   }
 }
