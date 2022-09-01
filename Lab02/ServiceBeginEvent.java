@@ -45,7 +45,7 @@ class ServiceBeginEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": %s service begin (by Counter %s)",
+    String str = String.format(": %s service begin (by  %s)",
         this.customer, this.counter);
     return super.toString() + str;
   }
