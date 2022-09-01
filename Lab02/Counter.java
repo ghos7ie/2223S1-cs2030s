@@ -17,8 +17,7 @@ class Counter {
     private int id;
 
     /**
-     * The availabilty of the counter
-     * Set default value to true
+     * The availabilty of the counter - Set default value to true
      */
     private boolean available = true;
 
