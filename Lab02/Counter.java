@@ -34,7 +34,7 @@ class Counter {
     /**
      * Tell if current counter is available
      */
-    public boolean isAvailable() {
+    private boolean isAvailable() {
         return this.available;
     }
 

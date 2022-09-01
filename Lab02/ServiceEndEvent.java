@@ -15,8 +15,10 @@ class ServiceEndEvent extends Event {
   /**
    * ServiceEndEvent Constructor
    * 
-   * @param endTime    Time that service ends
-   * @param customerId Customer Id
+   * @param endTime
+   *          Time that service ends
+   * @param customerId
+   *          Customer Id
    * @param counter
    */
   public ServiceEndEvent(Customer customer, Counter counter, Queue customerQueue, double endTime) {
@@ -36,6 +38,8 @@ class ServiceEndEvent extends Event {
           new DepartureEvent(this.customer, this.getTime())
       };
     } else {
+      // counter is now in use by the next customer
+      this.counter.setAvailable(false);
       return new Event[] {
           new DepartureEvent(this.customer, this.getTime()),
           new ServiceBeginEvent(customer, this.counter, this.customerQueue, this.getTime())
