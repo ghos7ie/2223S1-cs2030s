@@ -24,10 +24,9 @@ class Customer {
   private double serviceTime;
 
   /**
-   * Creates a customer.
+   * Customer Constructor.
    * 
-   * @param arrivalTime
-   * @param serviceTime
+   * @param serviceTime Service time of customer.
    */
   public Customer(double serviceTime) {
     this.id = count++;
@@ -35,9 +34,9 @@ class Customer {
   }
 
   /**
-   * Returns service time of customer
+   * Service time of customer.
    * 
-   * @return Period customer is served.
+   * @return Returns service time of customer.
    */
   public double getServiceTime() {
     return this.serviceTime;

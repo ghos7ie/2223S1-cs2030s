@@ -14,6 +14,7 @@ class DepartureEvent extends Event {
   private Customer customer;
 
   /**
+   * DepartureEvent Constructor.
    * 
    * @param customer
    *          Customer that is departing.

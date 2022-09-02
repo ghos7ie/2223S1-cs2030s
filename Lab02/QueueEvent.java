@@ -18,7 +18,7 @@ class QueueEvent extends Event {
   private Queue customerQueue;
 
   /**
-   * QueueEvent Constructor
+   * QueueEvent Constructor.
    * 
    * @param customer
    *          Customer that is joining the queue.

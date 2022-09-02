@@ -33,7 +33,8 @@ class ArrivalEvent extends Event {
    * @param arrivalTime
    *          Time at which customer arrives
    */
-  public ArrivalEvent(Customer customer, Counter[] counters, Queue customerQueue, double arrivalTime) {
+  public ArrivalEvent(Customer customer, Counter[] counters,
+      Queue customerQueue, double arrivalTime) {
     super(arrivalTime);
     this.customer = customer;
     this.counters = counters;

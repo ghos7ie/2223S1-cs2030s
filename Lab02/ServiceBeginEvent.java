@@ -33,7 +33,8 @@ class ServiceBeginEvent extends Event {
    * @param startTime
    *          starting time of service (needed since there is a queue now).
    */
-  public ServiceBeginEvent(Customer customer, Counter counter, Queue customerQueue, double startTime) {
+  public ServiceBeginEvent(Customer customer, Counter counter,
+      Queue customerQueue, double startTime) {
     super(startTime);
     this.customer = customer;
     this.counter = counter;

@@ -23,7 +23,7 @@ class Counter {
   private boolean available = true;
 
   /**
-   * Constructor for a counter.
+   * Counter Constructor.
    */
   public Counter() {
     this.id = count++;
@@ -31,6 +31,8 @@ class Counter {
 
   /**
    * Tell if current counter is available.
+   * 
+   * @return Returns availability of a counter.
    */
   private boolean isAvailable() {
     return this.available;

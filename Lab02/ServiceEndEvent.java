@@ -22,7 +22,7 @@ class ServiceEndEvent extends Event {
   private Queue customerQueue;
 
   /**
-   * Creates ServiceEndEvent
+   * ServiceEndEvent Constructor.
    * 
    * @param customer
    *          Customer that has been served.
@@ -69,7 +69,9 @@ class ServiceEndEvent extends Event {
   }
 
   /**
-   * Prints status of Event
+   * Prints status of Event.
+   * 
+   * @return Returns string representation of a ServiceEndEvent.
    */
   @Override
   public String toString() {
