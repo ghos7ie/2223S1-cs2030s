@@ -29,10 +29,12 @@ class ArrivalEvent extends Event {
    * @param counters
    *          Array of counters that the shop has.
    * @param customerQueue
-   *          Queue obj that contains number of customers currently in queue. 
+   *          Queue obj that contains number of customers currently in queue.
+   * @param arrivalTime
+   *          Time at which customer arrives
    */
-  public ArrivalEvent(Customer customer, Counter[] counters, Queue customerQueue) {
-    super(customer.getArrivalTime());
+  public ArrivalEvent(Customer customer, Counter[] counters, Queue customerQueue, double arrivalTime) {
+    super(arrivalTime);
     this.customer = customer;
     this.counters = counters;
     this.customerQueue = customerQueue;
