@@ -22,7 +22,7 @@ class Array<T extends Comparable<T>> {
    */
   public Array(int size) {
     @SuppressWarnings("unchecked")
-    T[] temp = (T[]) new Object[size];
+    T[] temp = (T[]) new Comparable[size];
     this.array = temp;
   }
 
