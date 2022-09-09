@@ -31,7 +31,8 @@ class Queue <T>{
   public Queue (int size) {
     this.maxSize = size;
     @SuppressWarnings("unchecked")
-    this.items = (T[]) new Object[size];
+    T[] itemArray = (T[]) new Object[size];
+    this.items = itemArray;
     this.first = -1;
     this.last = -1;
     this.len = 0;
