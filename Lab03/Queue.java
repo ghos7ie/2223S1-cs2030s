@@ -28,9 +28,10 @@ class Queue <T>{
    * @param size
    *          The maximum num of elements we can put in the queue.
    */
-  public Queue (T size) {
-    this.maxSize = (int) size;
-    this.items = (T[]) new Object[this.maxSize];
+  public Queue (int size) {
+    this.maxSize = size;
+    @SuppressWarnings("unchecked")
+    this.items = (T[]) new Object[size];
     this.first = -1;
     this.last = -1;
     this.len = 0;
@@ -43,7 +44,7 @@ class Queue <T>{
    *          The item to put in the queue.
    * @return false if the queue is full; true if e is added successfully.
    */
-  public boolean enq(Object e) {
+  public boolean enq(T e) {
     if (this.isFull()) {
       return false;
     }
