@@ -52,7 +52,6 @@ class QueueEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": %s joined queue %s", this.customer, this.shop);
-    return super.toString() + str;
+    return super.toString();
   }
 }
