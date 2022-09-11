@@ -100,7 +100,6 @@ class Counter implements Comparable<Counter> {
   public Customer nextCustomer() {
     this.makeAvailable();
     // if queue isn't empty
-    System.out.println("Is there a queue? " + this.queue.isEmpty());
     if (!this.queue.isEmpty()) {
       Customer nextCustomer = this.queue.deq();
       this.makeUnavailable();

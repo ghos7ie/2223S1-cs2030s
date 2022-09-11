@@ -73,7 +73,7 @@ public class Shop {
     this.queue.enq((customer));
   }
 
-  public Customer leaveQueue(){
+  public Customer nextCustomer() {
     return this.queue.deq();
   }
 
