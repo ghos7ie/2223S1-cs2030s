@@ -53,7 +53,7 @@ class Counter implements Comparable<Counter> {
     }
     // if both unavailable, return the one with shorter queue (not max queue length)
     else {
-      return Integer.compare(this.getQueueLength(), c.getQueueLength());
+      return Integer.compare(this.queue.length(), c.queue.length());
     }
   }
 
@@ -90,7 +90,7 @@ class Counter implements Comparable<Counter> {
     this.makeAvailable();
     // if queue isn't empty
     if (!this.queue.isEmpty()) {
-      Customer nextCustomer = (Customer) this.queue.deq();
+      Customer nextCustomer = this.queue.deq();
       this.makeUnavailable();
       return nextCustomer;
     }
@@ -102,7 +102,7 @@ class Counter implements Comparable<Counter> {
    * 
    * @return returns max length of queue.
    */
-  public int getQueueLength() {
+  private int getQueueLength() {
     return this.queue.length();
   }
 

@@ -66,11 +66,11 @@ class Queue<T> {
    * @return null if the queue is empty; the object removed from the queue
    *         otherwise.
    */
-  public Object deq() {
+  public T deq() {
     if (this.isEmpty()) {
       return null;
     }
-    Object item = this.items[this.first];
+    T item = this.items[this.first];
     this.first = (this.first + 1) % this.maxSize;
     this.len -= 1;
     return item;

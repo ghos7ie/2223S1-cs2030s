@@ -71,9 +71,9 @@ public class Shop {
   }
 
   /**
-   * Returns the string representation of shop aka it's queue.
+   * Returns the string representation of shop aka its queue.
    * 
-   * @return String representation of an arrival event.
+   * @return String representation of a shop event.
    */
   @Override
   public String toString() {
