@@ -73,6 +73,10 @@ public class Shop {
     this.queue.enq((customer));
   }
 
+  public Customer leaveQueue(){
+    return this.queue.deq();
+  }
+
   /**
    * Returns the string representation of shop aka its queue.
    * 
