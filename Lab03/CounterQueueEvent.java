@@ -23,8 +23,6 @@ class CounterQueueEvent extends Event {
    * 
    * @param customer
    *          Customer that is joining the queue.
-   * @param shop
-   *          Shop that customer is in.
    * @param queueTime
    *          Time that customer is joining the queue.
    * @param counter
