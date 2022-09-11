@@ -1,24 +1,25 @@
 /**
- * This class implements Event.
+ * This class extends QueueEvent class.
  * This class represents the event where the customer joins the
- * queue.
+ * shop queue.
  *
  * @author Lewis Lye [14A]
  * @version CS2030S AY21/22 Semester 2
  */
-class QueueEvent extends Event {
+class ShopQueueEvent extends QueueEvent {
 
   /**
    * Customer that is joining the queue.
    */
   private Customer customer;
+
   /**
    * Customer that is joining the queue.
    */
   private Shop shop;
 
   /**
-   * QueueEvent Constructor.
+   * ShopQueueEvent Constructor.
    * 
    * @param customer
    *          Customer that is joining the queue.
@@ -27,32 +28,27 @@ class QueueEvent extends Event {
    * @param queueTime
    *          Time that customer is joining the queue.
    */
-  public QueueEvent(Customer customer, Shop shop, double queueTime) {
-    super(queueTime);
+  public ShopQueueEvent(Customer customer, Shop shop, double queueTime) {
+    super(customer, shop, queueTime);
     this.customer = customer;
     this.shop = shop;
   }
 
   /**
-   * Simulate Queue event.
-   * Adds customer to customerQueue.
+   * Simulate Shop Queue event.
    * 
    * @return An array of new events to be scheduled by the simulator.
-   *         Returns empty Event[] as nothing happens after joining queue.
+   *         Returns Event[].
    */
   @Override
   public Event[] simulate() {
+    this.shop.joinQueue(this.customer);
     return new Event[] {};
   }
 
-  /**
-   * Returns the string representation of this event.
-   * 
-   * @return String representation of an queue event.
-   */
   @Override
   public String toString() {
-    String str = String.format(": %s joined queue %s", this.customer, this.shop);
+    String str = String.format("%s joined shop queue %s", this.customer, this.shop);
     return super.toString() + str;
   }
 }

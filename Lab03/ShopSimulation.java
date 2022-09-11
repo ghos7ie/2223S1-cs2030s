@@ -7,22 +7,13 @@ import java.util.Scanner;
  * @version CS2030S AY21/22 Semester 2
  */
 class ShopSimulation extends Simulation {
-  /**
-   * The number of counters in the shop.
-   */
-  private Counter[] counters;
+
 
   /**
    * The list of customer arrival events to populate
    * the simulation with.
    */
   private Event[] initEvents;
-
-  /**
-   * The list of customer arrival events to populate
-   * the simulation with.
-   */
-  private Queue customerQueue;
 
   /**
    * Constructor for a shop simulation.
@@ -37,12 +28,10 @@ class ShopSimulation extends Simulation {
   public ShopSimulation(Scanner sc) {
     initEvents = new Event[sc.nextInt()];
     int numOfCounters = sc.nextInt();
-    customerQueue = new Queue(sc.nextInt());
+    int counterQueue = sc.nextInt();
+    int shopQueue = sc.nextInt();
 
-    counters = new Counter[numOfCounters];
-    for (int i = 0; i < numOfCounters; i++) {
-      counters[i] = new Counter();
-    }
+    Shop shop = new Shop(numOfCounters, counterQueue, shopQueue);
 
     // Customer Id -- should move to Customer object next time
     int id = 0;
@@ -51,7 +40,7 @@ class ShopSimulation extends Simulation {
       double serviceTime = sc.nextDouble();
       Customer customer = new Customer(serviceTime);
       // check for available
-      initEvents[id] = new ArrivalEvent(customer, counters, customerQueue, arrivalTime);
+      initEvents[id] = new ArrivalEvent(customer, shop, arrivalTime);
       id += 1;
     }
   }

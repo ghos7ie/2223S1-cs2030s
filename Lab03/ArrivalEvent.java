@@ -12,14 +12,11 @@ class ArrivalEvent extends Event {
    * Customer that arrived.
    */
   private Customer customer;
+
   /**
-   * Array of counters that the shop has.
+   * Shop that is involved.
    */
-  private Counter[] counters;
-  /**
-   * Queue obj that contains number of customers currently in queue.
-   */
-  private Queue customerQueue;
+  private Shop shop;
 
   /**
    * ArrivalEvent Constructor.
@@ -33,12 +30,9 @@ class ArrivalEvent extends Event {
    * @param arrivalTime
    *          Time at which customer arrives
    */
-  public ArrivalEvent(Customer customer, Counter[] counters,
-      Queue customerQueue, double arrivalTime) {
+  public ArrivalEvent(Customer customer, Shop shop, double arrivalTime) {
     super(arrivalTime);
     this.customer = customer;
-    this.counters = counters;
-    this.customerQueue = customerQueue;
   }
 
   /**
@@ -53,12 +47,28 @@ class ArrivalEvent extends Event {
    */
   @Override
   public Event[] simulate() {
-    Counter counter = Counter.getAvailableCounter(this.counters);
-    if (counter == null) {
-      if (!this.customerQueue.isFull()) {
-        // if queue is not full
+    Counter counter = shop.availableCounter();
+    // check if counter is availble since above method returns a counter
+    // that is either availble or has the shortest queue
+    if (counter.isAvailable()) {
+      return new Event[] {
+          // begin service
+          new ServiceBeginEvent(this.customer, counter, this.shop, this.getTime())
+      };
+    } else {
+      // if counter isn't available
+      // check if can queue
+      if (counter.canQueue()) {
+        // TODO: return new queue event?
         return new Event[] {
-            new QueueEvent(this.customer, this.customerQueue, this.getTime())
+            new CounterQueueEvent(this.customer, this.shop, this.getTime(), counter)
+        };
+      }
+      // else check if shop queue is available
+      else if (this.shop.canQueue()) {
+        // TODO: return new queue event
+        return new Event[] {
+            new ShopQueueEvent(this.customer, this.shop, this.getTime())
         };
       } else {
         // if queue is full
@@ -66,11 +76,6 @@ class ArrivalEvent extends Event {
             new DepartureEvent(this.customer, this.getTime())
         };
       }
-    } else {
-      // if counter is available
-      return new Event[] {
-          new ServiceBeginEvent(this.customer, counter, this.customerQueue, this.getTime())
-      };
     }
   }
 
@@ -81,7 +86,7 @@ class ArrivalEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": %s arrived %s", this.customer, this.customerQueue);
+    String str = String.format(": %s arrived %s", this.customer, this.shop);
     return super.toString() + str;
   }
 }

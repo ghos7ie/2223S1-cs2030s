@@ -16,10 +16,11 @@ class ServiceEndEvent extends Event {
    * Counter that is serving the customer.
    */
   private Counter counter;
+
   /**
-   * Queue obj that contains number of customers currently in queue.
+   * Shop that customer is in.
    */
-  private Queue customerQueue;
+  private Shop shop;
 
   /**
    * ServiceEndEvent Constructor.
@@ -28,16 +29,16 @@ class ServiceEndEvent extends Event {
    *          Customer that has been served.
    * @param counter
    *          Counter that is serving the customer.
-   * @param customerQueue
-   *          Queue obj that contains number of customers currently in queue.
+   * @param shop
+   *          Shop that customer is in
    * @param endTime
    *          Time that the service ended.
    */
-  public ServiceEndEvent(Customer customer, Counter counter, Queue customerQueue, double endTime) {
+  public ServiceEndEvent(Customer customer, Counter counter, Shop shop, double endTime) {
     super(endTime);
     this.customer = customer;
     this.counter = counter;
-    this.customerQueue = customerQueue;
+    this.shop = shop;
   }
 
   /**
@@ -50,19 +51,22 @@ class ServiceEndEvent extends Event {
    */
   @Override
   public Event[] simulate() {
-    // Pass entire counter object to encapsulate what is done to the counter
-    this.counter.makeAvailable();
-    Customer customer = (Customer) this.customerQueue.deq();
+    // first check if any counter queue can be filled
+    if (this.shop.hasQueue()) {
+      Counter counter = shop.availableCounter();
+      if(counter.canQueue()){
+        // queueEvent for counter from shopQueue?
+      }
+    }
+    Customer customer = this.counter.nextCustomer();
     if (customer == null) {
       return new Event[] {
           new DepartureEvent(this.customer, this.getTime())
       };
     } else {
-      // counter is now in use by the next customer
-      this.counter.makeUnavailable();
       return new Event[] {
           new DepartureEvent(this.customer, this.getTime()),
-          new ServiceBeginEvent(customer, this.counter, this.customerQueue, this.getTime())
+          new ServiceBeginEvent(customer, this.counter, this.shop, this.getTime())
       };
     }
 

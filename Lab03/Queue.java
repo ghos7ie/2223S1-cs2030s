@@ -6,7 +6,7 @@
  * @author Wei Tsang
  * @version CS2030S AY21/22 Semester 2
  */
-class Queue <T>{
+class Queue<T> {
   /** An array to store the items in the queue. */
   private T[] items;
 
@@ -28,7 +28,7 @@ class Queue <T>{
    * @param size
    *          The maximum num of elements we can put in the queue.
    */
-  public Queue (int size) {
+  public Queue(int size) {
     this.maxSize = size;
     @SuppressWarnings("unchecked")
     T[] itemArray = (T[]) new Object[size];
