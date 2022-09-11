@@ -27,8 +27,8 @@ public class Shop {
    *          Max length of shop queue.
    */
   public Shop(int numOfCounters, int counterQueueLength, int shopQueueLength) {
-    counters = new Array<Counter>(numOfCounters);
-    queue = new Queue<Customer>(shopQueueLength);
+    this.counters = new Array<Counter>(numOfCounters);
+    this.queue = new Queue<Customer>(shopQueueLength);
   }
 
   /**
