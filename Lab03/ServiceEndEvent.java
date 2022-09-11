@@ -90,6 +90,16 @@ class ServiceEndEvent extends Event {
           new DepartureEvent(this.customer, this.getTime()),
           new ServiceBeginEvent(nextCustomerS, this.counter, this.shop, this.getTime()),
       };
+    } else if (counterCanQueue && nextCustomerS == null && nextCustomerC != null) {
+      /*
+       * 1. Counter can be queued into
+       * 2. There is NO customer in shop queue
+       * 3. But counter has customer to serve from its own queue
+       */
+      return new Event[] {
+          new DepartureEvent(this.customer, this.getTime()),
+          new ServiceBeginEvent(nextCustomerC, this.counter, this.shop, this.getTime()),
+      };
     } else if (counterCanQueue == false && nextCustomerC != null) {
       /*
        * 1. Counter cannot be queued into
