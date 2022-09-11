@@ -42,19 +42,32 @@ class Counter implements Comparable<Counter> {
    * 
    * @param c
    *          The other counter to compare to.
-   * @return
+   * @return 1 if c is available.
+   *         -1 if this.counter is available.
+   *         -1 if c has shorter queue.
+   *         1 if this.counter has shorter queue.
+   *         0 if both same.
    */
   @Override
   public int compareTo(Counter c) {
-    if (c.available) {
-      return 1;
+    if (this.available && c.available) {
+      // if both available, compare their queue
+      if (c.queue.length() < this.queue.length()) {
+        return -1;
+      } else if (this.queue.length() > c.queue.length()) {
+        return 1;
+      } else {
+        return 0;
+      }
     } else if (this.available) {
+      return 1;
+    } else if (c.available) {
       return -1;
+    } else {
+      return 0;
     }
-    // if both unavailable, return the one with shorter queue (not max queue length)
-    else {
-      return Integer.compare(this.queue.length(), c.queue.length());
-    }
+  }
+
   }
 
   /**
