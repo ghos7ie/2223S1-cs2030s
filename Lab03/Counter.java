@@ -154,6 +154,6 @@ class Counter implements Comparable<Counter> {
   @Override
   public String toString() {
     String str = String.format("S%s %s", this.id, this.queue);
-    return super.toString() + str;
+    return str;
   }
 }

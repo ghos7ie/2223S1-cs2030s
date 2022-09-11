@@ -81,6 +81,6 @@ public class Shop {
   @Override
   public String toString() {
     String str = String.format("%s", this.queue);
-    return super.toString() + str;
+    return str;
   }
 }
