@@ -66,74 +66,129 @@ class ServiceEndEvent extends Event {
     Customer nextCustomerC = this.counter.nextCustomer();
     // get next customer from shop queue
     Customer nextCustomerS = this.shop.nextCustomer();
-    // IF CAN ADD CUSTOMER TO COUNTER QUEUE
-    if (this.counter.canQueue()) {
-      // AND THERE IS A CUSTOMER IN SHOP QUEUE
-      if (nextCustomerS != null) {
-        // AND COUNTER CAN SERVE A CUSTOMER FROM ITS OWN QUEUE
-        if (nextCustomerC != null) {
-          // RETURN DEPART THE CURRENT CUSTOMER
-          // + SERVICE FOR NEXT COUNTER CUSTOMER
-          // + ADD SHOP CUSTOMER TO COUNTER QUEUE
-          return new Event[] {
-              new DepartureEvent(this.customer, this.getTime()),
-              new ServiceBeginEvent(nextCustomerC, this.counter, this.shop, this.getTime()),
-              new CounterQueueEvent(nextCustomerS, this.getTime(), this.counter)
-          };
-        } else {
-          // COUNTER DOESN'T HAVE CUSTOMER
-          // RETURN DEPART THE CURRENT CUSTOMER
-          // + SERVICE FOR THE NEXT SHOP CUSTOMER
-          return new Event[] {
-              new DepartureEvent(this.customer, this.getTime()),
-              new ServiceBeginEvent(nextCustomerS, this.counter, this.shop, this.getTime()),
-          };
-        }
-      } else {
-        // NO CUSTOMER IN SHOP QUEUE
-        // BUT HAVE CUSTOMER IN COUNTER QUEUE
-        if (nextCustomerC != null) {
-          // RETURN DEPART CURRENT CUSTOMER
-          // + SERVICE FOR COUNTER CUSTOMER
-          return new Event[] {
-              new DepartureEvent(this.customer, this.getTime()),
-              new ServiceBeginEvent(nextCustomerC, this.counter, this.shop, this.getTime()),
-          };
-        } else {
-          // NO CUSTOMER TO SERVE ALR
-          // RETURN DEPART CURRENT CUSTOMER
-          return new Event[] {
-              new DepartureEvent(this.customer, this.getTime())
-          };
-        }
-      }
+    boolean counterCanQueue = this.counter.canQueue();
+
+    if (counterCanQueue && nextCustomerS != null && nextCustomerC != null) {
+      /*
+       * 1. Counter can be queued into
+       * 2. There is a customer in shop queue
+       * 3. Counter has a next customer to serve from its own queue
+       */
+      return new Event[] {
+          new DepartureEvent(this.customer, this.getTime()),
+          new ServiceBeginEvent(nextCustomerC, this.counter, this.shop, this.getTime()),
+          new CounterQueueEvent(nextCustomerS, this.getTime(), this.counter)
+      };
+    } else if (counterCanQueue && nextCustomerS != null && nextCustomerC == null) {
+      /*
+       * 1. Counter can be queued into
+       * 2. There is a customer in shop queue
+       * 3. But counter has NO customer to serve from its own queue
+       * --> serve the next customer in shop queue
+       */
+      return new Event[] {
+          new DepartureEvent(this.customer, this.getTime()),
+          new ServiceBeginEvent(nextCustomerS, this.counter, this.shop, this.getTime()),
+      };
+    } else if (counterCanQueue == false && nextCustomerC != null) {
+      /*
+       * 1. Counter cannot be queued into
+       * 3. Counter has customer to serve from its own queue
+       */
+      return new Event[] {
+          new DepartureEvent(this.customer, this.getTime()),
+          new ServiceBeginEvent(nextCustomerC, this.counter, this.shop, this.getTime()),
+      };
+    } else if (counterCanQueue == false && nextCustomerC == null && nextCustomerS != null) {
+      /*
+       * 1. Counter cannot be queued into
+       * 2. There is a customer in shop queue
+       * 3. Counter has NO customer to serve from its own queue
+       * Can occur if counter takes no queue
+       */
+      return new Event[] {
+          new DepartureEvent(this.customer, this.getTime()),
+          new ServiceBeginEvent(nextCustomerS, this.counter, this.shop, this.getTime()),
+      };
     } else {
-      // what to do if counter queue cannot be entered
-      // IF COUNTER GOT CUSTOMER
-      if (nextCustomerC != null) {
-        // RETURN DEPART CURRENT CUSTOMER
-        // + SERVICE FOR COUNTER CUSTOMER
-        return new Event[] {
-            new DepartureEvent(this.customer, this.getTime()),
-            new ServiceBeginEvent(nextCustomerC, this.counter, this.shop, this.getTime()),
-        };
-      } else {
-        // IF COUNTER NO CUSTOMER, BUT SHOP HAVE
-        if (nextCustomerS != null) {
-          // RETURN DEPART CURRENT CUSTOMER
-          // + SERVICE FOR COUNTER CUSTOMER
-          return new Event[] {
-              new DepartureEvent(this.customer, this.getTime()),
-              new ServiceBeginEvent(nextCustomerS, this.counter, this.shop, this.getTime()),
-          };
-        } else {
-          // RETURN DEPART CURRENT CUSTOMER
-          return new Event[] {
-              new DepartureEvent(this.customer, this.getTime()),
-          };
-        }
-      }
+      return new Event[] {
+          new DepartureEvent(this.customer, this.getTime())
+      };
     }
+    // Old code with messy logic -- keeping in case
+    // // IF CAN ADD CUSTOMER TO COUNTER QUEUE
+    // if (this.counter.canQueue()) {
+    // // AND THERE IS A CUSTOMER IN SHOP QUEUE
+    // if (nextCustomerS != null) {
+    // // AND COUNTER CAN SERVE A CUSTOMER FROM ITS OWN QUEUE
+    // if (nextCustomerC != null) {
+    // // RETURN DEPART THE CURRENT CUSTOMER
+    // // + SERVICE FOR NEXT COUNTER CUSTOMER
+    // // + ADD SHOP CUSTOMER TO COUNTER QUEUE
+    // return new Event[] {
+    // new DepartureEvent(this.customer, this.getTime()),
+    // new ServiceBeginEvent(nextCustomerC, this.counter, this.shop,
+    // this.getTime()),
+    // new CounterQueueEvent(nextCustomerS, this.getTime(), this.counter)
+    // };
+    // } else {
+    // // COUNTER DOESN'T HAVE CUSTOMER
+    // // RETURN DEPART THE CURRENT CUSTOMER
+    // // + SERVICE FOR THE NEXT SHOP CUSTOMER
+    // return new Event[] {
+    // new DepartureEvent(this.customer, this.getTime()),
+    // new ServiceBeginEvent(nextCustomerS, this.counter, this.shop,
+    // this.getTime()),
+    // };
+    // }
+    // } else {
+    // // NO CUSTOMER IN SHOP QUEUE
+    // // BUT HAVE CUSTOMER IN COUNTER QUEUE
+    // if (nextCustomerC != null) {
+    // // RETURN DEPART CURRENT CUSTOMER
+    // // + SERVICE FOR COUNTER CUSTOMER
+    // return new Event[] {
+    // new DepartureEvent(this.customer, this.getTime()),
+    // new ServiceBeginEvent(nextCustomerC, this.counter, this.shop,
+    // this.getTime()),
+    // };
+    // } else {
+    // // NO CUSTOMER TO SERVE ALR
+    // // RETURN DEPART CURRENT CUSTOMER
+    // return new Event[] {
+    // new DepartureEvent(this.customer, this.getTime())
+    // };
+    // }
+    // }
+    // } else {
+    // // what to do if counter queue cannot be entered
+    // // IF COUNTER GOT CUSTOMER
+    // if (nextCustomerC != null) {
+    // // RETURN DEPART CURRENT CUSTOMER
+    // // + SERVICE FOR COUNTER CUSTOMER
+    // return new Event[] {
+    // new DepartureEvent(this.customer, this.getTime()),
+    // new ServiceBeginEvent(nextCustomerC, this.counter, this.shop,
+    // this.getTime()),
+    // };
+    // } else {
+    // // IF COUNTER NO CUSTOMER, BUT SHOP HAVE
+    // if (nextCustomerS != null) {
+    // // RETURN DEPART CURRENT CUSTOMER
+    // // + SERVICE FOR COUNTER CUSTOMER
+    // return new Event[] {
+    // new DepartureEvent(this.customer, this.getTime()),
+    // new ServiceBeginEvent(nextCustomerS, this.counter, this.shop,
+    // this.getTime()),
+    // };
+    // } else {
+    // // RETURN DEPART CURRENT CUSTOMER
+    // return new Event[] {
+    // new DepartureEvent(this.customer, this.getTime()),
+    // };
+    // }
+    // }
+    // }
 
   }
 
