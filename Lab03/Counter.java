@@ -68,8 +68,6 @@ class Counter implements Comparable<Counter> {
     }
   }
 
-  }
-
   /**
    * Tell if current counter is available.
    * 
