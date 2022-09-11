@@ -59,7 +59,7 @@ class ArrivalEvent extends Event {
       // check if can queue
       if (counter.canQueue()) {
         return new Event[] {
-            new CounterQueueEvent(this.customer, this.shop, this.getTime(), counter)
+            new CounterQueueEvent(this.customer, this.getTime(), counter)
         };
       } else if (this.shop.canQueue()) {
         // else check if shop queue is available

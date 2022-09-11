@@ -1,12 +1,12 @@
 /**
- * This class extends QueueEvent class.
+ * This class extends Event class.
  * This class represents the event where the customer joins the
  * shop queue.
  *
  * @author Lewis Lye [14A]
  * @version CS2030S AY21/22 Semester 2
  */
-class ShopQueueEvent extends QueueEvent {
+class ShopQueueEvent extends Event{
 
   /**
    * Customer that is joining the queue.
@@ -29,7 +29,7 @@ class ShopQueueEvent extends QueueEvent {
    *          Time that customer is joining the queue.
    */
   public ShopQueueEvent(Customer customer, Shop shop, double queueTime) {
-    super(customer, shop, queueTime);
+    super(queueTime);
     this.customer = customer;
     this.shop = shop;
   }
@@ -48,7 +48,7 @@ class ShopQueueEvent extends QueueEvent {
 
   @Override
   public String toString() {
-    String str = String.format("%s joined shop queue %s", this.customer, this.shop);
+    String str = String.format(": %s joined shop queue %s", this.customer, this.shop);
     return super.toString() + str;
   }
 }

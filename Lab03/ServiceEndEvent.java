@@ -54,11 +54,13 @@ class ServiceEndEvent extends Event {
     // first check if any counter queue can be filled
     if (this.shop.hasQueue()) {
       Counter counter = shop.availableCounter();
+      System.out.println(counter);
       if (counter.canQueue()) {
         // queueEvent for counter from shopQueue?
       }
     }
     Customer customer = this.counter.nextCustomer();
+    System.out.println(customer);
     if (customer == null) {
       return new Event[] {
           new DepartureEvent(this.customer, this.getTime())

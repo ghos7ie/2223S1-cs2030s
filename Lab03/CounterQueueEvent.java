@@ -1,12 +1,12 @@
 /**
- * This class extends QueueEvent class.
+ * This class extends Event class.
  * This class represents the event where the customer joins the
  * counter queue.
  *
  * @author Lewis Lye [14A]
  * @version CS2030S AY21/22 Semester 2
  */
-class CounterQueueEvent extends QueueEvent {
+class CounterQueueEvent extends Event {
 
   /**
    * Customer that is joining the queue.
@@ -30,8 +30,8 @@ class CounterQueueEvent extends QueueEvent {
    * @param counter
    *          Counter that customer is queuing for
    */
-  public CounterQueueEvent(Customer customer, Shop shop, double queueTime, Counter counter) {
-    super(customer, shop, queueTime);
+  public CounterQueueEvent(Customer customer, double queueTime, Counter counter) {
+    super(queueTime);
     this.customer = customer;
     this.counter = counter;
   }
@@ -55,7 +55,7 @@ class CounterQueueEvent extends QueueEvent {
    */
   @Override
   public String toString() {
-    String str = String.format("%s joined counter queue %s", this.customer, this.counter);
+    String str = String.format(": %s joined counter queue %s", this.customer, this.counter);
     return super.toString() + str;
   }
 }
