@@ -46,7 +46,6 @@ class ArrivalEvent extends Event {
    */
   @Override
   public Event[] simulate() {
-    System.out.println(this.shop);
     Counter counter = this.shop.availableCounter();
     // check if counter is availble since above method returns a counter
     // that is either availble or has the shortest queue
