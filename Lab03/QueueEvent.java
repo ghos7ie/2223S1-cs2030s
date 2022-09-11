@@ -52,6 +52,7 @@ class QueueEvent extends Event {
    */
   @Override
   public String toString() {
-    return super.toString();
+    String str = ": ";
+    return super.toString() + str;
   }
 }
