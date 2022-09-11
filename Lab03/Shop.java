@@ -28,6 +28,9 @@ public class Shop {
    */
   public Shop(int numOfCounters, int counterQueueLength, int shopQueueLength) {
     this.counters = new Array<Counter>(numOfCounters);
+    for (int i = 0; i < numOfCounters; i++) {
+      this.counters.set(i, new Counter(counterQueueLength));
+    }
     this.queue = new Queue<Customer>(shopQueueLength);
   }
 
