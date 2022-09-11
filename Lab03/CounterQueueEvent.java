@@ -53,7 +53,7 @@ class CounterQueueEvent extends Event {
    */
   @Override
   public String toString() {
-    String str = String.format(": %s joined counter queue %s", this.customer, this.counter);
+    String str = String.format(": %s joined counter queue (at %s)", this.customer, this.counter);
     return super.toString() + str;
   }
 }

@@ -6,7 +6,7 @@
  * @author Lewis Lye [14A]
  * @version CS2030S AY21/22 Semester 2
  */
-class ShopQueueEvent extends Event{
+class ShopQueueEvent extends Event {
 
   /**
    * Customer that is joining the queue.
