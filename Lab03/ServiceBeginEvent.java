@@ -48,6 +48,7 @@ class ServiceBeginEvent extends Event {
    */
   @Override
   public Event[] simulate() {
+    this.counter.makeUnavailable();
     double endTime = this.getTime() + this.customer.getServiceTime();
     return new Event[] {
         new ServiceEndEvent(this.customer, this.counter, this.shop, endTime)
