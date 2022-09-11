@@ -54,7 +54,7 @@ class ServiceEndEvent extends Event {
     // first check if any counter queue can be filled
     if (this.shop.hasQueue()) {
       Counter counter = shop.availableCounter();
-      if(counter.canQueue()){
+      if (counter.canQueue()) {
         // queueEvent for counter from shopQueue?
       }
     }

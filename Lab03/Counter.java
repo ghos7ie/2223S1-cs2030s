@@ -98,29 +98,29 @@ class Counter implements Comparable<Counter> {
   }
 
   /**
-   * Returns the queue length for the counter
+   * Returns the queue length for the counter.
    * 
-   * @return
+   * @return returns max length of queue.
    */
   public int getQueueLength() {
     return this.queue.length();
   }
 
   /**
-   * Checks if counter can be queued for
+   * Checks if counter can be queued for.
    * 
-   * @return true if queue is not full
-   *         false if full
+   * @return true if queue is not full.
+   *         false if full.
    */
   public boolean canQueue() {
     return !this.queue.isFull();
   }
 
   /**
-   * Adds customer to counter queue
+   * Adds customer to counter queue.
    * 
    * @param customer
-   *          customer that is joining shop queue
+   *          customer that is joining shop queue.
    */
   public void joinQueue(Customer customer) {
     this.queue.enq((customer));

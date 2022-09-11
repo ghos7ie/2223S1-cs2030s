@@ -24,9 +24,9 @@ class ArrivalEvent extends Event {
    * @param customer
    *          Customer that arrived.
    * @param shop
-   *          Shop that customer is in
+   *          Shop that customer is in.
    * @param arrivalTime
-   *          Time at which customer arrives
+   *          Time at which customer arrives.
    */
   public ArrivalEvent(Customer customer, Shop shop, double arrivalTime) {
     super(arrivalTime);
@@ -58,14 +58,11 @@ class ArrivalEvent extends Event {
       // if counter isn't available
       // check if can queue
       if (counter.canQueue()) {
-        // TODO: return new queue event?
         return new Event[] {
             new CounterQueueEvent(this.customer, this.shop, this.getTime(), counter)
         };
-      }
-      // else check if shop queue is available
-      else if (this.shop.canQueue()) {
-        // TODO: return new queue event
+      } else if (this.shop.canQueue()) {
+        // else check if shop queue is available
         return new Event[] {
             new ShopQueueEvent(this.customer, this.shop, this.getTime())
         };

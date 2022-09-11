@@ -32,39 +32,39 @@ public class Shop {
   }
 
   /**
-   * Find the first available counter
+   * Find the first available counter.
    * 
-   * @return either an available counter or counter with the shortest queue
+   * @return either an available counter or counter with the shortest queue.
    */
   public Counter availableCounter() {
     return this.counters.min();
   }
 
   /**
-   * Checks if shop's queue is not full
+   * Checks if shop's queue is not full.
    * 
-   * @return true if queue is not full
-   *         false if queue is full
+   * @return true if queue is not full.
+   *         false if queue is full.
    */
   public boolean canQueue() {
     return !this.queue.isFull();
   }
 
   /**
-   * Checks if shop has a queue
+   * Checks if shop has a queue.
    * 
-   * @return true if queue is not empty
-   *         false if queue is empty
+   * @return true if queue is not empty.
+   *         false if queue is empty.
    */
   public boolean hasQueue() {
     return !this.queue.isEmpty();
   }
 
   /**
-   * Adds customer to shop queue
+   * Adds customer to shop queue.
    * 
    * @param customer
-   *          customer that is joining shop queue
+   *          customer that is joining shop queue.
    */
   public void joinQueue(Customer customer) {
     this.queue.enq((customer));

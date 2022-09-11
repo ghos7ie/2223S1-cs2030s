@@ -1,5 +1,5 @@
 /**
- * The Array<T> for CS2030S.
+ * The generic Array for CS2030S.
  *
  * @author Lewis Lye [14A]
  * @version CS2030S AY21/22 Semester 2
@@ -10,7 +10,7 @@
  */
 class Array<T extends Comparable<T>> {
   /**
-   * Array of T type
+   * Array of T type.
    */
   private T[] array;
 
