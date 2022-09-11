@@ -57,6 +57,7 @@ class Array<T extends Comparable<T>> {
   public T min() {
     // Compare all items in array
     T minItem = this.array[0];
+    System.out.println(minItem);
     for (int i = 1; i < this.array.length; i++) {
       // IF compareTo returns -1, means array[i] is smaller
       // than current minItem

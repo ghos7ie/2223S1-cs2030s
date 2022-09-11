@@ -109,15 +109,6 @@ class Counter implements Comparable<Counter> {
   }
 
   /**
-   * Returns the queue length for the counter.
-   * 
-   * @return returns max length of queue.
-   */
-  private int getQueueLength() {
-    return this.queue.length();
-  }
-
-  /**
    * Checks if counter can be queued for.
    * 
    * @return true if queue is not full.
