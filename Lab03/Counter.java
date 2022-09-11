@@ -50,10 +50,10 @@ class Counter implements Comparable<Counter> {
    */
   @Override
   public int compareTo(Counter c) {
-    if (this.available) {
-      return -1;
-    } else if (c.available) {
+    if (c.available) {
       return 1;
+    } else if (this.available) {
+      return -1;
     } else {
       // since both unavailable
       // compare their queue lengths
