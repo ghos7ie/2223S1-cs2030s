@@ -79,8 +79,16 @@ class Probably<T> implements Actionable<T>{
     return false;
   }
  
-  public void action(Object obj){
-   if (
+  /**
+   * Implementation of Actionable<T>. Carries out
+   * the action provided.
+   * 
+   * @params action Action to be carried out.
+   */
+  public void act(Action<T> action){
+   if(this.value != null){
+     action.act(this);
+   }
   }
 
   /**
