@@ -7,5 +7,11 @@
  * CS2030S Lab 4
  * AY22/23 Semester 1
  *
- * @author Put Your Name (Lab Group)
+ * @author Lewis Lye [14A]
  */
+
+
+interface Action<T>{
+  abstract void call (T item){}
+}
+

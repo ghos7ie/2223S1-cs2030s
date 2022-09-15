@@ -5,10 +5,10 @@
  * we may return something that contains nothing
  * where the nothing is a null.
  *
- * @author XXX
+ * @author Lewis Lye [14A]
  * @version CS2030S AY22/23 Semester 1
  */
-class Probably<T> {
+class Probably<T> implements Actionable<T>{
   private final T value;
 
   private static final Probably<?> NONE = new Probably<>(null);
@@ -78,7 +78,11 @@ class Probably<T> {
     }
     return false;
   }
-  
+ 
+  public void action(Object obj){
+   if (
+  }
+
   /**
    * String representation of something that
    * is probably a value but maybe nothing.
