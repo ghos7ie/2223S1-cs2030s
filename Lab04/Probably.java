@@ -8,7 +8,7 @@
  * @author XXX
  * @version CS2030S AY22/23 Semester 1
  */
-class Probably<T> implements Actionable<T>, Immutatorable<T> {
+class Probably<T> implements Actionable<T>, Immutatorable<Object> {
   private final T value;
 
   private static final Probably<?> NONE = new Probably<>(null);
@@ -107,22 +107,13 @@ class Probably<T> implements Actionable<T>, Immutatorable<T> {
     }
   }
 
-  /**
-   * Transforms T item to R item.
-   * 
-   * @param <R>       Explicit type parameter. Telling compiler that the type of
-   *                  return
-   *                  will be R.
-   * @param immutator Item of type T that will be changed to Immutatorable<R>.
-   * 
-   * @return Item of type Immutatorable<R>.
-   */
   @Override
-  public <R> Probably<? extends R> transform(Immutator<? extends R, ? super T> immutator) {
+  public <R> Immutatorable<? extends R> transform(Immutator<? extends R, ? super Object> immutator) {
     if (this.value != null){
-      @SuppressWarnings("unchecked")
-      return (Probably<? extends R>) immutator.invoke(this.value);
+      return (Immutatorable<? extends R>) immutator.invoke(this.value);
     }
-    return NONE;
+    return (Immutatorable<? extends R>) NONE;
   }
+
+
 }
