@@ -8,14 +8,14 @@
  * @author Lewis Lye [14A]
  * @version CS2030S AY22/23 Semester 1
  */
-class Probably<T> implements Actionable<T>{
+class Probably<T> implements Actionable<T> {
   private final T value;
 
   private static final Probably<?> NONE = new Probably<>(null);
-  
+
   /**
    * Private constructor, can only be invoked inside.
-   * This is called a factory method.  We can only
+   * This is called a factory method. We can only
    * create this using the two public static method.
    *
    * @return The shared NOTHING.
@@ -23,7 +23,7 @@ class Probably<T> implements Actionable<T>{
   private Probably(T value) {
     this.value = value;
   }
-  
+
   /**
    * It is probably nothing, no value inside.
    *
@@ -34,7 +34,7 @@ class Probably<T> implements Actionable<T>{
     Probably<T> res = (Probably<T>) NONE;
     return res;
   }
-  
+
   /**
    * It is probably just the given value.
    * Unless the value is null, then nothing is
@@ -42,7 +42,7 @@ class Probably<T> implements Actionable<T>{
    *
    * @param value Probably this is the value
    *              unless it is null then we say
-   *              that there is no 
+   *              that there is no
    * @return The given value or nothing but
    *         never null.
    */
@@ -52,7 +52,7 @@ class Probably<T> implements Actionable<T>{
     }
     return (Probably<T>) new Probably<>(value);
   }
-  
+
   /**
    * Check for equality between something that
    * is probably a value but maybe nothing.
@@ -78,17 +78,18 @@ class Probably<T> implements Actionable<T>{
     }
     return false;
   }
- 
+
   /**
    * Implementation of Actionable<T>. Carries out
    * the action provided.
    * 
    * @params action Action to be carried out.
    */
-  public void act(Action<T> action){
-   if(this.value != null){
-     action.act(this);
-   }
+  @Override
+  public void act(Action<? extends T> action) {
+    if (this.value != null) {
+      action.act(this);
+    }
   }
 
   /**

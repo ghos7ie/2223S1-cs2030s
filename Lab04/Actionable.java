@@ -10,6 +10,6 @@
  * @author Lewis Lye [14A]
  */
 
-interface Actionable<T>{
- void act (Action<? extends T> action);
+interface Actionable<T> {
+  void act(Action<? extends T> action);
 }
