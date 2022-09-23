@@ -103,7 +103,7 @@ class Probably<T> implements Actionable<T> {
   @Override
   public void act(Action<? super T> action) {
     if (this.value != NONE) {
-      action.act(this);
+      action.call(this.value);
     }
   }
 }

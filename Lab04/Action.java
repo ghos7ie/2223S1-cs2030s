@@ -16,5 +16,5 @@ interface Action<T> {
    * 
    * @param item Item to perform Action on.
    */
-  abstract void call(T item);
+  void call(T item);
 }

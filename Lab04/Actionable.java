@@ -11,5 +11,11 @@
  */
 
 interface Actionable<T> {
+  /**
+   * Abstract method of act.
+   * Super since action is being consumed
+   * 
+   * @param action Action to be performed.
+   */
   void act(Action<? super T> action);
 }
