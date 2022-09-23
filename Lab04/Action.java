@@ -10,8 +10,10 @@
  * @author Lewis Lye [14A]
  */
 
-
-interface Action<T>{
- void call (T item);
+interface Action<T> {
+  /**
+   * 
+   * @param item
+   */
+  abstract void call(T item);
 }
-
