@@ -32,9 +32,9 @@ class Test3 {
     we.expect("new Improbable<String>().invoke(null)",
               new Improbable<String>().invoke(null).toString(),
               "<>");
-    we.expect("new Improbable<Integer>().invoke(1).transform(new Incr())",
-              new Improbable<Integer>().invoke(1).transform(new Incr()).toString(),
-              "<2>");
+    // we.expect("new Improbable<Integer>().invoke(1).transform(new Incr())",
+    //           new Improbable<Integer>().invoke(1).transform(new Incr()).toString(),
+    //           "<2>");
     we.expect("new Improbable<>().invoke(new Improbable<>().invoke(1))",
               new Improbable<>().invoke(new Improbable<Integer>().invoke(1)).toString(),
               "<<1>>");
