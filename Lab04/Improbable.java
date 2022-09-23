@@ -9,7 +9,12 @@
  */
 
 class Improbable<T> implements Immutator<Probably<T>, T> {
-
+  /**
+   * Changes param of type T to Proabably<T>.
+   * 
+   * @param param to change to Probably<T>.
+   * @return param from type T to Probably<T>.
+   */
   @Override
   public Probably<T> invoke(T param) {
     return Probably.just(param);
