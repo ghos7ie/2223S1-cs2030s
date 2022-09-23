@@ -11,5 +11,5 @@
  */
 
 interface Actionable<T> {
-  void act(Action<? extends T> action);
+  void act(Action<? super T> action);
 }

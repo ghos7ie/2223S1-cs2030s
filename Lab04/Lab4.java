@@ -6,7 +6,7 @@ import java.io.ByteArrayOutputStream;
  * The main class for CS2030S Lab 4.
  *
  * @author Wei Tsang
-   * @version CS2030S AY21/22 Semester 2
+ * @version CS2030S AY21/22 Semester 2
  */
 class Lab4 {
     

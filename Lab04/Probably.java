@@ -5,7 +5,7 @@
  * we may return something that contains nothing
  * where the nothing is a null.
  *
- * @author Lewis Lye [14A]
+ * @author XXX
  * @version CS2030S AY22/23 Semester 1
  */
 class Probably<T> implements Actionable<T> {
@@ -80,19 +80,6 @@ class Probably<T> implements Actionable<T> {
   }
 
   /**
-   * Implementation of Actionable<T>. Carries out
-   * the action provided.
-   * 
-   * @params action Action to be carried out.
-   */
-  @Override
-  public void act(Action<? extends T> action) {
-    if (this.value != null) {
-      action.act(this);
-    }
-  }
-
-  /**
    * String representation of something that
    * is probably a value but maybe nothing.
    *
@@ -104,6 +91,19 @@ class Probably<T> implements Actionable<T> {
       return "<>";
     } else {
       return "<" + this.value.toString() + ">";
+    }
+  }
+
+  /**
+   * Implementation of Actionable<T>. Carries out
+   * the action provided.
+   * 
+   * @params action Action to be carried out.
+   */
+  @Override
+  public void act(Action<? super T> action) {
+    if (this.value != NONE) {
+      action.act(this);
     }
   }
 }
