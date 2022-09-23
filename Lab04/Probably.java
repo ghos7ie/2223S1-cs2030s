@@ -8,7 +8,7 @@
  * @author XXX
  * @version CS2030S AY22/23 Semester 1
  */
-class Probably<T> implements Actionable<T>, Immutatorable<Object> {
+class Probably<T> implements Actionable<T>, Immutatorable<Probably<T>> {
   private final T value;
 
   private static final Probably<?> NONE = new Probably<>(null);
@@ -108,12 +108,11 @@ class Probably<T> implements Actionable<T>, Immutatorable<Object> {
   }
 
   @Override
-  public <R> Immutatorable<? extends R> transform(Immutator<? extends R, ? super Object> immutator) {
-    if (this.value != null){
-      return (Immutatorable<? extends R>) immutator.invoke(this.value);
+  public <R> Immutatorable<? extends R> transform(Immutator<? extends R, ? super Probably<T>> immutator) {
+    if (this.value != null) {
+      return immutator.invoke(this.value);
     }
-    return (Immutatorable<? extends R>) NONE;
+    return NONE;
   }
-
 
 }
