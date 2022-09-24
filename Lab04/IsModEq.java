@@ -11,7 +11,7 @@
  * @author Lewis Lye [14A]
  */
 
-class isModEq implements Immutator<Boolean, Integer> {
+class IsModEq implements Immutator<Boolean, Integer> {
 
   private Integer div;
   private Integer check;
@@ -22,7 +22,7 @@ class isModEq implements Immutator<Boolean, Integer> {
    * @param div   Integer to be divided by.
    * @param check Integer to be checked against.
    */
-  public isModEq(Integer div, Integer check) {
+  public IsModEq(Integer div, Integer check) {
     this.div = div;
     this.check = check;
   }
