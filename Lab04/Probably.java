@@ -108,12 +108,11 @@ class Probably<T> implements Actionable<T>, Immutatorable<T> {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator) {
-    @SuppressWarnings("unchecked")
     if (this.value != null) {
-      return new Probably(immutator.invoke(this.value));
+      return (Probably<R>) new Probably<>(immutator.invoke(this.value));
     }
-    return Improbable.invoke(this.value);
+    return none();
   }
-
 }
