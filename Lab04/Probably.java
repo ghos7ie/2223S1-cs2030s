@@ -18,6 +18,7 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
    * This is called a factory method. We can only
    * create this using the two public static method.
    *
+   * @param value value of type T.
    * @return The shared NOTHING.
    */
   private Probably(T value) {
@@ -26,8 +27,9 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
 
   /**
    * It is probably nothing, no value inside.
-   *
-   * @return The shared NOTHING.
+   * 
+   * @param <T> Explicit type parameter.
+   * @returnThe shared NOTHING.
    */
   public static <T> Probably<T> none() {
     @SuppressWarnings("unchecked")
@@ -40,6 +42,18 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
    * Unless the value is null, then nothing is
    * given again.
    *
+   * @param value Probably this is the value
+   *              unless it is null then we say
+   *              that there is no
+   * @return The given value or nothing but
+   *         never null.
+   */
+  /**
+   * It is probably just the given value.
+   * Unless the value is null, then nothing is
+   * given again.
+   *
+   * @param <T>   Explicit type parameter.
    * @param value Probably this is the value
    *              unless it is null then we say
    *              that there is no
@@ -95,7 +109,7 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
   }
 
   /**
-   * Implementation of Actionable<T>. Carries out
+   * Implementation of Actionable\<T\>. Carries out
    * the action provided.
    * 
    * @params action Action to be carried out.
@@ -108,13 +122,13 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
   }
 
   /**
-   * Transforms T item to Probably<R> item.
+   * Transforms T item to Probably\<R\> item.
    * 
    * @param <R>       Explicit type parameter. Telling compiler that the type of
    *                  return will be R.
    * @param immutator Item of type T that will be changed to Immutatorable<R>.
    * 
-   * @return Item of type Probably<R>, which is a subtype of Immutorable<R>.
+   * @return Item of type Probably\<R\>, which is a subtype of Immutorable<R>.
    */
   @Override
   public <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator) {
@@ -145,18 +159,20 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
   }
 
   /**
+   * Takes in Probably<Immutator> and mutates value inside
+   * Probably<Immutator>. idk why this works.
    * 
-   * @param <R>       Explicit type parameter. Telling compiler that the type of
-   *                  return will be R.
-   * @param immutator
+   * @param <R>      Explicit type parameter. Telling compiler that the type of
+   *                 return will be R.
+   * @param probably Probably<Immutator> to be mutated.
    * @return Probably<R> if immutator is this.value is not null and is an
    *         immutator.
    *         Else none();
    */
   @Override
-  public <R> Probably<R> apply(Probably<Immutator<R,T>> immutator) {
-    if (this.value != null && immutator.value != null) {
-      return new Probably<R>((immutator.value.invoke(this.value)));
+  public <R> Probably<R> apply(Probably<Immutator<R, T>> probably) {
+    if (this.value != null && probably.value != null) {
+      return new Probably<R>((probably.value.invoke(this.value)));
     } else {
       return none();
     }
