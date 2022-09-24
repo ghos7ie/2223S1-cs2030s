@@ -8,5 +8,10 @@
  * CS2030S Lab 4
  * AY22/23 Semester 1
  *
- * @author Put Your Name (Lab Group)
+ * @author Lewis Lye [14A]
+ * @version CS2030S AY22/23 Semester 1
  */
+
+interface Applicable<T> {
+  abstract <R> Probably<R> apply(Immutator<R, T> immutator);
+}

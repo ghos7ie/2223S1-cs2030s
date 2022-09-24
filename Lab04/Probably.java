@@ -8,7 +8,7 @@
  * @author Lewis Lye [14A]
  * @version CS2030S AY22/23 Semester 1
  */
-class Probably<T> implements Actionable<T>, Immutatorable<T> {
+class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
   private final T value;
 
   private static final Probably<?> NONE = new Probably<>(null);
@@ -124,6 +124,13 @@ class Probably<T> implements Actionable<T>, Immutatorable<T> {
     return none();
   }
 
+  /**
+   * Checks if value of Probably<Integer> is divisible by IsModEq val.
+   * 
+   * @param val of Type IsModEq with the values to be checked against.
+   * @return this if IsModEq returns true.
+   *         else returns none().
+   */
   @Override
   public Probably<T> check(IsModEq val) {
     if (this.value != null && this.value instanceof Integer) {
@@ -135,6 +142,24 @@ class Probably<T> implements Actionable<T>, Immutatorable<T> {
       }
     }
     return none();
+  }
+
+  /**
+   * 
+   * @param <R>       Explicit type parameter. Telling compiler that the type of
+   *                  return will be R.
+   * @param immutator
+   * @return Probably<R> if immutator is this.value is not null and is an
+   *         immutator.
+   *         Else none();
+   */
+  @Override
+  public <R> Probably<R> apply(Immutator<R, T> immutator) {
+    if (this.value != null && this.value instanceof Immutator) {
+      return new Probably<R>(immutator.invoke(this.value));
+    } else {
+      return none();
+    }
   }
 
 }
