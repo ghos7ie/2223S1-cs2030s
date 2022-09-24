@@ -2,9 +2,9 @@ import java.net.URI;
 import java.util.List;
 import javax.tools.DiagnosticCollector;
 import javax.tools.SimpleJavaFileObject;
-import javax.tools.ToolProvider;
 import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
+import javax.tools.ToolProvider;
 
 class CS2030STest {
 

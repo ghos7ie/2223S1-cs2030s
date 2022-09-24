@@ -116,7 +116,7 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
    * 
    * @param <R>       Explicit type parameter. Telling compiler that the type of
    *                  return will be R.
-   * @param immutator Item of type T that will be changed to Immutatorable<R>.
+   * @param immutator Item of type T that will be changed to {@code Immutatorable<R>}.
    * 
    * @return Item of type {@code Probably<R>}, which is a subtype of
    *         {@code Immutatorable<R>}.

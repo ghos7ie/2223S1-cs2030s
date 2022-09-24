@@ -1,5 +1,5 @@
-import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
@@ -69,6 +69,8 @@ class Lab4 {
         break;
       case 6:
         test6();
+        break;
+      default:
         break;
     }
 
@@ -219,7 +221,8 @@ class Lab4 {
       System.out.println(
           Probably.just(16).transform(new Incr()).check(new IsModEq(3, 2)).toString());
       System.out.println(
-          Probably.just("string").transform(new Length()).transform(new Incr()).transform(new Incr())
+          Probably.just("string").transform(new Length())
+              .transform(new Incr()).transform(new Incr())
               .check(new IsModEq(3, 2)).toString());
       System.out.println(
           Probably.<Integer>just(null).check(new IsModEq(0, 2)).toString());
