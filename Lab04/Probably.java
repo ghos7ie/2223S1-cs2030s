@@ -117,12 +117,9 @@ class Probably<T> implements Actionable<T>, Immutatorable<T> {
    * @return Item of type Probably<R>, which is a subtype of Immutorable<R>.
    */
   @Override
-  // Suppressing unchecked warning here is fine since we know for a fact that the
-  // return value will be of type Probably<R>.
-  @SuppressWarnings("unchecked")
   public <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator) {
     if (this.value != null) {
-      return (Probably<R>) new Probably<>(immutator.invoke(this.value));
+      return new Probably<R>(immutator.invoke(this.value));
     }
     return none();
   }
