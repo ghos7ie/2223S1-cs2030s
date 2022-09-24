@@ -16,11 +16,10 @@ interface Immutatorable<T> {
    * Transforms T item to R item.
    * 
    * @param <R>       Explicit type parameter. Telling compiler that the type of
-   *                  return
-   *                  will be R.
+   *                  return will be R.
    * @param immutator Item of type T that will be changed to Immutatorable<R>.
    * 
    * @return Item of type Immutatorable<R>.
    */
-  <R> Immutatorable<? extends R> transform(Immutator<? extends R, ? super T> immutator);
+  <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator);
 }
