@@ -17,7 +17,7 @@ class IsModEq implements Immutator<Boolean, Integer> {
   private Integer check;
 
   /**
-   * Constructor for isModEq.
+   * Constructor for IsModEq.
    * 
    * @param div   Integer to be divided by.
    * @param check Integer to be checked against.
@@ -36,7 +36,11 @@ class IsModEq implements Immutator<Boolean, Integer> {
    */
   @Override
   public Boolean invoke(Integer val) {
-    return val % div == check;
+    try {
+      return val % div == check;
+    } catch (ArithmeticException e) {
+      System.out.println("Cannot divide by zero.");
+    }
+    return Boolean.parseBoolean(null);
   }
-
 }

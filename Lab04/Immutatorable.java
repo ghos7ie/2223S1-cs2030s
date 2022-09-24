@@ -22,4 +22,13 @@ interface Immutatorable<T> {
    * @return Item of type Immutatorable<R>.
    */
   <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator);
+
+  /**
+   * Check if val % div is equal to check.
+   * 
+   * @param val Value that is to be mod by div.
+   * @return True if remainder == check.
+   *         Else return false.
+   */
+  Immutatorable<T> check(IsModEq val);
 }
