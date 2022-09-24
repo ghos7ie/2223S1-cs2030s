@@ -8,5 +8,35 @@
  * CS2030S Lab 4
  * AY22/23 Semester 1
  *
- * @author Put Your Name (Lab Group)
+ * @author Lewis Lye [14A]
  */
+
+class isModEq implements Immutator<Boolean, Integer> {
+
+  private Integer div;
+  private Integer check;
+
+  /**
+   * Constructor for isModEq.
+   * 
+   * @param div   Integer to be divided by.
+   * @param check Integer to be checked against.
+   */
+  public isModEq(Integer div, Integer check) {
+    this.div = div;
+    this.check = check;
+  }
+
+  /**
+   * Check if val % div is equal to check.
+   * 
+   * @param val Value that is to be mod by div.
+   * @return True if remainder == check.
+   *         Else return false.
+   */
+  @Override
+  public Boolean invoke(Integer val) {
+    return val % div == check;
+  }
+
+}

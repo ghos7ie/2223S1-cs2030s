@@ -107,7 +107,18 @@ class Probably<T> implements Actionable<T>, Immutatorable<T> {
     }
   }
 
+  /**
+   * Transforms T item to Probably<R> item.
+   * 
+   * @param <R>       Explicit type parameter. Telling compiler that the type of
+   *                  return will be R.
+   * @param immutator Item of type T that will be changed to Immutatorable<R>.
+   * 
+   * @return Item of type Probably<R>, which is a subtype of Immutorable<R>.
+   */
   @Override
+  // Suppressing unchecked warning here is fine since we know for a fact that the
+  // return value will be of type Probably<R>.
   @SuppressWarnings("unchecked")
   public <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator) {
     if (this.value != null) {
@@ -115,4 +126,17 @@ class Probably<T> implements Actionable<T>, Immutatorable<T> {
     }
     return none();
   }
+
+  public Probably<T> check(isModEq val) {
+    if (this.value != null && this.value instanceof Integer) {
+      Boolean check = val.invoke((Integer) this.value);
+      if (check) {
+        return this;
+      } else {
+        return none();
+      }
+    }
+    return none();
+  }
+
 }
