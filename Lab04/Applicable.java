@@ -13,5 +13,5 @@
  */
 
 interface Applicable<T> {
-  abstract <R> Probably<R> apply(Immutator<R, T> immutator);
+  abstract <R> Probably<R> apply(Immutator<? extends R, ? super T> immutator);
 }
