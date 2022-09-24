@@ -191,11 +191,13 @@ class Lab4 {
       System.out.println(Probably.just(4).transform(new Incr()).toString());
       System.out.println(Probably.just(4).transform(new Incr()).transform(new Incr()).toString());
       System.out.println(Probably.just("string").transform(new Length()).toString());
-      System.out.println(Probably.just("string").transform(new Length()).transform(new Incr()).toString());
+      System.out.println(
+          Probably.just("string").transform(new Length()).transform(new Incr()).toString());
 
       System.out.println(Probably.<Integer>none().transform(new Incr()).toString());
       System.out.println(Probably.<String>none().transform(new Length()).toString());
-      System.out.println(Probably.<String>just(null).transform(new Length()).transform(new Incr()).toString());
+      System.out.println(
+          Probably.<String>just(null).transform(new Length()).transform(new Incr()).toString());
     } catch (Exception e) {
       System.out.println("Error occurred");
     }
@@ -214,10 +216,13 @@ class Lab4 {
       System.out.println(Probably.just(17).check(new IsModEq(3, 2)).toString());
       System.out.println(Probably.just(18).check(new IsModEq(3, 2)).toString());
 
-      System.out.println(Probably.just(16).transform(new Incr()).check(new IsModEq(3, 2)).toString());
-      System.out.println(Probably.just("string").transform(new Length()).transform(new Incr()).transform(new Incr())
-          .check(new IsModEq(3, 2)).toString());
-      System.out.println(Probably.<Integer>just(null).check(new IsModEq(0, 2)).toString());
+      System.out.println(
+          Probably.just(16).transform(new Incr()).check(new IsModEq(3, 2)).toString());
+      System.out.println(
+          Probably.just("string").transform(new Length()).transform(new Incr()).transform(new Incr())
+              .check(new IsModEq(3, 2)).toString());
+      System.out.println(
+          Probably.<Integer>just(null).check(new IsModEq(0, 2)).toString());
     } catch (Exception e) {
       System.out.println("Error occurred");
     }

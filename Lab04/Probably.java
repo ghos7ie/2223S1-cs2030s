@@ -43,17 +43,6 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
    * Unless the value is null, then nothing is
    * given again.
    *
-   * @param value Probably this is the value
-   *              unless it is null then we say
-   *              that there is no
-   * @return The given value or nothing but
-   *         never null.
-   */
-  /**
-   * It is probably just the given value.
-   * Unless the value is null, then nothing is
-   * given again.
-   *
    * @param <T>   Explicit type parameter.
    * @param value Probably this is the value
    *              unless it is null then we say

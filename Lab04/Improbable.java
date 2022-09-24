@@ -10,10 +10,10 @@
 
 class Improbable<T> implements Immutator<Probably<T>, T> {
   /**
-   * Changes param of type T to Probably\<T\>.
+   * Changes param of type T to {@code Probably<T>}.
    * 
-   * @param param to change to Probably<T>.
-   * @return param from type T to Probably<T>.
+   * @param param to change to {@code Probably<T>}.
+   * @return param from type T to {@code Probably<T>}.
    */
   @Override
   public Probably<T> invoke(T param) {
