@@ -5,8 +5,10 @@
  * we may return something that contains nothing
  * where the nothing is a null.
  *
+ * @version CS2030S Lab 4
+ *          AY22/23 Semester 1
+ *
  * @author Lewis Lye [14A]
- * @version CS2030S AY22/23 Semester 1
  */
 class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
   private final T value;

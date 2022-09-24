@@ -5,11 +5,11 @@
  * <p>
  * Contains a single abstract method apply.
  * </p>
- * CS2030S Lab 4
- * AY22/23 Semester 1
+ *
+ * @version CS2030S Lab 4
+ *          AY22/23 Semester 1
  *
  * @author Lewis Lye [14A]
- * @version CS2030S AY22/23 Semester 1
  */
 
 interface Applicable<T> {

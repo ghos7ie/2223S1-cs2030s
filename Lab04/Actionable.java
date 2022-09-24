@@ -4,8 +4,9 @@
  * <p>
  * Contains a single abstract method act.
  * </p>
- * CS2030S Lab 4
- * AY22/23 Semester 1
+ *
+ * @version CS2030S Lab 4
+ *          AY22/23 Semester 1
  *
  * @author Lewis Lye [14A]
  */
