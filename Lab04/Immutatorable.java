@@ -32,5 +32,5 @@ interface Immutatorable<T> {
    * @return True if remainder == check.
    *         Else return false.
    */
-  Immutatorable<T> check(IsModEq val);
+  abstract Immutatorable<T> check(IsModEq val);
 }

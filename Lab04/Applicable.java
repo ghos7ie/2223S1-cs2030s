@@ -13,5 +13,11 @@
  */
 
 interface Applicable<T> {
-  <R> Probably<R> apply(Probably<? extends Immutator<? extends R, ? super T>> immutator);
+  /**
+   * 
+   * @param <R>
+   * @param immutator
+   * @return
+   */
+  <R> Probably<R> apply(Probably<? extends Immutator<? extends R, ? super T>> probably);
 }
