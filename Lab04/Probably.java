@@ -125,7 +125,8 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
   @Override
   public <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator) {
     if (this.value != null) {
-      return new Probably<R>(immutator.invoke(this.value));
+      Probably<R> returnProbably = Probably.just(immutator.invoke(this.value));
+      return returnProbably;
     }
     return none();
   }
@@ -137,7 +138,6 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
    * @return this if IsModEq returns true.
    *         else returns none().
    */
-  @Override
   public Probably<T> check(IsModEq val) {
     if (this.value != null && this.value instanceof Integer) {
       Boolean check = val.invoke((Integer) this.value);
@@ -161,10 +161,10 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
    *         immutator.
    *         Else none();
    */
-  @Override
-  public <R> Probably<R> apply(Probably<? extends Immutator<R, T>> probably) {
+  public <R> Probably<R> apply(Probably<? extends Immutator<? extends R, ? super T>> probably) {
     if (this.value != null && probably.value != null) {
-      return new Probably<R>((probably.value.invoke(this.value)));
+      Probably<R> returnProbably = Probably.just(probably.value.invoke(this.value));
+      return returnProbably;
     } else {
       return none();
     }
