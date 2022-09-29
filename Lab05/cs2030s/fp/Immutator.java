@@ -1,3 +1,5 @@
+package cs2030s.fp;
+
 /**
  * The Immutator interface that can transform
  * to type T2, an object of type T1.

@@ -1,3 +1,5 @@
+package cs2030s.fp;
+
 /**
  * The Immutatorable interface that can
  * transform when given something that is

@@ -1,3 +1,5 @@
+package cs2030s.fp;
+
 /**
  * The Actionable interface that can
  * act when given an action.
