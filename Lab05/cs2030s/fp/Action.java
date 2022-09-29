@@ -13,7 +13,7 @@ package cs2030s.fp;
  * @author Lewis Lye [14A]
  */
 
-interface Action<T> {
+public interface Action<T> {
   /**
    * Abstract call method.
    * 

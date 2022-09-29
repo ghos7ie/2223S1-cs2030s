@@ -13,7 +13,7 @@ package cs2030s.fp;
  * @author Lewis Lye [14A]
  */
 
-interface Immutator<R, P> {
+public interface Immutator<R, P> {
   /**
    * Changes param of type P to R.
    * 

@@ -14,7 +14,7 @@ package cs2030s.fp;
  * @author Lewis Lye [14A]
  */
 
-interface Immutatorable<T> {
+public interface Immutatorable<T> {
   /**
    * Transforms T item to R item.
    * 

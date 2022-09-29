@@ -13,7 +13,7 @@ package cs2030s.fp;
  * @author Lewis Lye [14A]
  */
 
-interface Actionable<T> {
+public interface Actionable<T> {
   /**
    * Abstract method of act.
    * Super since action is being consumed
