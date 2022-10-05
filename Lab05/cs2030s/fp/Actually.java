@@ -6,16 +6,33 @@ package cs2030s.fp;
  * @author Lewis Lye [14A]
  */
 
-public abstract class Actually<T<{
+public abstract class Actually<T>{
+
+  private final T value;
+
+  public Actually<T> (T value){
+    this.value = value;
+  }
+
+  public static <T> Success<T> ok (T res){
+    return new Success<> (res);
+  }
+
+  public static <T> Failure err(Exception exception){
+    return new Failure(exception);
+  }
 
    static final class Success<T> extends Actually<T> {
-   private ok (T res){
-    this.value = res;
-   } 
-
+    @Override
+    public String toString(){
+      return "<" + this.value.toString() + ">";
+    }
    }
 
    static final class Failure extends Actually<Object>{
-
+    @Override
+    public String toString(){
+      return "[" + this.value.getClass() + "] " + this.value.getMessage();
+    }
   }
 }
