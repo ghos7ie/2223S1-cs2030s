@@ -1,4 +1,5 @@
 package cs2030s.fp;
+
 /** 
  * @version CS2030S Lab 4
  *          AY22/23 Semester 1
@@ -10,10 +11,6 @@ public abstract class Actually<T>{
 
   private final T value;
 
-  public Actually<T> (T value){
-    this.value = value;
-  }
-
   public static <T> Success<T> ok (T res){
     return new Success<> (res);
   }
@@ -23,16 +20,30 @@ public abstract class Actually<T>{
   }
 
    static final class Success<T> extends Actually<T> {
-    @Override
-    public String toString(){
-      return "<" + this.value.toString() + ">";
-    }
+     
+     private final T value;
+
+     public Success<T> (value){
+       this.value = value;
+     }
+
+     @Override
+     public String toString(){
+       return "<" + this.value.toString() + ">";
+     }
    }
 
    static final class Failure extends Actually<Object>{
-    @Override
-    public String toString(){
-      return "[" + this.value.getClass() + "] " + this.value.getMessage();
-    }
+      
+     private final Object obj;
+     
+     public Failure (Object obj){
+       this.obj = obj;
+     }
+
+     @Override
+     public String toString(){
+       return "[" + this.obj.getClass() + "] " + this.obj.getMessage();
+     }
   }
 }
