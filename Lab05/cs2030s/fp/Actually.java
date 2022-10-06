@@ -60,10 +60,14 @@ public abstract class Actually<T> {
      */
     @Override
     public boolean equals(Object obj) {
+      if (obj == this){
+        return true;
+      }
       if (obj instanceof Success) {
-        if ((Success) obj.value == null) {
+        Success<?> some = (Success<?>) obj;
+        if (some.value == null) {
           return false;
-        } else if ((Success) obj.value == this.value) {
+        } else if (some.value == this.value) {
           return true;
         } else {
           return false;
@@ -115,8 +119,12 @@ public abstract class Actually<T> {
      */
     @Override
     public boolean equals(Object obj) {
+      if(obj == this){
+        return true;
+      }
       if (obj instanceof Failure) {
-        if (obj.getMessage() == this.obj.getMessage()) {
+        Failure some = (Failure) obj;
+        if (some.getMessage() == this.obj.getMessage()) {
           return true;
         } else {
           return false;
