@@ -63,7 +63,7 @@ public abstract class Actually<T> {
       if (obj == this){
         return true;
       }
-      if (obj instanceof Success) {
+      if (obj instanceof Success<?>) {
         Success<?> some = (Success<?>) obj;
         if (some.value == null) {
           return false;
@@ -124,7 +124,7 @@ public abstract class Actually<T> {
       }
       if (obj instanceof Failure) {
         Failure some = (Failure) obj;
-        if (some.getMessage() == this.obj.getMessage()) {
+        if (some.obj.getMessage() == this.obj.getMessage()) {
           return true;
         } else {
           return false;
