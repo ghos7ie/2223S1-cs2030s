@@ -138,9 +138,9 @@ class Probably<T> implements Actionable<T>, Immutatorable<T>, Applicable<T> {
    * @return this if IsModEq returns true.
    *         else returns none().
    */
-  public Probably<T> check(Immutator<Boolean, ? extends T> val) {
-    if (this.value != null && this.value instanceof Integer) {
-      Boolean check = val.invoke((Integer) this.value);
+  public Probably<T> check(Immutator<Boolean, ? super T> val) {
+    if (this.value != null) {
+      Boolean check = val.invoke(this.value);
       if (check) {
         return this;
       } else {
