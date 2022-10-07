@@ -61,7 +61,7 @@ public abstract class Actually<T> {
       } else if (obj instanceof Failure) {
         @SuppressWarnings("unchecked")
         Failure fail = (Failure) obj;
-        if (this.value.getMessage() == fail.getMessage()) {
+        if (this.value.getMessage() == fail.value.getMessage()) {
           return true;
         } else {
           return false;
