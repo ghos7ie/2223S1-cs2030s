@@ -9,6 +9,18 @@ package cs2030s.fp;
 
 public abstract class Actually<T>{
 
+  private T value;
+
+  /**
+   * Factory method for {@code Actually<T>}. 
+   * Cannot be accessed outside of class.
+   *
+   * @param value value of Actually<T>.
+   */
+  private Actually(T value){
+    this.value = value;
+  }
+
   /**
    *  ok(res) returns a Success Object.
    *  @param res variable of type T to put into Success.
@@ -37,12 +49,10 @@ public abstract class Actually<T>{
       return true;
     }else{
       return false;
-    }
+   }
   }
 
   static final class Success<T> extends Actually<T> {
-     
-    private final T value;
     
     /**
      * Constuctor for Success class.
@@ -50,36 +60,9 @@ public abstract class Actually<T>{
      * @param val value of type T.
      *
      */
-    public Success (T val){
-       this.value = val;
+    public Success (T value){
+       super(value);
      }
-
-    /**
-     * Equals implementation for Success class.
-     *
-     * @param object type of Object.
-     *
-     * @return true if value of object is equal to value of Success.
-     *         false i f not equal.
-     */ 
-    @Override
-    public boolean equals (Object obj){
-      if (obj instanceof Success){
-        Success<?> some = (Success<?>) obj;
-        if (some.value == null){
-          return false;
-        }
-        else if (some.value == this.value){
-          return true;
-        }
-        else{
-          return false;
-        }
-      }
-      else{
-        return false;
-      }
-    }
 
     /**
      * Returns String representation of Success object.
@@ -100,8 +83,6 @@ public abstract class Actually<T>{
 
    static final class Failure extends Actually<Object>{
      
-     private final Exception obj;
-     
      /**
       * Constructor for Failure class.
       *
@@ -109,33 +90,8 @@ public abstract class Actually<T>{
       *
       */ 
      public Failure (Exception obj){
-       this.obj = obj;
+      super(obj);
      }
-
-      
-    /** 
-     * Equals implementation for Failure class.
-     *
-     * @param object type of Object.
-     *
-     * @return true if getMessage() of object is equal to that of Failure.
-     *         false if not equal.
-     */   
-    @Override
-    public boolean equals (Object obj){
-      if (obj instanceof Failure){
-        Failure some = (Failure) obj;
-        if (some.obj.getMessage() == this.obj.getMessage()){
-          return true;
-        }
-        else{
-          return false;
-        }
-      }
-      else{
-        return false;
-      }
-    }
 
      /**
       * Returns String representation of Failure object.
