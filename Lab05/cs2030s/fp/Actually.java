@@ -1,35 +1,36 @@
 package cs2030s.fp;
 
-/** 
+/**
  * @version CS2030S Lab 4
  *          AY22/23 Semester 1
  *
  * @author Lewis Lye [14A]
  */
 
-public abstract class Actually<T>{
+public abstract class Actually<T> {
 
-  private T value;
+  protected T value;
 
   /**
-   * Factory method for {@code Actually<T>}. 
+   * Factory method for {@code Actually<T>}.
    * Cannot be accessed outside of class.
    *
    * @param value value of Actually<T>.
    */
-  private Actually(T value){
+  private Actually(T value) {
     this.value = value;
   }
 
   /**
-   *  ok(res) returns a Success Object.
-   *  @param res variable of type T to put into Success.
+   * ok(res) returns a Success Object.
+   * 
+   * @param res variable of type T to put into Success.
    *
-   *  @return new Success().
+   * @return new Success().
    *
-   */ 
-  public static <T> Success<T> ok (T res){
-    return new Success<> (res);
+   */
+  public static <T> Success<T> ok(T res) {
+    return new Success<>(res);
   }
 
   /**
@@ -39,30 +40,49 @@ public abstract class Actually<T>{
    *
    * @return new Failure().
    */
-  public static <T> Failure err(Exception exception){
+  public static <T> Failure err(Exception exception) {
     return new Failure(exception);
   }
 
   @Override
-  public boolean equals (Object obj){
-    if (obj == this){
+  public boolean equals(Object obj) {
+    if (obj == this) {
       return true;
-    }else{
+    }
+    if (obj instanceof Actually) {
+      if (obj instanceof Success) {
+        @SuppressWarnings("unchecked")
+        Success<T> succ = (Success<T>) obj;
+        if (this.value == succ.value) {
+          return true;
+        } else {
+          return false;
+        }
+      } else if (obj instanceof Failure) {
+        @SuppressWarnings("unchecked")
+        Failure fail = (Failure) obj;
+        if (this.value.getMessage() == fail.getMessage()) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
       return false;
-   }
+    }
   }
 
   static final class Success<T> extends Actually<T> {
-    
+
     /**
      * Constuctor for Success class.
      *
      * @param val value of type T.
      *
      */
-    public Success (T value){
-       super(value);
-     }
+    public Success(T value) {
+      super(value);
+    }
 
     /**
      * Returns String representation of Success object.
@@ -70,37 +90,36 @@ public abstract class Actually<T>{
      * @return {@code <null>} if this.value is null.
      *         value.toString() if not null.
      */
-     @Override
-     public String toString(){
-       if (this.value != null){
-         return "<" + this.value.toString() + ">";
-       } 
-       else{
-       return "<null>";
-       }
-     }
-   }
+    @Override
+    public String toString() {
+      if (super.value != null) {
+        return "<" + super.value.toString() + ">";
+      } else {
+        return "<null>";
+      }
+    }
+  }
 
-   static final class Failure extends Actually<Object>{
-     
-     /**
-      * Constructor for Failure class.
-      *
-      * @param obj obj of type Exception.
-      *
-      */ 
-     public Failure (Exception obj){
+  static final class Failure extends Actually<Object> {
+
+    /**
+     * Constructor for Failure class.
+     *
+     * @param obj obj of type Exception.
+     *
+     */
+    public Failure(Exception obj) {
       super(obj);
-     }
+    }
 
-     /**
-      * Returns String representation of Failure object.
-      *
-      * @return value in formatted manner.
-      */ 
-     @Override
-     public String toString(){
-       return "[" + this.obj.getClass().toString() + "] " + this.obj.getMessage();
-     }
+    /**
+     * Returns String representation of Failure object.
+     *
+     * @return value in formatted manner.
+     */
+    @Override
+    public String toString() {
+      return "[" + ((Exception) super.value).getClass().toString() + "] " + ((Exception) super.value).getMessage();
+    }
   }
 }
