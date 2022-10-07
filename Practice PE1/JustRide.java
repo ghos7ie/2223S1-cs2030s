@@ -12,7 +12,6 @@ public class JustRide implements Services {
    if (req.isSurcharged(SURCHARGE_START, SURCHARGE_END) == true){
     total += SURCHARGE;
    }
-
    return (int) total;
   }
 

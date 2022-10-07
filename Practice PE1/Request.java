@@ -22,4 +22,14 @@ public class Request {
   public double farePerPassenger(double fare){
     return fare/this.noOfPassengers;
   }
+
+  public int compareTime(Request req){
+    if (this.time > req.time){
+      return 1;
+    } else if (this.time == req.time){
+      return 1;
+    } else{
+      return -1;
+    }
+  }
 }
