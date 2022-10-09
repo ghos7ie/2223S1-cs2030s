@@ -7,7 +7,7 @@ package cs2030s.fp;
  * @author Lewis Lye [14A]
  */
 
-public abstract class Actually<T> implements Immutatorable<T> {
+public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
 
   /**
    * Unwraps nested class to get value.
@@ -51,6 +51,14 @@ public abstract class Actually<T> implements Immutatorable<T> {
    * @return Item of type {@code Immutatorable<R>}.
    */
   public abstract <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator);
+
+  /**
+   * Abstract method of act.
+   * Super since action is being consumed
+   * 
+   * @param action Action to be performed.
+   */
+  public abstract void act(Action<? super T> action);
 
   /**
    * ok(res) returns a Success Object.
@@ -135,6 +143,14 @@ public abstract class Actually<T> implements Immutatorable<T> {
       return this.value;
     }
 
+    /**
+     * Tries to mutate value of this {@code Success<T>}.
+     * 
+     * @param immutator immutator that is going to mutate the value.
+     * 
+     * @return new {@code Success<T>}.
+     *         or Failure.
+     */
     @Override
     public <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator) {
       try {
@@ -142,6 +158,16 @@ public abstract class Actually<T> implements Immutatorable<T> {
       } catch (Exception e) {
         return Actually.err(e);
       }
+    }
+
+    /**
+     * Invokes the call method in Action on {@code Success<T>}.
+     * 
+     * @param action Action to be performed.
+     * 
+     */
+    public void act(Action<? super T> action) {
+      action.call(this.value);
     }
 
     /**
@@ -245,9 +271,25 @@ public abstract class Actually<T> implements Immutatorable<T> {
       return item;
     }
 
+    /**
+     * Propogates Failure as new Failure.
+     * 
+     * @param immutator immutator that is going to mutate the value.
+     * 
+     * @return new Failure wrapped in Actually.
+     */
     @Override
     public <R> Immutatorable<R> transform(Immutator<? extends R, ? super Object> immutator) {
       return Actually.err(immutator.invoke(this.exception));
+    }
+
+    /**
+     * Does nothing.
+     * 
+     * @param action Action to be performed.
+     * 
+     */
+    public void act(Action<? super Object> action) {
     }
 
     /**
@@ -284,7 +326,7 @@ public abstract class Actually<T> implements Immutatorable<T> {
      */
     @Override
     public String toString() {
-      return "[" + this.exception.getClass().getCanonicalName()+ "] " + this.exception.getMessage();
+      return "[" + this.exception.getClass().getCanonicalName() + "] " + this.exception.getMessage();
     }
   }
 }

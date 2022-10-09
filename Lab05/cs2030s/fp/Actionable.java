@@ -20,5 +20,5 @@ public interface Actionable<T> {
    * 
    * @param action Action to be performed.
    */
-  void act(Action<? super T> action);
+  abstract void act(Action<? super T> action);
 }
