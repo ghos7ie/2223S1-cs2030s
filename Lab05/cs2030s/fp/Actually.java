@@ -102,12 +102,8 @@ public abstract class Actually<T> {
       }
       if (obj instanceof Failure) {
         Failure fail = (Failure) obj;
-        if (fail.exception.getClass() == this.exception.getClass()) {
-          if (this.exception.getMessage() == fail.exception.getMessage()) {
-            return true;
-          } else {
-            return false;
-          }
+        if (this.exception.getMessage() == fail.exception.getMessage()) {
+          return true;
         } else {
           return false;
         }
