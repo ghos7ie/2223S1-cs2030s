@@ -8,19 +8,6 @@ package cs2030s.fp;
  */
 
 public abstract class Actually<T> {
-
-  protected T value;
-
-  /**
-   * Factory method for {@code Actually<T>}.
-   * Cannot be accessed outside of class.
-   *
-   * @param value value of Actually<T>.
-   */
-  private Actually(T value) {
-    this.value = value;
-  }
-
   /**
    * ok(res) returns a Success Object.
    * 
@@ -29,8 +16,8 @@ public abstract class Actually<T> {
    * @return new Success().
    *
    */
-  public static <T> Success<T> ok(T res) {
-    return new Success<>(res);
+  public static <T> Actually<T> ok(T res) {
+    return new Success<T>(res);
   }
 
   /**
@@ -40,39 +27,13 @@ public abstract class Actually<T> {
    *
    * @return new Failure().
    */
-  public static <T> Failure err(Exception exception) {
+  public static Actually<Object> err(Exception exception) {
     return new Failure(exception);
   }
 
-  @Override
-  public boolean equals(Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (obj instanceof Actually) {
-      if (obj instanceof Success) {
-        @SuppressWarnings("unchecked")
-        Success<T> succ = (Success<T>) obj;
-        if (this.value == succ.value) {
-          return true;
-        } else {
-          return false;
-        }
-      } else if (obj instanceof Failure) {
-        @SuppressWarnings("unchecked")
-        Failure fail = (Failure) obj;
-        if (this.value.getMessage() == fail.value.getMessage()) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    } else {
-      return false;
-    }
-  }
-
   static final class Success<T> extends Actually<T> {
+
+    private T value;
 
     /**
      * Constuctor for Success class.
@@ -81,7 +42,27 @@ public abstract class Actually<T> {
      *
      */
     public Success(T value) {
-      super(value);
+      this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (obj == this) {
+        return true;
+      }
+      if (obj instanceof Success) {
+        // it is fine to suppress since we already checked that
+        // object is of Success type.
+        @SuppressWarnings("unchecked")
+        Success<T> succ = (Success<T>) obj;
+        if (this.value == succ.value) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     }
 
     /**
@@ -92,8 +73,8 @@ public abstract class Actually<T> {
      */
     @Override
     public String toString() {
-      if (super.value != null) {
-        return "<" + super.value.toString() + ">";
+      if (this.value != null) {
+        return "<" + this.value.toString() + ">";
       } else {
         return "<null>";
       }
@@ -102,14 +83,33 @@ public abstract class Actually<T> {
 
   static final class Failure extends Actually<Object> {
 
+    private Exception exception;
+
     /**
      * Constructor for Failure class.
      *
      * @param obj obj of type Exception.
      *
      */
-    public Failure(Exception obj) {
-      super(obj);
+    public Failure(Exception exception) {
+      this.exception = exception;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (obj == this) {
+        return true;
+      }
+      if (obj instanceof Failure) {
+        Failure fail = (Failure) obj;
+        if (this.exception.getMessage() == fail.exception.getMessage()) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     }
 
     /**
@@ -119,7 +119,7 @@ public abstract class Actually<T> {
      */
     @Override
     public String toString() {
-      return "[" + ((Exception) super.value).getClass().toString() + "] " + ((Exception) super.value).getMessage();
+      return "[" + this.exception.getClass().toString() + "] " + this.exception.getMessage();
     }
   }
 }
