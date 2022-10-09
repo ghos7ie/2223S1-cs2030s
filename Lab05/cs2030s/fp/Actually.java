@@ -7,7 +7,7 @@ package cs2030s.fp;
  * @author Lewis Lye [14A]
  */
 
-public abstract class Actually<T> {
+public abstract class Actually<T> implements Immutatorable<T> {
 
   /**
    * Unwraps nested class to get value.
@@ -41,6 +41,18 @@ public abstract class Actually<T> {
   public abstract <U extends T> T unless(U item);
 
   /**
+   * Transforms T item to R item.
+   * 
+   * @param <R>       Explicit type parameter. Telling compiler that the type of
+   *                  return will be R.
+   * @param immutator Item of type T that will be changed to
+   *                  {@code Immutatorable<R>}.
+   * 
+   * @return Item of type {@code Immutatorable<R>}.
+   */
+  public abstract <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator);
+
+  /**
    * ok(res) returns a Success Object.
    * 
    * @param res variable of type T to put into Success.
@@ -60,6 +72,8 @@ public abstract class Actually<T> {
    * @return new Failure().
    */
   public static <T> Actually<T> err(Object exception) {
+    // this is fine since we know that Failure is a subtype
+    // of Actually.
     @SuppressWarnings("unchecked")
     Actually<T> act = (Actually<T>) new Failure(exception);
     return act;
@@ -119,6 +133,15 @@ public abstract class Actually<T> {
     @Override
     public <U extends T> T unless(U item) {
       return this.value;
+    }
+
+    @Override
+    public <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator) {
+      try {
+        return ok(immutator.invoke(this.value));
+      } catch (Exception e) {
+        return err(e);
+      }
     }
 
     /**
@@ -220,6 +243,11 @@ public abstract class Actually<T> {
     @Override
     public <U extends Object> Object unless(U item) {
       return item;
+    }
+
+    @Override
+    public <R> Immutatorable<R> transform(Immutator<? extends R, ? super Object> immutator) {
+      return err(immutator.invoke(this.exception));
     }
 
     /**
