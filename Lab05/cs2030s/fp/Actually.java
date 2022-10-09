@@ -59,7 +59,7 @@ public abstract class Actually<T> {
    *
    * @return new Failure().
    */
-  public static Actually<Object> err(Exception exception) {
+  public static Actually<? extends Object> err(Exception exception) {
     return new Failure(exception);
   }
 
