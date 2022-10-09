@@ -284,7 +284,7 @@ public abstract class Actually<T> implements Immutatorable<T> {
      */
     @Override
     public String toString() {
-      return "[" + this.exception.getClass().toString() + "] " + this.exception.getMessage();
+      return "[" + this.exception.toString() + "] " + this.exception.getMessage();
     }
   }
 }
