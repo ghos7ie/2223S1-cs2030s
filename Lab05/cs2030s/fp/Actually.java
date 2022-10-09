@@ -30,7 +30,7 @@ public abstract class Actually<T> {
    * 
    * @param action to be used.
    */
-  public abstract void finish(Action<? super T> action);
+  public abstract void finish(Action<T> action);
 
   /**
    * Abstract unless method.
@@ -105,7 +105,7 @@ public abstract class Actually<T> {
      * @param action action to be performed.
      */
     @Override
-    public void finish(Action<? super T> action) {
+    public void finish(Action<T> action) {
       action.call(this.value);
     }
 
