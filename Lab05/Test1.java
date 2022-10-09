@@ -57,7 +57,7 @@ public class Test1 {
     we.expect(
       "Actually.ok(null).equals(Actually.ok(null))",
       cs2030s.fp.Actually.ok(null).equals(cs2030s.fp.Actually.ok(null)),
-      false
+      true
     );
     we.expect(
       "Actually.ok(null).equals(\"Err\")",
