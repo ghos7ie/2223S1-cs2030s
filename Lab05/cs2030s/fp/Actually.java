@@ -59,8 +59,10 @@ public abstract class Actually<T> {
    *
    * @return new Failure().
    */
-  public static Actually<? extends Object> err(Exception exception) {
-    return new Failure(exception);
+  public static <T> Actually<T> err(Object exception) {
+    @SuppressWarnings("unchecked")
+    Actually<T> act = (Actually<T>) new Failure(exception);
+    return act;
   }
 
   static final class Success<T> extends Actually<T> {
@@ -173,8 +175,8 @@ public abstract class Actually<T> {
      * @param obj obj of type Exception.
      *
      */
-    public Failure(Exception exception) {
-      this.exception = exception;
+    public Failure(Object exception) {
+      this.exception = (Exception) exception;
     }
 
     /**
