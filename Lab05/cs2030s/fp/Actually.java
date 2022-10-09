@@ -138,9 +138,9 @@ public abstract class Actually<T> implements Immutatorable<T> {
     @Override
     public <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator) {
       try {
-        return ok(immutator.invoke(this.value));
+        return Actually.ok(immutator.invoke(this.value));
       } catch (Exception e) {
-        return err(e);
+        return Actually.err(e);
       }
     }
 
@@ -247,7 +247,7 @@ public abstract class Actually<T> implements Immutatorable<T> {
 
     @Override
     public <R> Immutatorable<R> transform(Immutator<? extends R, ? super Object> immutator) {
-      return err(immutator.invoke(this.exception));
+      return Actually.err(immutator.invoke(this.exception));
     }
 
     /**
