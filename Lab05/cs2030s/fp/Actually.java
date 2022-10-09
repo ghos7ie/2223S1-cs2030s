@@ -8,6 +8,38 @@ package cs2030s.fp;
  */
 
 public abstract class Actually<T> {
+
+  /**
+   * Unwraps nested class to get value.
+   * 
+   * @return T value of the implemented class.
+   * @throws Exception for Failure class.
+   */
+  public abstract T unwrap() throws Exception;
+
+  /**
+   * Abstract except method.
+   * 
+   * @param c value to be returned.
+   * @return value of type T.
+   */
+  public abstract <S extends T> T except(Constant<S> c);
+
+  /**
+   * Abstract finish method.
+   * 
+   * @param action to be used.
+   */
+  public abstract void finish(Action<? super T> action);
+
+  /**
+   * Abstract unless method.
+   * 
+   * @param item item of subtype T.
+   * @return value of subtype T.
+   */
+  public abstract <U extends T> T unless(U item);
+
   /**
    * ok(res) returns a Success Object.
    * 
@@ -45,6 +77,56 @@ public abstract class Actually<T> {
       this.value = value;
     }
 
+    /**
+     * Unwraps {@code Success<T>}.
+     * 
+     * @return value inside Success.
+     */
+    @Override
+    public T unwrap() {
+      return this.value;
+    }
+
+    /**
+     * Returns value of {@code Success<T>} apparently??
+     * 
+     * @param c has no use here i believe.
+     * 
+     * @return value within {@code Success<T>}.
+     */
+    @Override
+    public <S extends T> T except(Constant<S> c) {
+      return this.value;
+    }
+
+    /**
+     * Performs provided action on value of {@code Success<T>}
+     * 
+     * @param action action to be performed.
+     */
+    @Override
+    public void finish(Action<? super T> action) {
+      action.call(this.value);
+    }
+
+    /**
+     * Returns value fo {@code Success<T>}.
+     * 
+     * @param item does nothing.
+     */
+    @Override
+    public <U extends T> T unless(U item) {
+      return this.value;
+    }
+
+    /**
+     * Equals implementation of {@code Success<T>}.
+     * 
+     * @param obj Object to be compared.
+     * 
+     * @return true if obj is of type {@code Success<T>} and values are the same.
+     *         false for other cases.
+     */
     @Override
     public boolean equals(Object obj) {
       if (obj == this) {
@@ -73,10 +155,10 @@ public abstract class Actually<T> {
      */
     @Override
     public String toString() {
-      if (this.value != null) {
-        return "<" + this.value.toString() + ">";
-      } else {
+      if (this.value == null) {
         return "<null>";
+      } else {
+        return "<" + this.value.toString() + ">";
       }
     }
   }
@@ -95,6 +177,57 @@ public abstract class Actually<T> {
       this.exception = exception;
     }
 
+    /**
+     * Throws the exception stored in Failure.
+     * 
+     * @reutrn returns nothing, exception will be thrown.
+     */
+    @Override
+    public Object unwrap() throws Exception {
+      throw this.exception;
+    }
+
+    /**
+     * Gets value inside of c.
+     * 
+     * @param c object with value we are getting.
+     * 
+     * @return value within c.
+     */
+    @Override
+    public <S> S except(Constant<S> c) {
+      return c.init();
+    }
+
+    /**
+     * Nothing. Don't do anything.
+     * 
+     * @param action :).
+     */
+    @Override
+    public void finish(Action<Object> action) {
+    }
+
+    /**
+     * Returns item in argument.
+     * 
+     * @param item of type U.
+     * 
+     * @return item in argument.
+     */
+    @Override
+    public <U extends Object> Object unless(U item) {
+      return item;
+    }
+
+    /**
+     * Equals implementation for Failure.
+     * 
+     * @param obj Object to be compared.
+     * 
+     * @return true if obj is of type Failure and getMessage() are the same.
+     *         false for all other cases.
+     */
     @Override
     public boolean equals(Object obj) {
       if (obj == this) {
@@ -102,7 +235,9 @@ public abstract class Actually<T> {
       }
       if (obj instanceof Failure) {
         Failure fail = (Failure) obj;
-        if (this.exception.getMessage() == fail.exception.getMessage()) {
+        if (this.exception.getMessage() == null || fail.exception.getMessage() == null) {
+          return false;
+        } else if (this.exception.getMessage() == fail.exception.getMessage()) {
           return true;
         } else {
           return false;
