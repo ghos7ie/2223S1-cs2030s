@@ -34,6 +34,12 @@ public abstract class Transformer<R, P> implements Immutator<R, P> {
     };
   }
 
+  /**
+   * Transforms R to N to T.
+   * 
+   * @param after the Transformer to change.
+   * @return new {@code Transformer<T,P>}.
+   */
   public <T> Transformer<T, P> before(Transformer<? extends T, ? super R> before) {
     /**
      * Currently I have Transformer<R, P> and Transformer<T, R>.

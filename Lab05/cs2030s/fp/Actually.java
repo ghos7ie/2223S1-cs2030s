@@ -54,6 +54,14 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
   public abstract <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator);
 
   /**
+   * Abstract next method.
+   * 
+   * @param immutator contains the T value to wrap into {@code Actually<R>}.
+   * @return {@code Actually<R>}.
+   */
+  public abstract <R> Actually<R> next(Immutator<Actually<R>, T> immutator);
+
+  /**
    * Abstract method of act.
    * Super since action is being consumed
    * 
@@ -169,6 +177,21 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      */
     public void act(Action<? super T> action) {
       action.call(this.value);
+    }
+
+    /**
+     * Uses provided T value and creates an Actually<R>.
+     * 
+     * @param immutator contains the T value to wrap into {@code Actually<R>}.
+     * @return {@code Actually<R>}.
+     */
+    @Override
+    public <R> Actually<R> next(Immutator<Actually<R>, T> immutator) {
+      try {
+        return immutator.invoke(this.value);
+      } catch (Exception e) {
+        return Actually.err(e);
+      }
     }
 
     /**
@@ -291,6 +314,17 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      * 
      */
     public void act(Action<? super Object> action) {
+    }
+
+    /**
+     * Uses provided T value and creates an Actually<R>.
+     * 
+     * @param immutator contains the T value to wrap into {@code Actually<R>}.
+     * @return {@code Actually<R>}.
+     */
+    @Override
+    public <R> Actually<R> next(Immutator<Actually<R>, Object> immutator) {
+      return immutator.invoke(this.exception);
     }
 
     /**
