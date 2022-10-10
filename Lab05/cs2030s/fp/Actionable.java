@@ -7,7 +7,7 @@ package cs2030s.fp;
  * Contains a single abstract method act.
  * </p>
  *
- * @version CS2030S Lab 4
+ * @version CS2030S Lab 5
  *          AY22/23 Semester 1
  *
  * @author Lewis Lye [14A]
