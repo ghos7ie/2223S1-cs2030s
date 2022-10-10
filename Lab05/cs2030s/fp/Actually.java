@@ -328,7 +328,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      */
     @Override
     public <R> Actually<R> next(Immutator<Actually<R>, Object> immutator) {
-      return immutator.invoke(this.exception);
+      return Actually.err(this.exception);
     }
 
     /**
