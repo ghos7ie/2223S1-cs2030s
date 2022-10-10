@@ -190,10 +190,11 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
       try {
         return immutator.invoke(this.value);
       } catch (Exception e) {
-        // okay to surppress since Actually.err(e) returns a Failure
-        @SuppressWarnings("unchecked")
-        Actually<R> actR = (Actually<R>)Actually.err(e);
-        return actR;
+        // // okay to surppress since Actually.err(e) returns a Failure
+        // @SuppressWarnings("unchecked")
+        // Actually<R> actR = (Actually<R>) Actually.err(e);
+        // return actR;
+        return Actually.err(e);
       }
     }
 
@@ -307,7 +308,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      */
     @Override
     public <R> Immutatorable<R> transform(Immutator<? extends R, ? super Object> immutator) {
-      return Actually.err(immutator.invoke(this.exception));
+      return Actually.err(this.exception);
     }
 
     /**
