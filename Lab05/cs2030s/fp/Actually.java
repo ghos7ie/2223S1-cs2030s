@@ -190,7 +190,10 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
       try {
         return immutator.invoke(this.value);
       } catch (Exception e) {
-        return Actually.err(e);
+        // okay to surppress since Actually.err(e) returns a Failure
+        @SuppressWarnings("unchecked")
+        Actually<R> actR = (Actually<R>)Actually.err(e);
+        return actR;
       }
     }
 
