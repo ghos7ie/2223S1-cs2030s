@@ -203,6 +203,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      */
     @Override
     public <R> Actually<R> next(Immutator<Actually<R>, T> immutator) {
+      if (this.value == null){
+        throw new NullPointerException();
       try {
         return (Actually<R>) immutator.invoke(this.value);
       } catch (Exception e) {
