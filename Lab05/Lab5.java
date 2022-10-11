@@ -48,12 +48,12 @@ class Lab5 {
         <Actually<Map<String, Map<String, String>>>, Map<String, Map<String, Map<String, String>>>> 
         getModule = new Immutator<>() {
 
-        @Override
-        public Actually<Map<String, Map<String, String>>> 
-          invoke(Map<String, Map<String, Map<String, String>>> param) {
-            return Actually.ok(param.get(module));
-          }
-    };
+          @Override
+          public Actually<Map<String, Map<String, String>>> 
+            invoke(Map<String, Map<String, Map<String, String>>> param) {
+              return Actually.ok(param.get(module));
+            }
+        };
 
     // getStudent -- Immutator<Actually<AssessmentMap>, StudentMap>
     Immutator<Actually<Map<String, String>>, Map<String, Map<String, String>>> 
@@ -63,7 +63,7 @@ class Lab5 {
           public Actually<Map<String, String>> invoke(Map<String, Map<String, String>> param) {
             return Actually.ok(param.get(student));
           }
-    };
+        };
 
     // getGrade -- Immutator<Actually<Grade>, AssessmentMap>
     Immutator<Actually<String>, Map<String, String>> getAssessment = new Immutator<>() {
