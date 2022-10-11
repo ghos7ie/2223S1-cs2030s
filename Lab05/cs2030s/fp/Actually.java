@@ -289,7 +289,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      * @return value within c.
      */
     @Override
-    public <S> S except(Constant<S> c) {
+    public <S extends Object> S except(Constant<S> c) {
       return c.init();
     }
 
