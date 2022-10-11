@@ -10,14 +10,14 @@ import java.util.Scanner;
 class Lab5 {
   public static String getGrade(String module, String student, String assessment,
       Map<String, Map<String, Map<String, String>>> db) {
-    /**
+    /*
      * Understanding db
      * Module -> Student -> Assessment
      */
     Constant<Actually<Map<String, Map<String, Map<String, String>>>>> contDB = new Constant<>() {
       public Actually<Map<String, Map<String, Map<String, String>>>> init() {
         return Actually.ok(db);
-      };
+      }
     };
     Constant<String> err = new Constant<>() {
       @Override
@@ -44,16 +44,19 @@ class Lab5 {
     // Immutator<Actually<specificModule, Actually<db>>
 
     // getModule -- Immutator<Actually<StudentMap>, ModuleMap>
-    Immutator<Actually<Map<String, Map<String, String>>>, Map<String, Map<String, Map<String, String>>>> getModule = new Immutator<>() {
+    Immutator<Actually<Map<String, Map<String, String>>>, 
+    Map<String, Map<String, Map<String, String>>>> getModule = new Immutator<>() {
 
       @Override
-      public Actually<Map<String, Map<String, String>>> invoke(Map<String, Map<String, Map<String, String>>> param) {
+      public Actually<Map<String, 
+      Map<String, String>>> invoke(Map<String, Map<String, Map<String, String>>> param) {
         return Actually.ok(param.get(module));
       }
     };
 
     // getStudent -- Immutator<Actually<AssessmentMap>, StudentMap>
-    Immutator<Actually<Map<String, String>>, Map<String, Map<String, String>>> getStudent = new Immutator<>() {
+    Immutator<Actually<Map<String, String>>, 
+    Map<String, Map<String, String>>> getStudent = new Immutator<>() {
 
       @Override
       public Actually<Map<String, String>> invoke(Map<String, Map<String, String>> param) {
@@ -107,11 +110,16 @@ class Lab5 {
   public static void test1() {
     String none = null;
 
-    System.out.println(Actually.err(new ArithmeticException("Err")).equals(Actually.err(new Exception("Err"))));
-    System.out.println(Actually.err(new ArithmeticException("Err")).equals(Actually.err(new Exception("Error"))));
-    System.out.println(Actually.err(new ArithmeticException("Err")).equals(Actually.err(new Exception(none))));
-    System.out.println(Actually.err(new ArithmeticException(none)).equals(Actually.err(new Exception(none))));
-    System.out.println(Actually.err(new ArithmeticException("Err")).equals(Actually.ok("Err")));
+    System.out.println(Actually.err(new ArithmeticException("Err"))
+    .equals(Actually.err(new Exception("Err"))));
+    System.out.println(Actually.err(new ArithmeticException("Err"))
+    .equals(Actually.err(new Exception("Error"))));
+    System.out.println(Actually.err(new ArithmeticException("Err"))
+    .equals(Actually.err(new Exception(none))));
+    System.out.println(Actually.err(new ArithmeticException(none))
+    .equals(Actually.err(new Exception(none))));
+    System.out.println(Actually.err(new ArithmeticException("Err"))
+    .equals(Actually.ok("Err")));
     System.out.println(Actually.ok("Err").equals(Actually.ok("Err")));
     System.out.println(Actually.ok("Err").equals(Actually.err(new Exception("Error"))));
     System.out.println(Actually.ok("Err").equals("Err"));
@@ -142,8 +150,10 @@ class Lab5 {
     Actually.<Integer>ok(9).finish(print);
     Actually.<Integer>err(new Exception("Err")).finish(print);
     System.out.println(Actually.<Number>ok(9).except(zero).toString());
-    System.out.println(Actually.<Number>err(new ArithmeticException("div by 0")).except(zero).toString());
-    System.out.println(Actually.<Number>err(new ArithmeticException("div by 0")).unless(4).toString());
+    System.out.println(Actually.<Number>err(new ArithmeticException("div by 0"))
+    .except(zero).toString());
+    System.out.println(Actually.<Number>err(new ArithmeticException("div by 0"))
+    .unless(4).toString());
     System.out.println(Actually.<Number>ok(0).unless(4).toString());
   }
 
