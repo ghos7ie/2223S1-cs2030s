@@ -1,10 +1,10 @@
-import cs2030s.fp.Actually;
-import cs2030s.fp.Immutator;
-import cs2030s.fp.Constant;
 import cs2030s.fp.Action;
+import cs2030s.fp.Actually;
+import cs2030s.fp.Constant;
+import cs2030s.fp.Immutator;
 import cs2030s.fp.Transformer;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 class Lab5 {
@@ -106,6 +106,8 @@ class Lab5 {
       case 6:
         test6();
         break;
+      default:
+        break;
     }
   }
 
@@ -132,7 +134,7 @@ class Lab5 {
   }
 
   public static void test2() {
-    Constant<Integer> zero = new Constant<>() {
+    final Constant<Integer> zero = new Constant<>() {
       public Integer init() {
         return 0;
       }
