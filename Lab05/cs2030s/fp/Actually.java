@@ -1,7 +1,7 @@
 package cs2030s.fp;
 
 /**
- * Actually<T> class.
+ * {@code Actually<T>} class.
  * 
  * @version CS2030S Lab 5
  *          AY22/23 Semester 1
@@ -22,7 +22,9 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
   /**
    * Abstract except method.
    * 
-   * @param c value to be returned.
+   * @param <S> Explicit type parameter. Telling compiler that the type of
+   *            return will be S.
+   * @param c   value to be returned.
    * @return value of type T.
    */
   public abstract <S extends T> T except(Constant<S> c);
@@ -77,6 +79,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
   /**
    * ok(res) returns a Success Object.
    * 
+   * @param <T> Explicit type parameter. Telling compiler that the type of
+   *            return will be T.
    * @param res variable of type T to put into Success.
    *
    * @return new Success().
@@ -89,6 +93,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
   /**
    * err(exception) returns a Failure Object.
    * 
+   * @param <T>       Explicit type parameter. Telling compiler that the type of
+   *                  return will be T.
    * @param exception object of type exception.
    *
    * @return new Failure().
@@ -188,8 +194,10 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     }
 
     /**
-     * Uses provided T value and creates an Actually<R>.
+     * Uses provided T value and creates an {@code Actually<R>}.
      * 
+     * @param <R>       Explicit type parameter. Telling compiler that the type of
+     *                  return will be R.
      * @param immutator contains the T value to wrap into {@code Actually<R>}.
      * @return {@code Actually<R>}.
      */
@@ -274,7 +282,9 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     /**
      * Gets value inside of c.
      * 
-     * @param c object with value we are getting.
+     * @param <S> Explicit type parameter. Telling compiler that the type of
+     *            return will be S.
+     * @param c   object with value we are getting.
      * 
      * @return value within c.
      */
@@ -295,6 +305,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     /**
      * Returns item in argument.
      * 
+     * @param <U>  Explicit type parameter. Telling compiler that the type of
+     *             return will be a subtype of Object.
      * @param item of type U.
      * 
      * @return item in argument.
@@ -307,6 +319,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     /**
      * Propogates Failure as new Failure.
      * 
+     * @param <R>       Explicit type parameter. Telling compiler that the type of
+     *                  return will be R.
      * @param immutator immutator that is going to mutate the value.
      * 
      * @return new Failure wrapped in Actually.
@@ -326,8 +340,10 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     }
 
     /**
-     * Uses provided T value and creates an Actually<R>.
+     * Uses provided T value and creates an {@code Actually<R>}.
      * 
+     * @param <S>       Explicit type parameter. Telling compiler that the type of
+     *                  return will be S.
      * @param immutator contains the T value to wrap into {@code Actually<R>}.
      * @return {@code Actually<R>}.
      */
