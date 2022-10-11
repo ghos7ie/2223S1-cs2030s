@@ -1,7 +1,9 @@
 package cs2030s.fp;
 
 /**
- * * @version CS2030S Lab 5
+ * Constant interface.
+ * 
+ * @version CS2030S Lab 5
  *          AY22/23 Semester 1
  *
  * @author Lewis Lye [14A]
@@ -14,5 +16,5 @@ public interface Constant<T> {
    *
    * @return value of type T.
    */
-  T init ();
+  abstract T init();
 }

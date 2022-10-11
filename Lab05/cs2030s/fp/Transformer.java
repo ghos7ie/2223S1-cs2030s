@@ -1,6 +1,8 @@
 package cs2030s.fp;
 
 /**
+ * Abstract {@code Transformer<R,P>} class.
+ * 
  * @version CS2030S Lab 5
  *          AY22/23 Semester 1
  *
@@ -14,11 +16,13 @@ public abstract class Transformer<R, P> implements Immutator<R, P> {
   /**
    * Transforms N to P to R.
    * 
-   * @param before the Transformer to change.
+   * @param <N>   Explicit type parameter. Telling compiler that the type of
+   *              return will be N.
+   * @param after the Transformer to change.
    * @return new {@code Transformer<R,N>}.
    */
   public <N> Transformer<R, N> after(Transformer<? extends P, ? super N> after) {
-    /**
+    /*
      * Currently i have Transformer <R,P> and Transformer<P,N>
      * 
      * I want to get Transformer<R,N> at the end.
@@ -37,11 +41,13 @@ public abstract class Transformer<R, P> implements Immutator<R, P> {
   /**
    * Transforms R to N to T.
    * 
-   * @param after the Transformer to change.
+   * @param <T>    Explicit type parameter. Telling compiler that the type of
+   *               return will be N.
+   * @param before the Transformer to change.
    * @return new {@code Transformer<T,P>}.
    */
   public <T> Transformer<T, P> before(Transformer<? extends T, ? super R> before) {
-    /**
+    /*
      * Currently I have Transformer<R, P> and Transformer<T, R>.
      * 
      * I want to get Transformer<T, P>.

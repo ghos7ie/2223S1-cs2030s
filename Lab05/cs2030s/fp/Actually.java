@@ -1,11 +1,12 @@
 package cs2030s.fp;
 
 /**
+ * Actually<T> class.
+ * 
  * @version CS2030S Lab 5
  *          AY22/23 Semester 1
  *
  * @author Lewis Lye [14A]
- * @param <R>
  */
 
 public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
@@ -36,6 +37,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
   /**
    * Abstract unless method.
    * 
+   * @param <U>  Explicit type parameter. Telling compiler that the type of
+   *             return will be U.
    * @param item item of subtype T.
    * @return value of subtype T.
    */
@@ -56,6 +59,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
   /**
    * Abstract next method.
    * 
+   * @param <R>       Explicit type parameter. Telling compiler that the type of
+   *                  return will be R.
    * @param immutator contains the T value to wrap into {@code Actually<R>}.
    * @return {@code Actually<R>}.
    */
@@ -103,7 +108,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     /**
      * Constuctor for Success class.
      *
-     * @param val value of type T.
+     * @param value value of type T.
      *
      */
     public Success(T value) {
@@ -121,7 +126,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     }
 
     /**
-     * Returns value of {@code Success<T>} apparently??
+     * Returns value of {@code Success<T>} apparently.
      * 
      * @param c has no use here i believe.
      * 
@@ -133,7 +138,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     }
 
     /**
-     * Performs provided action on value of {@code Success<T>}
+     * Performs provided action on value of {@code Success<T>}.
      * 
      * @param action action to be performed.
      */
@@ -143,9 +148,10 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     }
 
     /**
-     * Returns value fo {@code Success<T>}.
+     * Returns value of {@code Success<T>}.
      * 
      * @param item does nothing.
+     * @return value of Success.
      */
     @Override
     public <U extends T> T unless(U item) {
@@ -155,6 +161,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     /**
      * Tries to mutate value of this {@code Success<T>}.
      * 
+     * @param <R>       Explicit type parameter. Telling compiler that the type of
+     *                  return will be R.
      * @param immutator immutator that is going to mutate the value.
      * 
      * @return new {@code Success<T>}.
@@ -245,7 +253,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     /**
      * Constructor for Failure class.
      *
-     * @param obj obj of type Exception.
+     * @param exception obj of type Exception.
      *
      */
     public Failure(Object exception) {
@@ -255,6 +263,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     /**
      * Throws the exception stored in Failure.
      * 
+     * @throws Exception for Failure class.
      * @reutrn returns nothing, exception will be thrown.
      */
     @Override
@@ -361,7 +370,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      */
     @Override
     public String toString() {
-      return "[" + this.exception.getClass().getCanonicalName() + "] " + this.exception.getMessage();
+      return "[" + this.exception.getClass().getCanonicalName() + "] "
+          + this.exception.getMessage();
     }
   }
 }
