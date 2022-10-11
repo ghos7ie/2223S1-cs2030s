@@ -44,8 +44,7 @@ class Lab5 {
     // Immutator<Actually<specificModule, Actually<db>>
 
     // getModule -- Immutator<Actually<StudentMap>, ModuleMap>
-    Immutator<Actually<Map<String, Map<String, String>>>,
-        Map<String, Map<String, Map<String, String>>>> getModule = new Immutator<>() {
+    Immutator<Actually<Map<String, Map<String, String>>>, Map<String, Map<String, Map<String, String>>>> getModule = new Immutator<>() {
 
       @Override
       public Actually<Map<String, Map<String, String>>> invoke(Map<String, Map<String, Map<String, String>>> param) {

@@ -342,8 +342,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     /**
      * Uses provided T value and creates an {@code Actually<R>}.
      * 
-     * @param <S>       Explicit type parameter. Telling compiler that the type of
-     *                  return will be S.
+     * @param <R>       Explicit type parameter. Telling compiler that the type of
+     *                  return will be R.
      * @param immutator contains the T value to wrap into {@code Actually<R>}.
      * @return {@code Actually<R>}.
      */
