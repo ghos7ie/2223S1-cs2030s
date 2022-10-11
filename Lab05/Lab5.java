@@ -50,7 +50,7 @@ class Lab5 {
 
           @Override
           public Actually<Map<String, Map<String, String>>> 
-              invoke(Map<String, Map<String, Map<String, String>>> param) {
+                invoke(Map<String, Map<String, Map<String, String>>> param) {
                 return Actually.ok(param.get(module));
           }
         };
