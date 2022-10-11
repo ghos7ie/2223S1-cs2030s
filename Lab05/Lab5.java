@@ -69,11 +69,11 @@ class Lab5 {
       }
     };
 
-    //return contDB.init().next(getModule).next(getStudent).next(getAssessment).except(err);
+    return contDB.init().next(getModule).next(getStudent).next(getAssessment).except(err);
 
     // getStudent
     // return (contDB.init().next(getModule).get()).except(err).toString();
-    return db.get(module).get(student).get(assessment).toString();
+    // return db.get(module).get(student).get(assessment).toString();
   }
 
   public static void main(String[] args) {
