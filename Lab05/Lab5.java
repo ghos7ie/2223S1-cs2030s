@@ -44,19 +44,20 @@ class Lab5 {
     // Immutator<Actually<specificModule, Actually<db>>
 
     // getModule -- Immutator<Actually<StudentMap>, ModuleMap>
-    Immutator<Actually<Map<String, Map<String, String>>>, 
-      Map<String, Map<String, Map<String, String>>>> getModule = new Immutator<>() {
+    Immutator
+    <Actually<Map<String, Map<String, String>>>, Map<String, Map<String, Map<String, String>>>> 
+    getModule = new Immutator<>() {
 
       @Override
-      public Actually<Map<String, 
-        Map<String, String>>> invoke(Map<String, Map<String, Map<String, String>>> param) {
+      public Actually<Map<String, Map<String, String>>> 
+      invoke(Map<String, Map<String, Map<String, String>>> param) {
         return Actually.ok(param.get(module));
       }
     };
 
     // getStudent -- Immutator<Actually<AssessmentMap>, StudentMap>
-    Immutator<Actually<Map<String, String>>,
-     Map<String, Map<String, String>>> getStudent = new Immutator<>() {
+    Immutator<Actually<Map<String, String>>, Map<String, Map<String, String>>> 
+    getStudent = new Immutator<>() {
 
       @Override
       public Actually<Map<String, String>> invoke(Map<String, Map<String, String>> param) {
@@ -68,6 +69,7 @@ class Lab5 {
     Immutator<Actually<String>, Map<String, String>> getAssessment = new Immutator<>() {
       @Override
       public Actually<String> invoke(Map<String, String> param) {
+        // toString() to change it to string in case it is null --> will throw error!
         return Actually.ok(param.get(assessment).toString());
       }
     };
