@@ -226,8 +226,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
       if (obj instanceof Success) {
         // it is fine to suppress since we already checked that
         // object is of Success type.
-        @SuppressWarnings("unchecked")
-        Success<T> succ = (Success<T>) obj;
+        Success<?> succ = (Success<?>) obj;
         if (this.value == succ.value) {
           return true;
         } else {
