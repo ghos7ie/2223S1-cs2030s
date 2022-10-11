@@ -68,7 +68,7 @@ class Lab5 {
     Immutator<Actually<String>, Map<String, String>> getAssessment = new Immutator<>() {
       @Override
       public Actually<String> invoke(Map<String, String> param) {
-        return Actually.ok(param.get(assessment));
+        return Actually.ok(param.get(assessment).toString());
       }
     };
 

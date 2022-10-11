@@ -140,7 +140,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      */
     @Override
     public <S extends T> T except(Constant<S> c) {
-      return c.init();
+      return this.value;
     }
 
     /**
@@ -283,13 +283,13 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      * Gets value inside of c.
      * 
      * @param <S> Explicit type parameter. Telling compiler that the type of
-     *            return will be S.
+     *            return will be subtype of Object.
      * @param c   object with value we are getting.
      * 
      * @return value within c.
      */
     @Override
-    public <S> S except(Constant<S> c) {
+    public <S extends Object> S except(Constant<S> c) {
       return c.init();
     }
 
