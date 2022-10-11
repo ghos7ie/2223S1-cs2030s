@@ -140,7 +140,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      */
     @Override
     public <S extends T> T except(Constant<S> c) {
-      return this.value;
+      return c.init();
     }
 
     /**
@@ -264,8 +264,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      * @param exception obj of type Exception.
      *
      */
-    public Failure(Object exception) {
-      this.exception = (Exception) exception;
+    public Failure(Exception exception) {
+      this.exception =  exception;
     }
 
     /**
@@ -289,7 +289,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      * @return value within c.
      */
     @Override
-    public <S extends Object> S except(Constant<S> c) {
+    public <S> S except(Constant<S> c) {
       return c.init();
     }
 
