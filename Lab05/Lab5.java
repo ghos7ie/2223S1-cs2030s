@@ -10,12 +10,72 @@ import java.util.Scanner;
 class Lab5 {
   public static String getGrade(String module, String student, String assessment,
       Map<String, Map<String, Map<String, String>>> db) {
-    try {
-      return db.get(module).get(student).get(assessment).toString();
-    } catch(Exception e) {
-      return "No such entry";
-    }
+    /**
+     * Understanding db
+     * Module -> Student -> Assessment
+     */
+    Constant<Actually<Map<String, Map<String, Map<String, String>>>>> contDB = new Constant<>() {
+      public Actually<Map<String, Map<String, Map<String, String>>>> init() {
+        return Actually.ok(db);
+      };
+    };
+    Constant<String> err = new Constant<>() {
+      @Override
+      public String init() {
+        return "No such entry";
+      }
+    };
+
+    // contDB: Actually<Map<String, Map<String, Map<String, String>>>>
+    // Module: Map<String, Map<String, Map<String, String>>>
+    // Student: Map<String, Map<String, String>>
+    // Assessment: Map<String, String>
+    // NOTES
+    // contDB.next() only accepts an Immutator<Actually<R>, T>
+    // HENCE, must wrap all Immutator as Actually?
+    // last statement should be except(err), hence contDB has to be the starting
+    // point.
+    // contDB.init() - returns Actually<Module>
+    // contDB.init().next() gets Actually<Map of Students taking module>
+    // contDB.init().next().next() gets Map of Assessments done by student
+    // contDB.init().next().next().next() gets specific grade for assessment
+
+    // Module :: Map<String, Map<String, String>>
+    // Immutator<Actually<specificModule, Actually<db>>
+
+    // getModule -- Immutator<Actually<StudentMap>, ModuleMap>
+    Immutator<Actually<Map<String, Map<String, String>>>, Map<String, Map<String, Map<String, String>>>> getModule = new Immutator<>() {
+
+      @Override
+      public Actually<Map<String, Map<String, String>>> invoke(Map<String, Map<String, Map<String, String>>> param) {
+        return Actually.ok(param.get(module));
+      }
+    };
+
+    // getStudent -- Immutator<Actually<AssessmentMap>, StudentMap>
+    Immutator<Actually<Map<String, String>>, Map<String, Map<String, String>>> getStudent = new Immutator<>() {
+
+      @Override
+      public Actually<Map<String, String>> invoke(Map<String, Map<String, String>> param) {
+        return Actually.ok(param.get(student));
+      }
+    };
+
+    // getGrade -- Immutator<Actually<Grade>, AssessmentMap>
+    Immutator<Actually<String>, Map<String, String>> getAssessment = new Immutator<>() {
+      @Override
+      public Actually<String> invoke(Map<String, String> param) {
+        return Actually.ok(param.get(assessment));
+      }
+    };
+
+    return contDB.init().next(getModule).next(getStudent).next(getAssessment).except(err);
+
+    // getStudent
+    // return (contDB.init().next(getModule).get()).except(err).toString();
+    // return db.get(module).get(student).get(assessment).toString();
   }
+
   public static void main(String[] args) {
     // Create a scanner to read from standard input.
     Scanner sc = new Scanner(System.in);
@@ -43,10 +103,10 @@ class Lab5 {
         break;
     }
   }
-  
+
   public static void test1() {
     String none = null;
-    
+
     System.out.println(Actually.err(new ArithmeticException("Err")).equals(Actually.err(new Exception("Err"))));
     System.out.println(Actually.err(new ArithmeticException("Err")).equals(Actually.err(new Exception("Error"))));
     System.out.println(Actually.err(new ArithmeticException("Err")).equals(Actually.err(new Exception(none))));
@@ -60,7 +120,7 @@ class Lab5 {
     System.out.println(Actually.ok(null).equals("Err"));
     System.out.println(Actually.ok(null).equals(null));
   }
-  
+
   public static void test2() {
     Constant<Integer> zero = new Constant<>() {
       public Integer init() {
@@ -72,13 +132,13 @@ class Lab5 {
         System.out.println(i);
       }
     };
-    
+
     try {
       Actually.<Number>ok(0).unwrap().toString();
-    } catch(Exception e) {
+    } catch (Exception e) {
       System.out.println(e.getMessage());
     }
-    
+
     Actually.<Integer>ok(9).finish(print);
     Actually.<Integer>err(new Exception("Err")).finish(print);
     System.out.println(Actually.<Number>ok(9).except(zero).toString());
@@ -86,29 +146,29 @@ class Lab5 {
     System.out.println(Actually.<Number>err(new ArithmeticException("div by 0")).unless(4).toString());
     System.out.println(Actually.<Number>ok(0).unless(4).toString());
   }
-  
+
   public static void test3() {
-    Immutator<Integer,Integer> inc = new Immutator<>() {
+    Immutator<Integer, Integer> inc = new Immutator<>() {
       public Integer invoke(Integer p) {
-        return p+1;
+        return p + 1;
       }
     };
-    Immutator<Integer,Integer> inv = new Immutator<>() {
+    Immutator<Integer, Integer> inv = new Immutator<>() {
       public Integer invoke(Integer p) {
-        return 1/p;
+        return 1 / p;
       }
     };
-    Immutator<Number,Integer> incNum = new Immutator<>() {
+    Immutator<Number, Integer> incNum = new Immutator<>() {
       public Number invoke(Integer p) {
-        return p+1;
+        return p + 1;
       }
     };
-    Immutator<Number,Integer> invNum = new Immutator<>() {
+    Immutator<Number, Integer> invNum = new Immutator<>() {
       public Number invoke(Integer p) {
-        return 1/p;
+        return 1 / p;
       }
     };
-    
+
     System.out.println(Actually.<Integer>ok(0).transform(inc).toString());
     System.out.println(Actually.<Integer>ok(0).transform(inv).toString());
     System.out.println(Actually.ok(0).transform(inc).toString());
@@ -118,46 +178,46 @@ class Lab5 {
     System.out.println(Actually.ok(0).transform(incNum).toString());
     System.out.println(Actually.ok(0).transform(invNum).toString());
   }
-  
+
   public static void test4() {
-    Transformer<Integer,Integer> inc = new Transformer<>() {
+    Transformer<Integer, Integer> inc = new Transformer<>() {
       public Integer invoke(Integer p) {
-        return p+1;
+        return p + 1;
       }
     };
-    Transformer<Integer,Integer> sqr = new Transformer<>() {
+    Transformer<Integer, Integer> sqr = new Transformer<>() {
       public Integer invoke(Integer p) {
-        return p*p;
+        return p * p;
       }
     };
-    
-    Transformer<Integer,Integer> sqrPlusOneA = sqr.before(inc);
-    Transformer<Integer,Integer> sqrPlusOneB = inc.after(sqr);
-    Transformer<Integer,Integer> plusOneSqrA = sqr.after(inc);
-    Transformer<Integer,Integer> plusOneSqrB = inc.before(sqr);
-    
+
+    Transformer<Integer, Integer> sqrPlusOneA = sqr.before(inc);
+    Transformer<Integer, Integer> sqrPlusOneB = inc.after(sqr);
+    Transformer<Integer, Integer> plusOneSqrA = sqr.after(inc);
+    Transformer<Integer, Integer> plusOneSqrB = inc.before(sqr);
+
     System.out.println(sqrPlusOneA.invoke(2).toString());
     System.out.println(sqrPlusOneA.invoke(2).toString());
     System.out.println(plusOneSqrA.invoke(2).toString());
     System.out.println(plusOneSqrB.invoke(2).toString());
   }
-  
+
   public static void test5() {
-    Immutator<Actually<Integer>,Integer> half = new Immutator<>() {
+    Immutator<Actually<Integer>, Integer> half = new Immutator<>() {
       public Actually<Integer> invoke(Integer p) {
-        if (p%2 == 0) {
-          return Actually.<Integer>ok(p/2);
+        if (p % 2 == 0) {
+          return Actually.<Integer>ok(p / 2);
         } else {
           return Actually.<Integer>err(new Exception("odd number"));
         }
       }
     };
-    Immutator<Actually<Integer>,Integer> inc = new Immutator<>() {
+    Immutator<Actually<Integer>, Integer> inc = new Immutator<>() {
       public Actually<Integer> invoke(Integer p) {
-        return Actually.<Integer>ok(p+1);
+        return Actually.<Integer>ok(p + 1);
       }
     };
-    Immutator<Actually<Integer>,Integer> make = new Immutator<>() {
+    Immutator<Actually<Integer>, Integer> make = new Immutator<>() {
       public Actually<Integer> invoke(Integer p) {
         return Actually.<Integer>ok(p);
       }
@@ -167,42 +227,35 @@ class Lab5 {
         return 0;
       }
     };
-    
+
     System.out.println(make.invoke(0).next(inc).next(inc).next(half).toString());
     System.out.println(make.invoke(0).next(inc).next(half).next(inc).toString());
     System.out.println(make.invoke(0).next(inc).next(inc).next(half).except(zero).toString());
     System.out.println(make.invoke(0).next(inc).next(half).next(inc).except(zero).toString());
   }
-  
+
   public static void test6() {
-    Map<String, Map<String, Map<String, String>>> nus =
-          Map.of(
-            "CS2030S", Map.of(
-              "Steve", Map.of(
+    Map<String, Map<String, Map<String, String>>> nus = Map.of(
+        "CS2030S", Map.of(
+            "Steve", Map.of(
                 "lab1", "A",
                 "lab2", "A-",
                 "lab3", "A+",
                 "lab4", "B",
-                "pe1", "C"
-              ),
-              "Tony", Map.of(
+                "pe1", "C"),
+            "Tony", Map.of(
                 "lab1", "C",
                 "lab2", "C",
                 "lab3", "B-",
                 "lab4", "B+",
-                "pe1", "A"
-              )
-            ),
-            "CS2040S", Map.of(
-              "Steve", Map.of(
+                "pe1", "A")),
+        "CS2040S", Map.of(
+            "Steve", Map.of(
                 "lab1", "A",
                 "lab2", "A+",
                 "lab3", "A+",
                 "lab4", "A",
-                "midterm", "A+"
-              )
-            )
-          );
+                "midterm", "A+")));
 
     System.out.println(getGrade("CS2030S", "Steve", "lab1", nus));
     System.out.println(getGrade("CS2030S", "Steve", "lab2", nus));

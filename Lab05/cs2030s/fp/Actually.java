@@ -88,7 +88,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
    *
    * @return new Failure().
    */
-  public static <T> Actually<T> err(Object exception) {
+  public static <T> Actually<T> err(Exception exception) {
     // this is fine since we know that Failure is a subtype
     // of Actually.
     @SuppressWarnings("unchecked")
@@ -188,12 +188,8 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
     @Override
     public <R> Actually<R> next(Immutator<Actually<R>, T> immutator) {
       try {
-        return immutator.invoke(this.value);
+        return (Actually<R>) immutator.invoke(this.value);
       } catch (Exception e) {
-        // // okay to surppress since Actually.err(e) returns a Failure
-        // @SuppressWarnings("unchecked")
-        // Actually<R> actR = (Actually<R>) Actually.err(e);
-        // return actR;
         return Actually.err(e);
       }
     }
