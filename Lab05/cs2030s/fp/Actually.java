@@ -27,14 +27,14 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
    * @param c   value to be returned.
    * @return value of type T.
    */
-  public abstract <S extends T> T except(Constant<S> c);
+  public abstract <S extends T> T except(Constant<? extends S> c);
 
   /**
    * Abstract finish method.
    * 
    * @param action to be used.
    */
-  public abstract void finish(Action<T> action);
+  public abstract void finish(Action<? super T> action);
 
   /**
    * Abstract unless method.
@@ -139,7 +139,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      * @return value within {@code Success<T>}.
      */
     @Override
-    public <S extends T> T except(Constant<S> c) {
+    public <S extends T> T except(Constant<? extends S> c) {
       return this.value;
     }
 
@@ -149,7 +149,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      * @param action action to be performed.
      */
     @Override
-    public void finish(Action<T> action) {
+    public void finish(Action<? super T> action) {
       action.call(this.value);
     }
 
@@ -288,7 +288,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      * @return value within c.
      */
     @Override
-    public <S extends Object> S except(Constant<S> c) {
+    public <S extends Object> S except(Constant<? extends S> c) {
       return c.init();
     }
 
@@ -298,7 +298,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      * @param action :).
      */
     @Override
-    public void finish(Action<Object> action) {
+    public void finish(Action<? super Object> action) {
     }
 
     /**
