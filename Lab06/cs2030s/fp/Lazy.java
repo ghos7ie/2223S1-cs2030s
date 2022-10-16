@@ -51,6 +51,6 @@ public class Lazy<T> /* implements Immutatorable<T> */ {
    */
   @Override
   public String toString() {
-    return this.init.toString();
+    return this.init.init().toString();
   }
 }
