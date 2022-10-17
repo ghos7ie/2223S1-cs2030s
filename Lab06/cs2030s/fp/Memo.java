@@ -32,7 +32,12 @@ public class Memo<T> extends Lazy<T> {
    * @return Memo object through lambda expression.
    */
   public static <T> Memo<T> from(T v) {
-    return new Memo<>(() -> v, Actually.ok(v));
+    Constant<T> con = new Constant<>() {
+      public T init() {
+        return v;
+      }
+    };
+    return new Memo<>(con, Actually.ok(v));
   }
 
   /**
