@@ -81,11 +81,11 @@ public class Memo<T> extends Lazy<T> {
    * @param immutator contains the T value to wrap into {@code Lazy<R>}.
    * @return new {@code Memo<R>}.
    */
-  @Override
-  public <R> Memo<R> next(Immutator<? extends Lazy<R>, ? super T> immutator) {
-    Lazy<R> lazR = immutator.invoke(super.get());
-    return new Memo<>(() -> lazR.get(), Actually.next(lazR);
-  }
+  // @Override
+  // public <R> Memo<R> next(Immutator<? extends Lazy<R>, ? super T> immutator) {
+  //   Lazy<R> lazR = immutator.invoke(super.get());
+  //   return new Memo<>(() -> lazR.get(), Actually.next(lazR);
+  // }
 
   /**
    * Returns string representation of Memo.
