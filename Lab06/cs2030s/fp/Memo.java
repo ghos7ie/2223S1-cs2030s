@@ -32,12 +32,7 @@ public class Memo<T> extends Lazy<T> {
    * @return Memo object through lambda expression.
    */
   public static <T> Memo<T> from(T v) {
-    Constant<T> con = new Constant<>() {
-      public T init() {
-        return v;
-      }
-    };
-    return new Memo<>(con, Actually.ok(v));
+    return new Memo<>(() -> v, Actually.ok(v));
   }
 
   /**
@@ -65,15 +60,13 @@ public class Memo<T> extends Lazy<T> {
     return computedVal;
   }
 
-  @Override
   /**
    * Returns string representation of Memo.
    * 
    * @return String representation of Memo.
    */
+  @Override
   public String toString() {
-    // return this.value.transform(v -> String.valueOf(v)).unless("?").toString();
-
-    return null;
+    return this.value.transform(v -> String.valueOf(v)).toString();
   }
 }
