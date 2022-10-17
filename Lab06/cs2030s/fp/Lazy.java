@@ -74,8 +74,8 @@ public class Lazy<T> implements Immutatorable<T> {
    * @param immutator contains the T value to wrap into {@code Lazy<R>}.
    * @return new {@code Lazy<R>}.
    */
-  public <R> Lazy<R> next(Immutator<? extends Lazy<R>, ? super T> immutator) {
-    return Lazy.from(immutator.invoke(this.get()).get());
+  public <R> Lazy<R> next(Immutator<? extends Lazy<? extends R>, ? super T> immutator) {
+    return Lazy.from(() -> immutator.invoke(this.get()).get());
   }
 
   /**
