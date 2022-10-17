@@ -58,7 +58,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
    * 
    * @return Item of type {@code Immutatorable<R>}.
    */
-  public abstract <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator);
+  public abstract <R> Actually<R> transform(Immutator<? extends R, ? super T> immutator);
 
   /**
    * Abstract next method.
@@ -177,7 +177,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      *         or Failure.
      */
     @Override
-    public <R> Immutatorable<R> transform(Immutator<? extends R, ? super T> immutator) {
+    public <R> Actually<R> transform(Immutator<? extends R, ? super T> immutator) {
       try {
         return Actually.ok(immutator.invoke(this.value));
       } catch (Exception e) {
@@ -327,7 +327,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      * @return new Failure wrapped in Actually.
      */
     @Override
-    public <R> Immutatorable<R> transform(Immutator<? extends R, ? super Object> immutator) {
+    public <R> Actually<R> transform(Immutator<? extends R, ? super Object> immutator) {
       return Actually.err(this.exception);
     }
 

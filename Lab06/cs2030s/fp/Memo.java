@@ -67,6 +67,6 @@ public class Memo<T> extends Lazy<T> {
    */
   @Override
   public String toString() {
-    return this.value.transform(v -> String.valueOf(v)).toString();
+    return this.value.transform(v -> String.valueOf(v)).unless("?");
   }
 }
