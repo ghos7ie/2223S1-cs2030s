@@ -8,7 +8,7 @@ package cs2030s.fp;
  *
  * @author Lewis Lye [14A]
  */
-public class Lazy<T> /* implements Immutatorable<T> */ {
+public class Lazy<T> implements Immutatorable<T> {
   private Constant<? extends T> init;
 
   /**
@@ -54,6 +54,31 @@ public class Lazy<T> /* implements Immutatorable<T> */ {
   }
 
   /**
+   * Mutates value of Lazy.
+   * 
+   * @param <R>Explicit type parameter. Telling compiler that the type of
+   *                    return will be R.
+   * @param f           immutator that is going to mutate the value.
+   * @return new {@code Lazy<R>}.
+   */
+  @Override
+  public <R> Lazy<R> transform(Immutator<? extends R, ? super T> f) {
+    return new Lazy<>(() -> f.invoke(this.get()));
+  }
+
+  /**
+   * Next method. Mutates Lazy based on Immutator.
+   * 
+   * @param <R>       Explicit type parameter. Telling compiler that the type of
+   *                  return will be R.
+   * @param immutator contains the T value to wrap into {@code Lazy<R>}.
+   * @return new {@code Lazy<R>}.
+   */
+  public <R> Lazy<R> next(Immutator<? extends Lazy<R>, ? super T> immutator) {
+    return immutator.invoke(this.get());
+  }
+
+  /**
    * String representation of Lazy.
    * 
    * @return String representation of Lazy.
@@ -62,4 +87,5 @@ public class Lazy<T> /* implements Immutatorable<T> */ {
   public String toString() {
     return this.get().toString();
   }
+
 }

@@ -61,6 +61,33 @@ public class Memo<T> extends Lazy<T> {
   }
 
   /**
+   * Mutates value of Memo.
+   * 
+   * @param <R>Explicit type parameter. Telling compiler that the type of
+   *                    return will be R.
+   * @param f           immutator that is going to mutate the value.
+   * @return new {@code Memo<R>}.
+   */
+  @Override
+  public <R> Memo<R> transform(Immutator<? extends R, ? super T> f) {
+    return new Memo<>(() -> f.invoke(super.get()), Actually.err(new Exception("error")));
+  }
+
+  /**
+   * Abstract next method.
+   * 
+   * @param <R>       Explicit type parameter. Telling compiler that the type of
+   *                  return will be R.
+   * @param immutator contains the T value to wrap into {@code Lazy<R>}.
+   * @return new {@code Memo<R>}.
+   */
+  @Override
+  public <R> Memo<R> next(Immutator<? extends Lazy<R>, ? super T> immutator) {
+    Lazy<R> lazR = immutator.invoke(super.get());
+    return new Memo<>(() -> lazR.get(), Actually.next(lazR);
+  }
+
+  /**
    * Returns string representation of Memo.
    * 
    * @return String representation of Memo.
