@@ -70,7 +70,7 @@ public class Memo<T> extends Lazy<T> {
    */
   @Override
   public <R> Memo<R> transform(Immutator<? extends R, ? super T> f) {
-    return new Memo<>(() -> f.invoke(super.get()), Actually.err(new Exception("error")));
+    return Memo.from(() -> f.invoke(super.get()));
   }
 
   /**
@@ -83,7 +83,7 @@ public class Memo<T> extends Lazy<T> {
    */
   @Override
   public <R> Memo<R> next(Immutator<? extends Lazy<R>, ? super T> immutator) {
-    return new Memo<>(() -> immutator.invoke(super.get()).get(), Actually.err(new Exception("error")));
+    return Memo.from(() -> immutator.invoke(super.get()).get());
   }
 
   /**

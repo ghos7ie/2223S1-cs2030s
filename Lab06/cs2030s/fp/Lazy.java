@@ -63,7 +63,7 @@ public class Lazy<T> implements Immutatorable<T> {
    */
   @Override
   public <R> Lazy<R> transform(Immutator<? extends R, ? super T> f) {
-    return new Lazy<>(() -> f.invoke(this.get()));
+    return Lazy.from(() -> f.invoke(this.get()));
   }
 
   /**
@@ -75,7 +75,7 @@ public class Lazy<T> implements Immutatorable<T> {
    * @return new {@code Lazy<R>}.
    */
   public <R> Lazy<R> next(Immutator<? extends Lazy<R>, ? super T> immutator) {
-    return immutator.invoke(this.get());
+    return Lazy.from(immutator.invoke(this.get()).get());
   }
 
   /**
