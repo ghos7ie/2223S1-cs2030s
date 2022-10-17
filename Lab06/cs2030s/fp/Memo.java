@@ -63,9 +63,9 @@ public class Memo<T> extends Lazy<T> {
   /**
    * Mutates value of Memo.
    * 
-   * @param <R>Explicit type parameter. Telling compiler that the type of
-   *                    return will be R.
-   * @param f           immutator that is going to mutate the value.
+   * @param <R> Explicit type parameter. Telling compiler that the type of
+   *            return will be R.
+   * @param f   immutator that is going to mutate the value.
    * @return new {@code Memo<R>}.
    */
   @Override
@@ -84,6 +84,19 @@ public class Memo<T> extends Lazy<T> {
   @Override
   public <R> Memo<R> next(Immutator<? extends Lazy<? extends R>, ? super T> immutator) {
     return Memo.from(() -> immutator.invoke(this.get()).get());
+  }
+
+  /**
+   * Combines 2 Memos into 1 lazily.
+   * 
+   * @param <S>      The type of the 2nd value for combine function.
+   * @param <R>      The type of the return value of combine function.
+   * @param s        Memo to be combined with.
+   * @param combiner Combiner function.
+   * @return Memo comprising of both memos.
+   */
+  public <R, S> Memo<R> combine(Memo<S> s, Combiner<? extends R, ? super S, ? super T> combiner) {
+    return Memo.from(() -> combiner.combine(s.get(), this.get()));
   }
 
   /**
