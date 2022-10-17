@@ -1,5 +1,13 @@
 package cs2030s.fp;
 
+/**
+ * {@code Lazy<T>} class.
+ * 
+ * @version CS2030S Lab 6
+ *          AY22/23 Semester 1
+ *
+ * @author Lewis Lye [14A]
+ */
 public class Lazy<T> /* implements Immutatorable<T> */ {
   private Constant<? extends T> init;
 
@@ -25,6 +33,7 @@ public class Lazy<T> /* implements Immutatorable<T> */ {
   }
 
   /**
+   * Creates a Lazy object with an uninitialized value.
    * 
    * @param <T> Explicit type parameter. Telling compiler that the type of
    *            return will be T.
@@ -51,6 +60,6 @@ public class Lazy<T> /* implements Immutatorable<T> */ {
    */
   @Override
   public String toString() {
-    return this.init.init().toString();
+    return this.get().toString();
   }
 }

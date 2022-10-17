@@ -3,7 +3,7 @@ package cs2030s.fp;
 /**
  * {@code Actually<T>} class.
  * 
- * @version CS2030S Lab 5
+ * @version CS2030S Lab 6
  *          AY22/23 Semester 1
  *
  * @author Lewis Lye [14A]
@@ -45,7 +45,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
    * @param item item of subtype T.
    * @return value of subtype T.
    */
-  // alt: public abstract T unless(T item) 
+  // alt: public abstract T unless(T item)
   public abstract <U extends T> T unless(U item);
 
   /**
@@ -266,7 +266,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
      *
      */
     public Failure(Exception exception) {
-      this.exception =  exception;
+      this.exception = exception;
     }
 
     /**
