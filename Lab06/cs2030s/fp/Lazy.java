@@ -56,9 +56,9 @@ public class Lazy<T> implements Immutatorable<T> {
   /**
    * Mutates value of Lazy.
    * 
-   * @param <R>Explicit type parameter. Telling compiler that the type of
-   *                    return will be R.
-   * @param f           immutator that is going to mutate the value.
+   * @param <R> Explicit type parameter. Telling compiler that the type of
+   *            return will be R.
+   * @param f   immutator that is going to mutate the value.
    * @return new {@code Lazy<R>}.
    */
   @Override
