@@ -370,6 +370,7 @@ public abstract class Actually<T> implements Immutatorable<T>, Actionable<T> {
         Failure fail = (Failure) obj;
         if (this.exception.getMessage() == null || fail.exception.getMessage() == null) {
           return false;
+          // should do this.exception.getMessage().equals(fail.exception.getMessage())
         } else if (this.exception.getMessage() == fail.exception.getMessage()) {
           return true;
         } else {
