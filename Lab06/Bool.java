@@ -15,7 +15,7 @@ class Bool implements Cond {
 
   @Override
   public String toString() {
-    return this.val.transform(b -> b.toString()).transform(s -> s.substring(0, 1)).toString();
+    return this.val.transform(s -> s.toString().substring(0, 1)).toString();
   }
 
   @Override
