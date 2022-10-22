@@ -78,6 +78,14 @@ class MemoList<T> {
     return memoList;
   }
 
+  public MemoList<T> map(Immutator<T, T> f) {
+    MemoList<T> memoList = new MemoList<>(new ArrayList<>());
+    for (Memo<T> m : this.list) {
+      memoList.list.add(m.transform(f));
+    }
+    return memoList;
+  }
+
   /**
    * Return the element at index i of the list.
    *
