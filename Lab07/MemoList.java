@@ -62,6 +62,7 @@ class MemoList<T> {
     Memo<T> curr2 = Memo.from(snd);
     memoList.list.add(curr1);
     memoList.list.add(curr2);
+    n = n - 2;
     for (int i = 0; i < n; i++) {
       if (n % 2 == 0) {
         // first combine curr1 to give next number in seq
