@@ -95,7 +95,7 @@ public class Memo<T> extends Lazy<T> {
    * @param combiner Combiner function.
    * @return Memo comprising of both memos.
    */
-  public <R, S> Memo<R> combine(Memo<S> s, Combiner<? extends R, T, S> combiner) {
+  public <R, S> Memo<R> combine(Memo<S> s, Combiner<R, T, S> combiner) {
     return Memo.from(() -> combiner.combine(this.get(), s.get()));
   }
 
