@@ -62,7 +62,7 @@ class MemoList<T> {
    * @return The index of the element in the list.  -1 is element is not in the list.
    */
   public int indexOf(T v) {
-    return this.list.indexOf(v);
+    return this.list.indexOf(Memo.from(v));
   }
 
   /** 
