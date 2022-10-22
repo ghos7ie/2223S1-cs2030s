@@ -1,6 +1,6 @@
 import cs2030s.fp.Immutator;
-import cs2030s.fp.Memo;
 import cs2030s.fp.Combiner;
+import cs2030s.fp.Memo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +58,8 @@ class MemoList<T> {
    * @param f   The combiner function on the elements.
    * @return The created list.
    */
-  public static <T> MemoList<T> generate(int n, T fst, T snd, Combiner<? extends T, ? super T, ? super T> f) {
+  public static <T> MemoList<T> generate(int n, T fst, T snd, 
+  Combiner<? extends T, ? super T, ? super T> f) {
     MemoList<T> memoList = new MemoList<>(new ArrayList<>());
     Memo<T> curr1 = Memo.from(fst);
     Memo<T> curr2 = Memo.from(snd);
