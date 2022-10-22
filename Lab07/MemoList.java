@@ -58,7 +58,7 @@ class MemoList<T> {
    * @param f   The combiner function on the elements.
    * @return The created list.
    */
-  public static <T> MemoList<T> generate(int n, T fst, T snd, Combiner<T, T, T> f) {
+  public static <T> MemoList<T> generate(int n, T fst, T snd, Combiner<? extends T, ? super T, ? super T> f) {
     MemoList<T> memoList = new MemoList<>(new ArrayList<>());
     Memo<T> curr1 = Memo.from(fst);
     Memo<T> curr2 = Memo.from(snd);
@@ -78,10 +78,28 @@ class MemoList<T> {
     return memoList;
   }
 
-  public MemoList<T> map(Immutator<T, T> f) {
-    MemoList<T> memoList = new MemoList<>(new ArrayList<>());
+  /**
+   * Lazily applies provided immutator on each element without evaluation.
+   * 
+   * @param <R> The type of the elements in the list.
+   * @param f   The immutator function on the elements.
+   * @return The created list.
+   */
+  public <R> MemoList<R> map(Immutator<? extends R, ? super T> f) {
+    MemoList<R> memoList = new MemoList<>(new ArrayList<>());
     for (Memo<T> m : this.list) {
       memoList.list.add(m.transform(f));
+    }
+    return memoList;
+  }
+
+  public <R> MemoList<R> flatMap(Immutator<MemoList<R>, ? super T> f) {
+    MemoList<R> memoList = new MemoList<>(new ArrayList<>());
+    for (int i = 0; i < this.list.size(); i++) {
+      MemoList<R> tempList = f.invoke(this.get(i));
+      for (Memo<R> temp : tempList.list) {
+        memoList.list.add(temp);
+      }
     }
     return memoList;
   }
