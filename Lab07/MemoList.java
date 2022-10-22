@@ -47,16 +47,18 @@ class MemoList<T> {
   }
 
   /**
-   * Generate the content of the list. Given x and a lambda f,
+   * Lazy Fibonacci Sequence.
+   * Generate the content of the list. Given x, y and a lambda f,
    * generate the list of n elements as [x, y, f(x,y), f(y,f(x,y))* ... ]
    *
-   * @param <T>  The type of the elements in the list.
-   * @param n    The number of elements.
-   * @param seed The first element.
-   * @param f    The immutator function on the elements.
+   * @param <T> The type of the elements in the list.
+   * @param n   The number of elements.
+   * @param fst The first element.
+   * @param snd The second element.
+   * @param f   The combiner function on the elements.
    * @return The created list.
    */
-  public static <R, T> MemoList<T> generate(int n, T fst, T snd, Combiner<T, T, T> f) {
+  public static <T> MemoList<T> generate(int n, T fst, T snd, Combiner<T, T, T> f) {
     MemoList<T> memoList = new MemoList<>(new ArrayList<>());
     Memo<T> curr1 = Memo.from(fst);
     Memo<T> curr2 = Memo.from(snd);
