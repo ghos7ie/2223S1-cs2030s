@@ -62,13 +62,16 @@ class MemoList<T> {
     Memo<T> curr2 = Memo.from(snd);
     memoList.list.add(curr1);
     memoList.list.add(curr2);
-    n = n - 2;
-    for (int i = 0; i < n; i++) {
-      // first combine curr1 to give next number in seq
-      curr1 = curr1.combine(curr2, f);
-      memoList.list.add(curr1);
-      // then combine curr2 to get subsequent number in seq
-      curr2 = curr2.combine(curr1, f);
+    // starting from 2 since first 2 evaluated already
+    for (int i = 2; i < n; i++) {
+      // if even
+      if (i % 2 == 0) {
+        curr1 = curr1.combine(curr2, f);
+        memoList.list.add(curr1);
+      } else {
+        curr2 = curr2.combine(curr1, f);
+        memoList.list.add(curr2);
+      }
     }
     return memoList;
   }
