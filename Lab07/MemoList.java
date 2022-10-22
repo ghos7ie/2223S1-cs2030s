@@ -1,5 +1,5 @@
-import cs2030s.fp.Immutator;
 import cs2030s.fp.Combiner;
+import cs2030s.fp.Immutator;
 import cs2030s.fp.Memo;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,24 +59,24 @@ class MemoList<T> {
    * @return The created list.
    */
   public static <T> MemoList<T> generate(int n, T fst, T snd, 
-  Combiner<? extends T, ? super T, ? super T> f) {
-    MemoList<T> memoList = new MemoList<>(new ArrayList<>());
-    Memo<T> curr1 = Memo.from(fst);
-    Memo<T> curr2 = Memo.from(snd);
-    memoList.list.add(curr1);
-    memoList.list.add(curr2);
-    // starting from 2 since first 2 evaluated already
-    for (int i = 2; i < n; i++) {
-      // if even
-      if (i % 2 == 0) {
-        curr1 = curr1.combine(curr2, f);
+      Combiner<? extends T, ? super T, ? super T> f) {
+        MemoList<T> memoList = new MemoList<>(new ArrayList<>());
+        Memo<T> curr1 = Memo.from(fst);
+        Memo<T> curr2 = Memo.from(snd);
         memoList.list.add(curr1);
-      } else {
-        curr2 = curr2.combine(curr1, f);
         memoList.list.add(curr2);
-      }
-    }
-    return memoList;
+        // starting from 2 since first 2 evaluated already
+        for (int i = 2; i < n; i++) {
+          // if even
+          if (i % 2 == 0) {
+            curr1 = curr1.combine(curr2, f);
+            memoList.list.add(curr1);
+          } else {
+            curr2 = curr2.combine(curr1, f);
+            memoList.list.add(curr2);
+          }
+        }
+        return memoList;
   }
 
   /**
