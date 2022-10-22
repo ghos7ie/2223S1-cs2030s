@@ -64,15 +64,11 @@ class MemoList<T> {
     memoList.list.add(curr2);
     n = n - 2;
     for (int i = 0; i < n; i++) {
-      if (n % 2 == 0) {
-        // first combine curr1 to give next number in seq
-        curr1 = curr1.combine(curr2, f);
-        memoList.list.add(curr1);
-      } else {
-        // then combine curr2 to get subsequent number in seq
-        curr2 = curr2.combine(curr1, f);
-        memoList.list.add(curr2);
-      }
+      // first combine curr1 to give next number in seq
+      curr1 = curr1.combine(curr2, f);
+      memoList.list.add(curr1);
+      // then combine curr2 to get subsequent number in seq
+      curr2 = curr2.combine(curr1, f);
     }
     return memoList;
   }
