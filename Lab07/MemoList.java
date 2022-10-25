@@ -18,7 +18,8 @@ class MemoList<T> {
   /**
    * A private constructor to initialize the list to the given one.
    *
-   * @param list The given java.util.List to wrap around.
+   * @param list
+   *          The given java.util.List to wrap around.
    */
   private MemoList(List<Memo<T>> list) {
     this.list = list;
@@ -29,10 +30,14 @@ class MemoList<T> {
    * generate the list of n elements as [x, f(x), f(f(x)), f(f(f(x))),
    * ... ]
    *
-   * @param <T>  The type of the elements in the list.
-   * @param n    The number of elements.
-   * @param seed The first element.
-   * @param f    The immutator function on the elements.
+   * @param <T>
+   *          The type of the elements in the list.
+   * @param n
+   *          The number of elements.
+   * @param seed
+   *          The first element.
+   * @param f
+   *          The immutator function on the elements.
    * @return The created list.
    */
   public static <T> MemoList<T> generate(int n, T seed, Immutator<? extends T, ? super T> f) {
@@ -51,14 +56,19 @@ class MemoList<T> {
    * Generate the content of the list. Given x, y and a lambda f,
    * generate the list of n elements as [x, y, f(x,y), f(y,f(x,y))* ... ]
    *
-   * @param <T> The type of the elements in the list.
-   * @param n   The number of elements.
-   * @param fst The first element.
-   * @param snd The second element.
-   * @param f   The combiner function on the elements.
+   * @param <T>
+   *          The type of the elements in the list.
+   * @param n
+   *          The number of elements.
+   * @param fst
+   *          The first element.
+   * @param snd
+   *          The second element.
+   * @param f
+   *          The combiner function on the elements.
    * @return The created list.
    */
-  public static <T> MemoList<T> generate(int n, T fst, T snd, 
+  public static <T> MemoList<T> generate(int n, T fst, T snd,
       Combiner<? extends T, ? super T, ? super T> f) {
     MemoList<T> memoList = new MemoList<>(new ArrayList<>());
     Memo<T> curr1 = Memo.from(fst);
@@ -82,8 +92,10 @@ class MemoList<T> {
   /**
    * Lazily applies provided immutator on each element without evaluation.
    * 
-   * @param <R> The type of the elements in the list.
-   * @param f   The immutator function on the elements.
+   * @param <R>
+   *          The type of the elements in the list.
+   * @param f
+   *          The immutator function on the elements.
    * @return The created list.
    */
   public <R> MemoList<R> map(Immutator<? extends R, ? super T> f) {
@@ -94,10 +106,10 @@ class MemoList<T> {
     return memoList;
   }
 
-  public <R> MemoList<R> flatMap(Immutator<MemoList<R>, ? super T> f) {
+  public <R> MemoList<R> flatMap(Immutator<? extends MemoList<R>, ? super T> f) {
     MemoList<R> memoList = new MemoList<>(new ArrayList<>());
-    for (int i = 0; i < this.list.size(); i++) {
-      MemoList<R> tempList = f.invoke(this.get(i));
+    for (Memo<T> m : this.list) {
+      MemoList<R> tempList = f.invoke(m.get());
       for (Memo<R> temp : tempList.list) {
         memoList.list.add(temp);
       }
@@ -108,7 +120,8 @@ class MemoList<T> {
   /**
    * Return the element at index i of the list.
    *
-   * @param i The index of the element to retrieved (0 for the 1st element).
+   * @param i
+   *          The index of the element to retrieved (0 for the 1st element).
    * @return The element at index i.
    */
   public T get(int i) {
@@ -118,7 +131,8 @@ class MemoList<T> {
   /**
    * Find the index of a given element.
    *
-   * @param v The value of the element to look for.
+   * @param v
+   *          The value of the element to look for.
    * @return The index of the element in the list. -1 is element is not in the
    *         list.
    */
