@@ -67,16 +67,30 @@ public class InfiniteList<T> {
     return this.head.get().transform(x -> this.tail.get()).except(() -> this.tail.get().tail());
   }
 
+  /**
+   * Lazily applies immutator to each element in the infinite list.
+   * 
+   * @param <R> The type of elements in the new list.
+   * @param f   The immutator to mutate each elements with.
+   * @return New InfiniteList with mutated values.
+   */
   public <R> InfiniteList<R> map(Immutator<? extends R, ? super T> f) {
-    // TODO
     return new InfiniteList<R>(
         this.head.transform(h -> h.transform(f)),
+        // recursively call map and apply immutator to each head value.
         this.tail.transform(t -> t.map(f)));
   }
 
+  /**
+   * Filters out elements that fail given the Immutator provided.
+   * 
+   * @param pred The immutator to check each element with.
+   * @return new List of elements that fail the Immutator.
+   */
   public InfiniteList<T> filter(Immutator<Boolean, ? super T> pred) {
-    // TODO
-    return new InfiniteList<>(null, null);
+    return new InfiniteList<>(
+        head.transform(h -> h.check(pred)),
+        tail.transform(t -> t.filter(pred)));
   }
 
   public InfiniteList<T> limit(long n) {
