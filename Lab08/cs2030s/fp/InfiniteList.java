@@ -44,7 +44,7 @@ public class InfiniteList<T> {
    */
   public static <T> InfiniteList<T> iterate(T seed, Immutator<T, T> func) {
     // TODO
-    return new InfiniteList<>(Memo.from(() -> Actually.ok(seed)),
+    return new InfiniteList<>(Memo.from(Actually.ok(seed)),
         Memo.from(() -> InfiniteList.iterate(func.invoke(seed), func)));
   }
 
