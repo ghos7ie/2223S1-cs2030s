@@ -51,20 +51,25 @@ public class InfiniteList<T> {
   /**
    * Returns the head of the List or subsequent one if current head is empty.
    * 
-   * @return First element of type T.
+   * @return First non-null head field.
    */
   public T head() {
     return this.head.get().except(() -> this.tail.get().head());
   }
 
+  /**
+   * Returns the tail value of the first non-null head field.
+   * 
+   * @return Tail value of the first non-null head field.
+   */
   public InfiniteList<T> tail() {
     // TODO
-    return new InfiniteList<>(null, null);
+    return this.head.get().transform(x -> this.tail.get()).except(() -> this.tail.get().tail());
   }
 
   public <R> InfiniteList<R> map(Immutator<? extends R, ? super T> f) {
     // TODO
-    return new InfiniteList<>(null, null);
+    return new InfiniteList<R>(null, null);
   }
 
   public InfiniteList<T> filter(Immutator<Boolean, ? super T> pred) {
