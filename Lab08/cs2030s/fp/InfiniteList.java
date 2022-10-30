@@ -63,13 +63,15 @@ public class InfiniteList<T> {
    * @return Tail value of the first non-null head field.
    */
   public InfiniteList<T> tail() {
-    // TODO
+    // transform basically returns tail if head is null
     return this.head.get().transform(x -> this.tail.get()).except(() -> this.tail.get().tail());
   }
 
   public <R> InfiniteList<R> map(Immutator<? extends R, ? super T> f) {
     // TODO
-    return new InfiniteList<R>(null, null);
+    return new InfiniteList<R>(
+        this.head.transform(h -> h.transform(f)),
+        this.tail.transform(t -> t.map(f)));
   }
 
   public InfiniteList<T> filter(Immutator<Boolean, ? super T> pred) {
