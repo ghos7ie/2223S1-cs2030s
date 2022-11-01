@@ -1,5 +1,6 @@
 package cs2030s.fp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -131,9 +132,20 @@ public class InfiniteList<T> {
         tail.transform(t -> t.filter(pred)));
   }
 
+  /**
+   * Truncates Infinitelist to a FiniteList :).
+   * With at most n elements.
+   * 
+   * @param n max number of elements in the "InfiniteList".
+   * @return Truncated InfiniteList.
+   */
   public InfiniteList<T> limit(long n) {
-    // TODO
-    return new InfiniteList<>(null, null);
+    // returns and end if n is less than or equals to 0
+    // else recursively creates an Infinitelist until n = 0
+    return n <= 0 ? end()
+        : new InfiniteList<>(
+            Memo.from(() -> Actually.ok(this.head())),
+            Memo.from(() -> this.tail().limit(n - 1)));
   }
 
   public InfiniteList<T> takeWhile(Immutator<Boolean, ? super T> pred) {
@@ -141,9 +153,21 @@ public class InfiniteList<T> {
     return new InfiniteList<>(null, null);
   }
 
+  /**
+   * Collects elements in InfiniteList into a list.
+   * 
+   * @return List containing all the elements in the InfiniteList.
+   */
   public List<T> toList() {
-    // TODO
-    return List.of();
+    List<T> rList = new ArrayList<>();
+    InfiniteList<T> iList = this;
+    while (!this.isEnd()) {
+      if (this.head.get().transform(x -> true).unless(false)) {
+        rList.add(this.head());
+      }
+      iList = iList.tail.get();
+    }
+    return rList;
   }
 
   public <U> U reduce(U id, Combiner<U, U, ? super T> acc) {
@@ -221,6 +245,16 @@ public class InfiniteList<T> {
      */
     public InfiniteList<Object> filter(Immutator<Boolean, ? super Object> pred) {
       return End.end();
+    }
+
+    /**
+     * Returns empty list.
+     * 
+     * @return Empty List.
+     */
+    @Override
+    public List<Object> toList() {
+      return List.of();
     }
 
     /**
