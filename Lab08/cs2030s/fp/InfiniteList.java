@@ -169,12 +169,12 @@ public class InfiniteList<T> {
    * 
    * @return Returns false as it is not the end.
    */
-  public static boolean isEnd() {
+  public boolean isEnd() {
     return false;
   }
 
   // Add your End class here...
-  private static class End extends InfiniteList<Object> {
+  static class End extends InfiniteList<Object> {
     /**
      * Constructor for End.
      */
@@ -203,11 +203,32 @@ public class InfiniteList<T> {
     }
 
     /**
+     * Lazily applies immutator to each element in the infinite list.
+     * 
+     * @param <R> The type of elements in the new list.
+     * @param f   The immutator to mutate each elements with.
+     * @return New InfiniteList with mutated values.
+     */
+    public <R> InfiniteList<R> map(Immutator<? extends R, ? super Object> f) {
+      return End.end();
+    }
+
+    /**
+     * Filters out elements that fail given the Immutator provided.
+     * 
+     * @param pred The immutator to check each element with.
+     * @return new List of elements that fail the Immutator.
+     */
+    public InfiniteList<Object> filter(Immutator<Boolean, ? super Object> pred) {
+      return End.end();
+    }
+
+    /**
      * Checks if InfiniteList is the end.
      * 
      * @return Returns true as it is end.
      */
-    public static boolean isEnd() {
+    public boolean isEnd() {
       return true;
     }
 
