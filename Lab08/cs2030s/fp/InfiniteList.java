@@ -12,14 +12,39 @@ import java.util.List;
  */
 
 public class InfiniteList<T> {
+  /**
+   * Actually encapsulated by Memo.
+   */
   private Memo<Actually<T>> head;
+  /**
+   * InfiniteList encapsulated by Memo.
+   * Contains the rest of the elements in the InfiniteList.
+   */
   private Memo<InfiniteList<T>> tail;
 
+  /**
+   * Caches the end of the infinite list.
+   */
+  private static final End END = new End();
+
+  /**
+   * Factory method of Infinite List.
+   * 
+   * @param head Starting element.
+   * @param tail Rest of the list.
+   */
   private InfiniteList(Memo<Actually<T>> head, Memo<InfiniteList<T>> tail) {
     this.head = head;
     this.tail = tail;
   }
+
   // You may add other private constructor but it's not necessary.
+  /**
+   * Empty constructor for InfiniteList.
+   */
+  private InfiniteList() {
+
+  }
 
   /**
    * Generates an infinite list given the constant.
@@ -118,14 +143,68 @@ public class InfiniteList<T> {
     return 0L;
   }
 
+  /**
+   * String represenation of InfiniteList.
+   */
   @Override
   public String toString() {
     return "[" + this.head + " " + this.tail + "]";
   }
 
+  /**
+   * Checks if InfiniteList is the end.
+   * 
+   * @return Retruns false as it is not the end.
+   */
   public boolean isEnd() {
     return false;
   }
 
   // Add your End class here...
+  private static class End extends InfiniteList<Object> {
+    /**
+     * Constructor for End.
+     */
+    End() {
+      super();
+    }
+
+    /**
+     * Returns the head of the List or subsequent one if current head is empty.
+     * 
+     * @return No Such Element Exception.
+     */
+    @Override
+    public Object head() {
+      throw new java.util.NoSuchElementException();
+    }
+
+    /**
+     * Returns the tail value of the first non-null head field.
+     * 
+     * @return No Such Element Exception.
+     */
+    @Override
+    public InfiniteList<Object> tail() {
+      throw new java.util.NoSuchElementException();
+    }
+
+    /**
+     * Checks if InfiniteList is the end.
+     * 
+     * @return Retruns true as it is end.
+     */
+    @Override
+    public boolean isEnd() {
+      return true;
+    }
+
+    /**
+     * String represenation of InfiniteList.
+     */
+    @Override
+    public String toString() {
+      return "-";
+    }
+  }
 }
