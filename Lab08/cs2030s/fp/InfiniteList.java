@@ -74,6 +74,18 @@ public class InfiniteList<T> {
   }
 
   /**
+   * Creates the end infinite list.
+   * 
+   * @param <T> The type of elements in the list.
+   * @return Empty Infinite List.
+   */
+  public static <T> InfiniteList<T> end() {
+    @SuppressWarnings("unchecked")
+    InfiniteList<T> end = (InfiniteList<T>) END;
+    return end;
+  }
+
+  /**
    * Returns the head of the List or subsequent one if current head is empty.
    * 
    * @return First non-null head field.
