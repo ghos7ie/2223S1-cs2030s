@@ -44,8 +44,6 @@ public class InfiniteList<T> {
    * Empty constructor for InfiniteList.
    */
   private InfiniteList() {
-    this.head = null;
-    this.tail = null;
   }
 
   /**
