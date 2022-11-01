@@ -43,7 +43,8 @@ public class InfiniteList<T> {
    * Empty constructor for InfiniteList.
    */
   private InfiniteList() {
-
+    this.head = null;
+    this.tail = null;
   }
 
   /**
@@ -173,7 +174,7 @@ public class InfiniteList<T> {
   }
 
   // Add your End class here...
-  static class End extends InfiniteList<Object> {
+  private static class End extends InfiniteList<Object> {
     /**
      * Constructor for End.
      */
@@ -206,6 +207,7 @@ public class InfiniteList<T> {
      * 
      * @return Retruns true as it is end.
      */
+    @Override
     public boolean isEnd() {
       return true;
     }
