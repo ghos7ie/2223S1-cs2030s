@@ -167,9 +167,9 @@ public class InfiniteList<T> {
   /**
    * Checks if InfiniteList is the end.
    * 
-   * @return Retruns false as it is not the end.
+   * @return Returns false as it is not the end.
    */
-  public boolean isEnd() {
+  public static boolean isEnd() {
     return false;
   }
 
@@ -205,10 +205,9 @@ public class InfiniteList<T> {
     /**
      * Checks if InfiniteList is the end.
      * 
-     * @return Retruns true as it is end.
+     * @return Returns true as it is end.
      */
-    @Override
-    public boolean isEnd() {
+    public static boolean isEnd() {
       return true;
     }
 
