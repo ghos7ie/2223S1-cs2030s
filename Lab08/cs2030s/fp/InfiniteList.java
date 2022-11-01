@@ -206,7 +206,6 @@ public class InfiniteList<T> {
      * 
      * @return Retruns true as it is end.
      */
-    @Override
     public boolean isEnd() {
       return true;
     }
