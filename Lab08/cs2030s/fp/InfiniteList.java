@@ -140,7 +140,7 @@ public class InfiniteList<T> {
    * @return Truncated InfiniteList.
    */
   public InfiniteList<T> limit(long n) {
-    // returns and end if n is less than or equals to 0
+    // returns an end if n is less than or equals to 0
     // else recursively creates an Infinitelist until n = 0
     return n <= 0 ? end()
         : new InfiniteList<>(
@@ -162,7 +162,7 @@ public class InfiniteList<T> {
     List<T> rList = new ArrayList<>();
     InfiniteList<T> iList = this;
     while (!this.isEnd()) {
-      if (this.head.get().transform(x -> true).unless(false)) {
+      if (iList.head.get().transform(x -> true).unless(false)) {
         rList.add(this.head());
       }
       iList = iList.tail.get();
