@@ -173,7 +173,7 @@ public class InfiniteList<T> {
   }
 
   // Add your End class here...
-  private static class End extends InfiniteList<Object> {
+  static class End extends InfiniteList<Object> {
     /**
      * Constructor for End.
      */
