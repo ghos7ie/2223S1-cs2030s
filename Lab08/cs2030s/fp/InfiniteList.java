@@ -159,9 +159,9 @@ public class InfiniteList<T> {
   public List<T> toList() {
     List<T> rList = new ArrayList<>();
     InfiniteList<T> iList = this;
-    while (!this.isEnd()) {
+    while (!iList.isEnd()) {
       if (iList.head.get().transform(x -> true).unless(false)) {
-        rList.add(this.head());
+        rList.add(iList.head());
       }
       iList = iList.tail.get();
     }
