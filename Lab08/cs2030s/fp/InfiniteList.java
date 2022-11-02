@@ -138,16 +138,12 @@ public class InfiniteList<T> {
    * @return Truncated InfiniteList.
    */
   public InfiniteList<T> limit(long n) {
-    if (this.isEnd()){
     // returns an end if n is less than or equals to 0
     // else recursively creates an Infinitelist until n = 0
     return n <= 0 ? end()
         : new InfiniteList<>(
             Memo.from(() -> Actually.ok(this.head())),
             Memo.from(() -> this.tail().limit(n - 1)));
-    }else{
-      return end();
-    }
   }
 
   public InfiniteList<T> takeWhile(Immutator<Boolean, ? super T> pred) {
@@ -246,6 +242,11 @@ public class InfiniteList<T> {
      * @return new List of elements that fail the Immutator.
      */
     public InfiniteList<Object> filter(Immutator<Boolean, ? super Object> pred) {
+      return End.end();
+    }
+
+    @Override
+    public InfiniteList<Object> limit(long n) {
       return End.end();
     }
 
