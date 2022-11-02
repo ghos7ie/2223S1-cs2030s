@@ -142,7 +142,7 @@ public class InfiniteList<T> {
     // else recursively creates an Infinitelist until n = 0
     return n <= 0 ? end()
         : new InfiniteList<>(
-            this.head,
+          Memo.from(() -> this.head.get()),
             Memo.from(() -> this.tail().limit(n - 1)));
   }
 
