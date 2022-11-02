@@ -126,8 +126,8 @@ public class InfiniteList<T> {
    */
   public InfiniteList<T> filter(Immutator<Boolean, ? super T> pred) {
     return new InfiniteList<>(
-        head.transform(h -> h.check(pred)),
-        tail.transform(t -> t.filter(pred)));
+        this.head.transform(h -> h.check(pred)),
+        this.tail.transform(t -> t.filter(pred)));
   }
 
   /**
