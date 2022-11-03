@@ -101,7 +101,9 @@ public class InfiniteList<T> {
    */
   public InfiniteList<T> tail() {
     // transform basically returns tail if head is null
-    return this.head.get().transform(x -> this.tail.get()).except(() -> this.tail.get().tail());
+    return this.head.get()
+        .transform(x -> this.tail.get())
+        .except(() -> this.tail.get().tail());
   }
 
   /**
@@ -142,9 +144,31 @@ public class InfiniteList<T> {
     // else recursively creates an Infinitelist until n = 0
     return n <= 0 ? end()
         : new InfiniteList<>(
-          Memo.from(() -> this.head.get()),
-            Memo.from(() -> this.tail().limit(n - 1)));
+            this.head,
+            Memo.from(() -> this.head.get()
+                .transform(t -> this.tail.get().limit(n - 1))
+                .except(() -> this.tail.get().limit(n))));
   }
+  // Memo.from(() -> this.tail().limit(this.head.get().transform(n -
+  // 1).unless(n))));
+  /*
+   * this.head.get()
+   * get the Actually object containing head value
+   * 
+   * this.head.get().transform(n -1)
+   * if evaluated, return (n - 1),
+   * else return a Failure
+   * 
+   * this.head.get().transform(n -1).unless(n)
+   * if evaluated, return (n - 1)
+   * else return n
+   */
+  /*
+   * if this.head == err
+   * Memo.from(() -> this.tail().limit(n));
+   * else
+   * Memo.from(() -> this.tail().limit(n-1))
+   */
 
   public InfiniteList<T> takeWhile(Immutator<Boolean, ? super T> pred) {
     // TODO
@@ -158,10 +182,13 @@ public class InfiniteList<T> {
    */
   public List<T> toList() {
     List<T> rList = new ArrayList<>();
+    Action<T> addToArray = (e) -> {
+      rList.add(e);
+    };
     InfiniteList<T> iList = this;
     while (!iList.isEnd()) {
       if (iList.head.get().transform(x -> true).unless(false)) {
-        rList.add(iList.head());
+        iList.head.get().finish(addToArray);
       }
       iList = iList.tail.get();
     }

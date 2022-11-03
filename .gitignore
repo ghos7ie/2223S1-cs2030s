@@ -1,4 +1,4 @@
 eclipse-formatter.xml
 .vscode/settings.json
-.class
-.zip
+*.class
+*.zip
