@@ -20,16 +20,25 @@ abstract class Either<L, R> {
   public abstract R getRight();
 
   public static <L, R> Either<L, R> left(L value) {
-
+    @SuppressWarnings("unchecked")
+    Either<L, R> either = (Either<L, R>) new Left<L>(value);
+    return either;
   }
 
   public static <L, R> Either<L, R> right(R value) {
+    @SuppressWarnings("unchecked")
+    Either<L, R> either = (Either<L, R>) new Right<R>(value);
+    return either;
 
   }
 
   private static class Left<L> extends Either<L, Object> {
 
     private L value;
+
+    private Left(L value) {
+      this.value = value;
+    }
 
     @Override
     public boolean isLeft() {
@@ -78,6 +87,10 @@ abstract class Either<L, R> {
 
   private static class Right<R> extends Either<Object, R> {
     private R value;
+
+    private Right(R value) {
+      this.value = value;
+    }
 
     @Override
     public boolean isLeft() {
