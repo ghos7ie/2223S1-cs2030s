@@ -9,7 +9,7 @@ package cs2030s.fp;
 
 import java.util.NoSuchElementException;
 
-abstract class Either<L, R> {
+public abstract class Either<L, R> {
 
   public abstract boolean isLeft();
 
