@@ -19,6 +19,18 @@ public abstract class Either<L, R> {
 
   public abstract R getRight();
 
+  public abstract <U, V> Either<U, V> map(Transformer<? super L, ? extends U> left,
+      Transformer<? super R, ? extends V> right);
+
+  public abstract <U, V> Either<U, V> flatMap(Transformer<? super L, ? extends U> left,
+      Transformer<? super R, ? extends V> right);
+
+  public abstract <U> U fold(Transformer<? super L, ? extends U> left,
+      Transformer<? super R, ? extends U> right);
+
+  public abstract Either<L, R> filterOrElse(BooleanCondition<? super R> cond,
+      Transformer<? super R, ? extends L> transformerR);
+
   public static <L, R> Either<L, R> left(L value) {
     @SuppressWarnings("unchecked")
     Either<L, R> either = (Either<L, R>) new Left<L>(value);
@@ -29,7 +41,6 @@ public abstract class Either<L, R> {
     @SuppressWarnings("unchecked")
     Either<L, R> either = (Either<L, R>) new Right<R>(value);
     return either;
-
   }
 
   private static class Left<L> extends Either<L, Object> {
@@ -90,6 +101,33 @@ public abstract class Either<L, R> {
     public String toString() {
       return "Left[" + this.value.toString() + "]";
     }
+
+    @Override
+    public <U, V> Either<U, V> map(Transformer<? super L, ? extends U> left,
+        Transformer<? super Object, ? extends V> right) {
+      return left(left.transform(this.value));
+    }
+
+    @Override
+    public <U, V> Either<U, V> flatMap(Transformer<? super L, ? extends U> left,
+        Transformer<? super Object, ? extends V> right) {
+      @SuppressWarnings("unchecked")
+      Either<U, V> trans = (Either<U, V>) left(left.transform(this.value));
+      return trans;
+    }
+
+    @Override
+    public <U> U fold(Transformer<? super L, ? extends U> left, Transformer<? super Object, ? extends U> right) {
+      // TODO Auto-generated method stub
+      return left.transform(this.value);
+    }
+
+    @Override
+    public Either<L, Object> filterOrElse(BooleanCondition<? super Object> cond,
+        Transformer<? super Object, ? extends L> transformerR) {
+      // TODO Auto-generated method stub
+      return this;
+    }
   }
 
   private static class Right<R> extends Either<Object, R> {
@@ -148,6 +186,37 @@ public abstract class Either<L, R> {
     @Override
     public String toString() {
       return "Right[" + this.value.toString() + "]";
+    }
+
+    @Override
+    public <U, V> Either<U, V> map(Transformer<? super Object, ? extends U> left,
+        Transformer<? super R, ? extends V> right) {
+      return right(right.transform(this.value));
+    }
+
+    @Override
+    public <U, V> Either<U, V> flatMap(Transformer<? super Object, ? extends U> left,
+        Transformer<? super R, ? extends V> right) {
+      @SuppressWarnings("unchecked")
+      Either<U, V> trans = (Either<U, V>) right(right.transform(this.value));
+      return trans;
+    }
+
+    @Override
+    public <U> U fold(Transformer<? super Object, ? extends U> left, Transformer<? super R, ? extends U> right) {
+      // TODO Auto-generated method stub
+      return right.transform(this.value);
+    }
+
+    @Override
+    public Either<Object, R> filterOrElse(BooleanCondition<? super R> cond,
+        Transformer<? super R, ? extends Object> transformer) {
+      // TODO Auto-generated method stub
+      if (cond.test(this.value)) {
+        return this;
+      } else {
+        return left(transformer.transform(this.value));
+      }
     }
   }
 
