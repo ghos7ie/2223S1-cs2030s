@@ -9,6 +9,9 @@ package cs2030s.fp;
 
 import java.util.NoSuchElementException;
 
+// I GIVE UP
+// I DON'T KNOW WHY CANNOT RUN TEST2 AND I'M NOT TRYING ANYMORE.
+
 public abstract class Either<L, R> {
 
   public abstract boolean isLeft();
