@@ -1,10 +1,12 @@
-package cs2030s.fp;
 /**
  * CS2030S PE1 Question 1
  * AY21/22 Semester 2
  *
  * @author A0000000X
  */
+
+package cs2030s.fp;
+
 import java.util.NoSuchElementException;
 
 public abstract class Either<L, R> {
@@ -27,7 +29,7 @@ public abstract class Either<L, R> {
       Transformer<? super R, ? extends U> right);
 
   public abstract Either<L, R> filterOrElse(BooleanCondition<? super R> cond,
-      Transformer<? super R, ? extends L> right);
+      Transformer<? super R, ? extends L> transformerR);
 
   public static <L, R> Either<L, R> left(L value) {
     @SuppressWarnings("unchecked")
@@ -107,8 +109,9 @@ public abstract class Either<L, R> {
     }
 
     @Override
-    public <U, V> Either<U, V> flatMap(Transformer<? super L, ? extends U> left,
-        Transformer<? super Object, ? extends V> right) {
+    public <U, V> Either<U, V> flatMap(Transformer<? super L, ? extends Either<? extends U, ? extends V>> left,
+        Transformer<? super Object, ? extends Either<? extends U, ? extends V>> right) {
+      // TODO Auto-generated method stub
       @SuppressWarnings("unchecked")
       Either<U, V> trans = (Either<U, V>) left(left.transform(this.value));
       return trans;
@@ -126,6 +129,7 @@ public abstract class Either<L, R> {
       // TODO Auto-generated method stub
       return this;
     }
+
   }
 
   private static class Right<R> extends Either<Object, R> {
@@ -193,8 +197,8 @@ public abstract class Either<L, R> {
     }
 
     @Override
-    public <U, V> Either<U, V> flatMap(Transformer<? super Object, ? extends U> left,
-        Transformer<? super R, ? extends V> right) {
+    public <U, V> Either<U, V> flatMap(Transformer<? super Object, ? extends Either<? extends U, ? extends V>> left,
+        Transformer<? super R, ? extends Either<? extends U, ? extends V>> right) {
       @SuppressWarnings("unchecked")
       Either<U, V> trans = (Either<U, V>) right(right.transform(this.value));
       return trans;
