@@ -77,6 +77,7 @@ public abstract class Either<L, R> {
         if (left.value == null) {
           return false;
         }
+        return left.value.equals(this.value);
       }
       if (obj instanceof Right<?>) {
         Right<?> right = (Right<?>) obj;
@@ -135,6 +136,7 @@ public abstract class Either<L, R> {
         if (right.value == null) {
           return false;
         }
+        return right.value.equals(this.value);
       }
       if (obj instanceof Left<?>) {
         Left<?> right = (Left<?>) obj;
