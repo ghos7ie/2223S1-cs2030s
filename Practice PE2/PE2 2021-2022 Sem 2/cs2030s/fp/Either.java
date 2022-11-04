@@ -71,11 +71,11 @@ public abstract class Either<L, R> {
       }
       if (obj instanceof Left<?>) {
         Left<?> left = (Left<?>) obj;
-        if (left.value == null) {
-          return false;
-        }
         if (left.value == this.value) {
           return true;
+        }
+        if (left.value == null) {
+          return false;
         }
       }
       if (obj instanceof Right<?>) {
@@ -129,11 +129,11 @@ public abstract class Either<L, R> {
       }
       if (obj instanceof Right<?>) {
         Right<?> right = (Right<?>) obj;
-        if (right.value == null) {
-          return false;
-        }
         if (right.value == this.value) {
           return true;
+        }
+        if (right.value == null) {
+          return false;
         }
       }
       if (obj instanceof Left<?>) {
