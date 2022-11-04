@@ -70,7 +70,8 @@ public abstract class Either<L, R> {
         return true;
       }
       if (obj instanceof Left<?>) {
-        return true;
+        Left<?> left = (Left<?>) obj;
+        return left.value == this.value;
       }
       if (obj instanceof Right<?>) {
         Right<?> right = (Right<?>) obj;
@@ -122,7 +123,8 @@ public abstract class Either<L, R> {
         return true;
       }
       if (obj instanceof Right<?>) {
-        return true;
+        Right<?> right = (Right<?>) obj;
+        return right.value == this.value;
       }
       if (obj instanceof Left<?>) {
         Left<?> right = (Left<?>) obj;
