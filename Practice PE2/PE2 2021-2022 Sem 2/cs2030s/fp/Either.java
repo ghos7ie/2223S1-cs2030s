@@ -1,12 +1,10 @@
+package cs2030s.fp;
 /**
  * CS2030S PE1 Question 1
  * AY21/22 Semester 2
  *
  * @author A0000000X
  */
-
-package cs2030s.fp;
-
 import java.util.NoSuchElementException;
 
 public abstract class Either<L, R> {
@@ -22,14 +20,14 @@ public abstract class Either<L, R> {
   public abstract <U, V> Either<U, V> map(Transformer<? super L, ? extends U> left,
       Transformer<? super R, ? extends V> right);
 
-  public abstract <U, V> Either<U, V> flatMap(Transformer<? super L, ? extends U> left,
-      Transformer<? super R, ? extends V> right);
+  public abstract <U, V> Either<U, V> flatMap(Transformer<? super L, ? extends Either<? extends U, ? extends V>> left,
+      Transformer<? super R, ? extends Either<? extends U, ? extends V>> right);
 
   public abstract <U> U fold(Transformer<? super L, ? extends U> left,
       Transformer<? super R, ? extends U> right);
 
   public abstract Either<L, R> filterOrElse(BooleanCondition<? super R> cond,
-      Transformer<? super R, ? extends L> transformerR);
+      Transformer<? super R, ? extends L> right);
 
   public static <L, R> Either<L, R> left(L value) {
     @SuppressWarnings("unchecked")
