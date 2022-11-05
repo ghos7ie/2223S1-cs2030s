@@ -2,3 +2,4 @@ eclipse-formatter.xml
 .vscode/settings.json
 *.class
 *.zip
+*.swp
