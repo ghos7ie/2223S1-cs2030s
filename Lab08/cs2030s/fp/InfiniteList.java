@@ -173,8 +173,15 @@ public class InfiniteList<T> {
   public InfiniteList<T> takeWhile(Immutator<Boolean, ? super T> pred) {
     //
     return new InfiniteList<>(
-        this.head.transform(h -> h.check(pred)),
-        this.tail.transform(t -> t.takeWhile(pred)));
+        // uses check(pred)
+        // if head value fails (because err or fails check), return err
+        // else returns the Actually<head>.
+        Memo.from(() -> this.head.get().check(pred)),
+        // check if head passes the test
+        // if it passes recrusively call takeWhile on tail
+        // else return end
+        Memo.from(
+            () -> this.head.get().check(pred).transform(t -> this.tail.get().takeWhile(pred)).except(() -> end())));
   }
 
   /**
@@ -183,21 +190,17 @@ public class InfiniteList<T> {
    * @return List containing all the elements in the InfiniteList.
    */
   public List<T> toList() {
-    /*
-     * check if at the end,
-     * if not and head is not failure,
-     * 
-     */
-    List<T> rList = new ArrayList<>();
+    List<T> output = new ArrayList<>();
     Action<T> addToArray = (e) -> {
-      rList.add(e);
+      output.add(e);
     };
     InfiniteList<T> iList = this;
     while (!iList.isEnd()) {
+      // does not add if head is err
       iList.head.get().finish(addToArray);
       iList = iList.tail.get();
     }
-    return rList;
+    return output;
   }
 
   public <U> U reduce(U id, Combiner<U, U, ? super T> acc) {
