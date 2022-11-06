@@ -181,8 +181,7 @@ public class InfiniteList<T> {
         // else return end
         Memo.from(
             () -> this.head.get()
-                .check(pred).transform(t -> this.tail.get())
-                .check(x -> x.isEnd())
+                .check(pred)
                 .transform(t -> this.tail.get().takeWhile(pred))
                 .except(() -> end())));
   }
@@ -209,11 +208,8 @@ public class InfiniteList<T> {
   public <U> U reduce(U id, Combiner<U, U, ? super T> acc) {
     U result = id;
     InfiniteList<T> iList = this;
-    Action<T> addToResult = (e) -> {
-      result = acc.combine(result, iList.head());
-    }
     while(!iList.isEnd()){
-      iList.head.get().finish(addToResult);
+      //iList.head.get()
       iList = iList.tail.get();
     }
     return result;
