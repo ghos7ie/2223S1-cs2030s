@@ -128,8 +128,8 @@ public class InfiniteList<T> {
    */
   public InfiniteList<T> filter(Immutator<Boolean, ? super T> pred) {
     return new InfiniteList<>(
-        Memo.from(() -> this.head.get().check(pred)),
-        Memo.from(() -> this.tail.get().filter(pred)));
+        this.head.transform(h -> h.check(pred)),
+        this.tail.transform(t -> t.filter(pred)));
   }
 
   /**
@@ -175,7 +175,7 @@ public class InfiniteList<T> {
         // uses check(pred)
         // if head value fails (because err or fails check), return err
         // else returns the Actually<head>.
-        Memo.from(() -> this.head.get().check(pred)),
+        this.head.transform(h -> h.check(pred)),
         // check if head passes the test
         // if it passes recrusively call takeWhile on tail
         // else return end
