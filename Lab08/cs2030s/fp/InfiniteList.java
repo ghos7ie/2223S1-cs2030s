@@ -183,7 +183,7 @@ public class InfiniteList<T> {
             () -> this.head.get()
                 .check(pred)
                 .transform(t -> this.tail.get().takeWhile(pred))
-                .except(() -> end())));
+                .unless(end())));
   }
 
   /**
