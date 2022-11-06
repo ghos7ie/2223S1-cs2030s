@@ -207,13 +207,20 @@ public class InfiniteList<T> {
   }
 
   public <U> U reduce(U id, Combiner<U, U, ? super T> acc) {
-    // TODO
-    return null;
+    U result = id;
+    InfiniteList<T> iList = this;
+    Action<T> addToResult = (e) -> {
+      result = acc.combine(result, iList.head());
+    }
+    while(!iList.isEnd()){
+      iList.head.get().finish(addToResult);
+      iList = iList.tail.get();
+    }
+    return result;
   }
 
   public long count() {
-    // TODO
-    return 0L;
+    return reduce(0L, (x, y) -> x + 1L);
   }
 
   /**
