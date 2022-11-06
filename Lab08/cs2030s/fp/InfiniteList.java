@@ -128,8 +128,8 @@ public class InfiniteList<T> {
    */
   public InfiniteList<T> filter(Immutator<Boolean, ? super T> pred) {
     return new InfiniteList<>(
-        this.head.transform(h -> h.check(pred)),
-        this.tail.transform(t -> t.filter(pred)));
+        Memo.from(() -> this.head.get().check(pred)),
+        Memo.from(() -> this.tail.get().filter(pred)));
   }
 
   /**
@@ -182,7 +182,9 @@ public class InfiniteList<T> {
         Memo.from(
             () -> this.head.get()
                 .check(pred)
+                // if pass pred, can do recusive call
                 .transform(t -> this.tail.get().takeWhile(pred))
+                // unless so that if it is an end/fails, it will be evaluated.
                 .unless(end())));
   }
 
@@ -208,8 +210,8 @@ public class InfiniteList<T> {
   public <U> U reduce(U id, Combiner<U, U, ? super T> acc) {
     U result = id;
     InfiniteList<T> iList = this;
-    while(!iList.isEnd()){
-      //iList.head.get()
+    while (!iList.isEnd()) {
+      // iList.head.get()
       iList = iList.tail.get();
     }
     return result;
