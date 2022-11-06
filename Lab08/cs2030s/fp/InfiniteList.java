@@ -171,7 +171,6 @@ public class InfiniteList<T> {
    */
 
   public InfiniteList<T> takeWhile(Immutator<Boolean, ? super T> pred) {
-    //
     return new InfiniteList<>(
         // uses check(pred)
         // if head value fails (because err or fails check), return err
@@ -181,7 +180,7 @@ public class InfiniteList<T> {
         // if it passes recrusively call takeWhile on tail
         // else return end
         Memo.from(
-            () -> this.head.get().check(x -> isEnd()).check(pred).transform(t -> this.tail.get().takeWhile(pred)).except(() -> end())));
+            () -> this.head.get().check(x -> isEnd()).check(pred).transform(t -> this.tail.get().takeWhile(pred)).unless(end())));
   }
 
   /**
