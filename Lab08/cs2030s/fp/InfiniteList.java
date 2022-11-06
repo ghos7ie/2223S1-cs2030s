@@ -175,13 +175,15 @@ public class InfiniteList<T> {
         // uses check(pred)
         // if head value fails (because err or fails check), return err
         // else returns the Actually<head>.
-        Memo.from(this.head.get().check(pred)),
+        Memo.from(() -> this.head.get().check(pred)),
         // check if head passes the test
         // if it passes recrusively call takeWhile on tail
         // else return end
         Memo.from(
             () -> this.head.get()
-                .check(pred).transform(t -> this.tail.get().takeWhile(pred))
+                .check(pred).transform(t -> this.tail.get())
+                .check(x -> x.isEnd())
+                .transform(t -> this.tail.get().takeWhile(pred))
                 .except(() -> end())));
   }
 
