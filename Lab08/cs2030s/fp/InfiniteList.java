@@ -170,6 +170,13 @@ public class InfiniteList<T> {
    * Memo.from(() -> this.tail().limit(n-1))
    */
 
+  /**
+   * Finitises an InfiniteList to the first element that fails the check.
+   * 
+   * @param pred condition to check element against.
+   * @return Truncated list containing elements that pass until the first one that
+   *         fails.
+   */
   public InfiniteList<T> takeWhile(Immutator<Boolean, ? super T> pred) {
     return new InfiniteList<>(
         // uses check(pred)
@@ -206,7 +213,14 @@ public class InfiniteList<T> {
     }
     return output;
   }
-
+  
+  /**
+   * 
+   * @param <U>
+   * @param id
+   * @param acc
+   * @return
+   */
   public <U> U reduce(U id, Combiner<U, U, ? super T> acc) {
     U result = id;
     InfiniteList<T> iList = this;
@@ -274,6 +288,7 @@ public class InfiniteList<T> {
      * @param f   The immutator to mutate each elements with.
      * @return New InfiniteList with mutated values.
      */
+    @Override
     public <R> InfiniteList<R> map(Immutator<? extends R, ? super Object> f) {
       return End.end();
     }
@@ -284,12 +299,31 @@ public class InfiniteList<T> {
      * @param pred The immutator to check each element with.
      * @return new List of elements that fail the Immutator.
      */
+    @Override
     public InfiniteList<Object> filter(Immutator<Boolean, ? super Object> pred) {
       return End.end();
     }
 
+    /**
+     * Truncates Infinitelist to a FiniteList :).
+     * With at most n elements.
+     * 
+     * @param n max number of elements in the "InfiniteList".
+     * @return End.
+     */
     @Override
     public InfiniteList<Object> limit(long n) {
+      return End.end();
+    }
+
+    /**
+     * Finitises an InfiniteList to the first element that fails the check.
+     * 
+     * @param pred condition to check element against.
+     * @return End.
+     */
+    @Override
+    public InfiniteList<Object> takeWhile(Immutator<Boolean, ? super Object> pred) {
       return End.end();
     }
 
