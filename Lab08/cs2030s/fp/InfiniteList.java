@@ -171,8 +171,10 @@ public class InfiniteList<T> {
    */
 
   public InfiniteList<T> takeWhile(Immutator<Boolean, ? super T> pred) {
-    // TODO
-    return new InfiniteList<>(null, null);
+    //
+    return new InfiniteList<>(
+        this.head.transform(h -> h.check(pred)),
+        this.tail.transform(t -> t.takeWhile(pred)));
   }
 
   /**
@@ -181,15 +183,18 @@ public class InfiniteList<T> {
    * @return List containing all the elements in the InfiniteList.
    */
   public List<T> toList() {
+    /*
+     * check if at the end,
+     * if not and head is not failure,
+     * 
+     */
     List<T> rList = new ArrayList<>();
     Action<T> addToArray = (e) -> {
       rList.add(e);
     };
     InfiniteList<T> iList = this;
     while (!iList.isEnd()) {
-      if (iList.head.get().transform(x -> true).unless(false)) {
-        iList.head.get().finish(addToArray);
-      }
+      iList.head.get().finish(addToArray);
       iList = iList.tail.get();
     }
     return rList;
