@@ -175,7 +175,7 @@ public class InfiniteList<T> {
         // uses check(pred)
         // if head value fails (because err or fails check), return err
         // else returns the Actually<head>.
-        this.head.transform(h -> h.check(pred)),
+        Memo.from(() -> this.head.get().check(pred)),
         // check if head passes the test
         // if it passes recrusively call takeWhile on tail
         // else return end
@@ -185,7 +185,7 @@ public class InfiniteList<T> {
                 // if pass pred, can do recusive call
                 .transform(t -> this.tail.get().takeWhile(pred))
                 // unless so that if it is an end/fails, it will be evaluated.
-                .unless(end())));
+                .except(() -> end())));
   }
 
   /**
