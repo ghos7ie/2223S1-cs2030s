@@ -217,11 +217,12 @@ public class InfiniteList<T> {
   }
 
   /**
+   * Performs an operation to accumulate all the elements in the InfiniteList.
    * 
-   * @param <U>
-   * @param id
-   * @param acc
-   * @return
+   * @param <U> Type of return value is U.
+   * @param id  Starting value of the reduction.
+   * @param acc Function to perform on the List.
+   * @return Reduced value of the list.
    */
   public <U> U reduce(U id, Combiner<U, U, ? super T> acc) {
     U pass = this.head.get()
