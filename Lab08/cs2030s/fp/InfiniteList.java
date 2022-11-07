@@ -207,11 +207,11 @@ public class InfiniteList<T> {
     Action<T> addToArray = (e) -> {
       output.add(e);
     };
-    InfiniteList<T> iList = this;
-    while (!iList.isEnd()) {
+    InfiniteList<T> checkList = this;
+    while (!checkList.isEnd()) {
       // does not add if head is err
-      iList.head.get().finish(addToArray);
-      iList = iList.tail.get();
+      checkList.head.get().finish(addToArray);
+      checkList = checkList.tail.get();
     }
     return output;
   }
