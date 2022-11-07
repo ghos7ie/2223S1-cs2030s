@@ -182,13 +182,12 @@ public class InfiniteList<T> {
         // uses check(pred)
         // if head value fails (because err or fails check), return err
         // else returns the Actually<head>.
-        Memo.from(() -> this.head.get().check(pred)),
+        Memo.from(() -> Actually.ok(this.head()).check(pred)),
         // check if head passes the test
         // if it passes recrusively call takeWhile on tail
         // else return end
         Memo.from(
-            () -> this.head.get()
-                .check(pred)
+            () -> Actually.ok(this.head()).check(pred)
                 // if pass pred, can do recusive call
                 .transform(t -> this.tail.get().takeWhile(pred))
                 // unless so that if it is an end/fails, it will be evaluated.
@@ -213,7 +212,7 @@ public class InfiniteList<T> {
     }
     return output;
   }
-  
+
   /**
    * 
    * @param <U>
@@ -231,6 +230,11 @@ public class InfiniteList<T> {
     return result;
   }
 
+  /**
+   * Returns count of elements in InfiniteList.
+   * 
+   * @return Count of elements.
+   */
   public long count() {
     return reduce(0L, (x, y) -> x + 1L);
   }
@@ -325,6 +329,16 @@ public class InfiniteList<T> {
     @Override
     public InfiniteList<Object> takeWhile(Immutator<Boolean, ? super Object> pred) {
       return End.end();
+    }
+
+    /**
+     * Returns count of elements in InfiniteList.
+     * 
+     * @return Count of elements.
+     */
+    @Override
+    public long count() {
+      return 0;
     }
 
     /**
