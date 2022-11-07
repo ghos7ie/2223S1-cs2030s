@@ -187,7 +187,8 @@ public class InfiniteList<T> {
         // if it passes recrusively call takeWhile on tail
         // else return end
         Memo.from(
-            () -> Actually.ok(this.head()).check(pred)
+            () -> Memo.from(() -> Actually.ok(this.head()).check(pred))
+                .get()
                 // if pass pred, can do recusive call
                 .transform(t -> this.tail.get().takeWhile(pred))
                 // unless so that if it is an end/fails, it will be evaluated.
