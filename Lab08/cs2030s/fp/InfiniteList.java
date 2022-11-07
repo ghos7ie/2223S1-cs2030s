@@ -68,7 +68,6 @@ public class InfiniteList<T> {
    * @return Infinite list containing iterations of given element.
    */
   public static <T> InfiniteList<T> iterate(T seed, Immutator<T, T> func) {
-    // TODO
     return new InfiniteList<>(Memo.from(Actually.ok(seed)),
         Memo.from(() -> InfiniteList.iterate(func.invoke(seed), func)));
   }
@@ -91,6 +90,9 @@ public class InfiniteList<T> {
    * @return First non-null head field.
    */
   public T head() {
+    // this.head.get() returns the head value
+    // .except() will handle the case where head is an Err
+    // and recursively call for the next head
     return this.head.get().except(() -> this.tail.get().head());
   }
 
@@ -141,7 +143,9 @@ public class InfiniteList<T> {
    */
   public InfiniteList<T> limit(long n) {
     // returns an end if n is less than or equals to 0
-    // else recursively creates an Infinitelist until n = 0
+    // else recursively calls the next InfiniteList and decrementing n depending on
+    // whether the head
+    // value exists.
     return n <= 0 ? end()
         : new InfiniteList<>(
             this.head,
@@ -149,26 +153,6 @@ public class InfiniteList<T> {
                 .transform(t -> this.tail.get().limit(n - 1))
                 .except(() -> this.tail.get().limit(n))));
   }
-  // Memo.from(() -> this.tail().limit(this.head.get().transform(n -
-  // 1).unless(n))));
-  /*
-   * this.head.get()
-   * get the Actually object containing head value
-   * 
-   * this.head.get().transform(n -1)
-   * if evaluated, return (n - 1),
-   * else return a Failure
-   * 
-   * this.head.get().transform(n -1).unless(n)
-   * if evaluated, return (n - 1)
-   * else return n
-   */
-  /*
-   * if this.head == err
-   * Memo.from(() -> this.tail().limit(n));
-   * else
-   * Memo.from(() -> this.tail().limit(n-1))
-   */
 
   /**
    * Finitises an InfiniteList to the first element that fails the check.
@@ -178,18 +162,17 @@ public class InfiniteList<T> {
    *         fails.
    */
   public InfiniteList<T> takeWhile(Immutator<Boolean, ? super T> pred) {
-    // Create a new Memo, to check if head exists also
+    // Create a new Memo, to retrieve the first exisitng head
+    // this.head() will skip over the heads that are failures!!
     // uses check(pred)
     // if head value fails (because err or fails check), return err
     // else returns the Actually<head>.
     Memo<Actually<T>> exist = Memo.from(() -> Actually.ok(this.head()).check(pred));
     return new InfiniteList<>(
         exist,
-        // exist.get() will return an err IF head is a Failure and
-        // cause the recursive call to end through .except()
-        // check if head passes the test
-        // if it passes recrusively call takeWhile on tail
-        // else return end
+        /**
+         * 
+         */
         Memo.from(() -> exist.get()
             // if pass pred, can do recusive call
             .transform(t -> this.tail().takeWhile(pred))
@@ -240,6 +223,7 @@ public class InfiniteList<T> {
    * @return Count of elements.
    */
   public long count() {
+    // basically + 1 for every element that exists inside
     return reduce(0L, (x, y) -> x + 1L);
   }
 
