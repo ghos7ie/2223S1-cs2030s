@@ -336,6 +336,19 @@ public class InfiniteList<T> {
     }
 
     /**
+     * Performs an operation to accumulate all the elements in the InfiniteList.
+     * 
+     * @param <U> Type of return value is U.
+     * @param id  Starting value of the reduction.
+     * @param acc Function to perform on the List.
+     * @return Reduced value of the list.
+     */
+    @Override
+    public <U> U reduce(U id, Combiner<U, U, ? super Object> acc) {
+      return id;
+    }
+
+    /**
      * Returns count of elements in InfiniteList.
      * 
      * @return Count of elements.
