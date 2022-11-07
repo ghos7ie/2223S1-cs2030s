@@ -178,21 +178,21 @@ public class InfiniteList<T> {
    *         fails.
    */
   public InfiniteList<T> takeWhile(Immutator<Boolean, ? super T> pred) {
+    // Create a new Memo, to check if head exists also
+    // uses check(pred)
+    // if head value fails (because err or fails check), return err
+    // else returns the Actually<head>.
+    Memo<Actually<T>> exist = Memo.from(() -> Actually.ok(this.head()).check(pred));
     return new InfiniteList<>(
-        // uses check(pred)
-        // if head value fails (because err or fails check), return err
-        // else returns the Actually<head>.
-        Memo.from(() -> Actually.ok(this.head()).check(pred)),
+        exist,
         // check if head passes the test
         // if it passes recrusively call takeWhile on tail
         // else return end
-        Memo.from(
-            () -> Memo.from(() -> Actually.ok(this.head()).check(pred))
-                .get()
-                // if pass pred, can do recusive call
-                .transform(t -> this.tail.get().takeWhile(pred))
-                // unless so that if it is an end/fails, it will be evaluated.
-                .except(() -> end())));
+        Memo.from(() -> exist.get()
+            // if pass pred, can do recusive call
+            .transform(t -> this.tail().takeWhile(pred))
+            // unless so that if it is an end/fails, it will be evaluated.
+            .except(() -> end())));
   }
 
   /**
