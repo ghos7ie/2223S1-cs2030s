@@ -145,9 +145,9 @@ public class InfiniteList<T> {
     return n <= 0 ? end()
         : new InfiniteList<>(
             this.head,
-            Memo.from(() -> this.head.get()
-                .transform(t -> this.tail.get().limit(n - 1))
-                .except(() -> this.tail.get().limit(n))));
+            Memo.from(() -> this.head())
+                // will skip to the next tail that exits
+                .transform(t -> this.tail().limit(n - 1)));
   }
   // Memo.from(() -> this.tail().limit(this.head.get().transform(n -
   // 1).unless(n))));
@@ -185,6 +185,8 @@ public class InfiniteList<T> {
     Memo<Actually<T>> exist = Memo.from(() -> Actually.ok(this.head()).check(pred));
     return new InfiniteList<>(
         exist,
+        // exist.get() will return an err IF head is a Failure and
+        // cause the recursive call to end through .except()
         // check if head passes the test
         // if it passes recrusively call takeWhile on tail
         // else return end
@@ -222,13 +224,13 @@ public class InfiniteList<T> {
    * @return
    */
   public <U> U reduce(U id, Combiner<U, U, ? super T> acc) {
-    U result = id;
-    InfiniteList<T> iList = this;
-    while (!iList.isEnd()) {
-      // iList.head.get()
-      iList = iList.tail.get();
-    }
-    return result;
+    U pass = this.head.get()
+        // bascially pass the value inside of head into the accumulator
+        .transform(x -> acc.combine(id, x))
+        // if can't do that since head.get() is Failure
+        // return the id unchanged.
+        .unless(id);
+    return this.tail.get().reduce(pass, acc);
   }
 
   /**
