@@ -145,9 +145,9 @@ public class InfiniteList<T> {
     return n <= 0 ? end()
         : new InfiniteList<>(
             this.head,
-            Memo.from(() -> this.head())
-                // will skip to the next tail that exits
-                .transform(t -> this.tail().limit(n - 1)));
+            Memo.from(() -> this.head.get()
+                .transform(t -> this.tail.get().limit(n - 1))
+                .except(() -> this.tail.get().limit(n))));
   }
   // Memo.from(() -> this.tail().limit(this.head.get().transform(n -
   // 1).unless(n))));
