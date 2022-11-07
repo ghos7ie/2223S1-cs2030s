@@ -170,9 +170,6 @@ public class InfiniteList<T> {
     Memo<Actually<T>> exist = Memo.from(() -> Actually.ok(this.head()).check(pred));
     return new InfiniteList<>(
         exist,
-        /**
-         * 
-         */
         Memo.from(() -> exist.get()
             // if pass pred, can do recusive call
             .transform(t -> this.tail().takeWhile(pred))
