@@ -20,7 +20,7 @@ public class Streaming {
                 list1.getLast().setFst(list1.getLast().getFst() + list2.getFirst().getFst());
                 list2.removeFirst();
               }
-
+              list1.addAll(list2);
             })
         .stream().collect(Collectors.toList());
   }
