@@ -17,7 +17,7 @@ public class Streaming {
             },
             (list1, list2) -> {
               if (list1.getLast().getSnd().equals(list2.getFirst().getSnd())) {
-                list1.getLast().setFst(list1.getLast().getFst() + list2.getLast().getFst());
+                list1.getLast().setFst(list1.getLast().getFst() + list2.getFirst().getFst());
                 list2.removeFirst();
               }
 
